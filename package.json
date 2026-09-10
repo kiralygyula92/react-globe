@@ -1,0 +1,18 @@
+{
+  "name": "react-globe-workspace",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@11.6.0",
+  "scripts": {
+    "build": "pnpm --filter @yourscope/react-globe build",
+    "dev": "pnpm build && pnpm --parallel --filter @yourscope/react-globe --filter demo dev",
+    "test": "pnpm --filter @yourscope/react-globe test",
+    "typecheck": "pnpm -r typecheck",
+    "e2e": "playwright test",
+    "assets": "node scripts/globe-assets.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0",
+    "typescript": "^5.9.3"
+  }
+}

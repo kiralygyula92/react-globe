@@ -1,0 +1,56 @@
+{
+  "name": "@yourscope/react-globe",
+  "version": "1.0.0",
+  "description": "An interactive, detailed 3D Earth for React, drawn with plain three.js.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    },
+    "./globe.css": "./dist/globe.css",
+    "./assets/*": "./dist/assets/*"
+  },
+  "scripts": {
+    "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build:js": "vite build",
+    "build:css": "tailwindcss -i ./src/styles.css -o ./dist/globe.css --minify",
+    "build:types": "tsc -p tsconfig.build.json",
+    "build": "pnpm clean && pnpm build:js && pnpm build:css && pnpm build:types",
+    "dev": "pnpm run \"/^watch:/\"",
+    "watch:js": "vite build --watch",
+    "watch:css": "tailwindcss -i ./src/styles.css -o ./dist/globe.css --watch",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "peerDependencies": {
+    "react": ">=19",
+    "react-dom": ">=19",
+    "three": ">=0.170"
+  },
+  "dependencies": {
+    "@types/geojson": "^7946.0.16"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.3.3",
+    "@types/react": "^19.2.18",
+    "@types/react-dom": "^19.2.4",
+    "@types/three": "^0.185.4",
+    "@vitejs/plugin-react": "^6.0.5",
+    "jsdom": "^30.0.1",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tailwindcss": "^4.3.3",
+    "three": "^0.186.0",
+    "typescript": "^5.9.3",
+    "vite": "^8.2.1",
+    "vitest": "^4.1.10"
+  }
+}

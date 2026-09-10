@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.tgz
+.vite/
+test-results/
+playwright-report/
+blob-report/
+*.tsbuildinfo

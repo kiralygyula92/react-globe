@@ -1,0 +1,14 @@
+/*
+ * The package stylesheet, compiled to dist/globe.css.
+ *
+ * Tailwind's theme and utilities only — no preflight, so the host app's base
+ * styles are left alone — and every utility carries the `wg:` prefix so it can
+ * never collide with the host app's own Tailwind.
+ */
+
+@layer theme, base, components, utilities;
+
+@import "tailwindcss/theme.css" layer(theme) prefix(wg);
+@import "tailwindcss/utilities.css" layer(utilities) source(none);
+
+@source "./";
