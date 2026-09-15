@@ -19,6 +19,7 @@ Opened in Phase 2 (Model), 2026-09-15.
 | E-10 | §2.3 newsletter capture | Accepted (owner delegated); search and RSS delivered in Phase 6 |
 | E-11 | §6 E, §8.3–§8.5 — reference generation | Accepted (owner delegated) |
 | E-12 | §7.2 sandbox action, §6 F tabs | Accepted (owner delegated); sandbox until GAPS G-01 |
+| E-13 | §5 section 1 "llms.txt" sidebar entry | Accepted (owner) |
 
 ---
 
@@ -153,3 +154,17 @@ Recorded so the conformance script and the reviewer apply the same reading of PP
   their own `###` headings, which read without JavaScript and appear in the ToC.
 - **`data-demo-activate`.** A demo that waits for the reader (lazy loading) marks its start button so the
   automated demo check can press it.
+
+---
+
+## E-13 — llms.txt is not linked from the sidebar
+- **Rule:** PPDS §5 lists `llms.txt` as the last entry of Getting started.
+- **Deviation:** the sidebar has no llms.txt entry. The file is still generated at
+  `/react-globe/llms.txt` (its conventional path) and lists every Markdown twin; each page also
+  advertises its own twin with `<link rel="alternate" type="text/markdown">`. Checks 16 and flow F8
+  still verify it.
+- **Reason:** owner request during the docs layout redesign (2026-09-15).
+- **Removed by:** adding `{ "pathname": "/react-globe/llms.txt" }` back to the Getting started section
+  of `nav.json` and its title to `titles.json`.
+- **Related, not an exception:** the conditional Resources section is disabled; its one page, Bundled
+  data, moved to Customization (301 from `/react-globe/resources/bundled-data/`).

@@ -58,7 +58,7 @@ A capitals dataset is a convenient way to show your own labelled points with col
 
 ::demo{src="./demo-customization.tsx" title="Your own sites as the capitals layer"}
 
-See [How to customize](/react-globe/customization/) and [Bundled data](/react-globe/resources/bundled-data/)
+See [How to customize](/react-globe/customization/) and [Bundled data](/react-globe/customization/bundled-data/)
 for what ships by default.
 
 ## Limitations

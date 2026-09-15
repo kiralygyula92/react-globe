@@ -1,33 +1,29 @@
 ---
 pluginId: react-globe
 title: Playground
-description: One globe combining pins, clustering, popups, connections, country hover, controls, styles and locales.
+description: One globe with a live control for every prop, every render override and the imperative handle.
 date: 2026-09-15
 ---
 
-A single screen that uses most of the package together: switch the render style and locale, hover
-countries, click a hub to fly to it, and watch the linked routes.
+Change any prop in the panel and the globe updates immediately. Use it to explore combinations before
+writing code, or to check how a prop behaves.
 
-::demo{src="./demo-scenario.tsx" title="A network of hubs" height="520"}
+::demo{src="./demo-playground.tsx" title="Globe playground" height="760"}
 
-## What it uses
+## What you can try
 
-- [Pins](/react-globe/pins/) with [popups](/react-globe/pin-popups/); Lisbon and Porto merge into a
-  [cluster](/react-globe/pin-clustering/) until you zoom in.
-- [Connections](/react-globe/connections/) with an animated, a dotted and a coloured link.
-- [Country hover](/react-globe/country-interaction/) with [localized names](/react-globe/localization/).
-- [Controls](/react-globe/controls/), the [Camera API](/react-globe/camera-api/) and
-  [Auto-rotate](/react-globe/auto-rotate/).
-- All four [render styles](/react-globe/render-styles/).
+- **Camera and interaction** — gestures, distance limits and the built-in controls; see
+  [Gestures](/react-globe/gestures/) and [Camera](/react-globe/camera/).
+- **Geography** — borders, names, capitals, hover and the graticule; see
+  [Country names](/react-globe/country-names/) and [Country hover & click](/react-globe/country-interaction/).
+- **Appearance and localization** — all four [render styles](/react-globe/render-styles/), grayscale,
+  background tokens and the six built-in [locales](/react-globe/localization/).
+- **Pins and connections** — eleven cities, a 5,000-pin stress set, [clustering](/react-globe/pin-clustering/),
+  popups and [connections](/react-globe/connections/), including one that points at a missing pin on purpose.
+- **Render overrides** — replace the pin marker, popup, cluster marker, connections and controls; see
+  [Overriding components](/react-globe/customization/overriding-components/).
+- **Imperative handle** — flights, zoom, auto-rotation, reset and a controlled camera; see the
+  [Camera API](/react-globe/camera-api/).
+- **Lifecycle** — unmount and remount the globe to see that it cleans up after itself.
 
-## The full playground app
-
-The repository also contains a development playground with a live control for every prop, used by the
-end-to-end tests:
-
-```bash
-pnpm install
-pnpm dev
-```
-
-It opens at `http://localhost:5173`.
+The Events list shows `onReady`, `onError`, pin clicks and country clicks as they happen.

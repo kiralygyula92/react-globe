@@ -1,0 +1,192 @@
+/*
+ * Playground layout. Colours come from the docs theme tokens when the demo runs on the docs
+ * site, with literal fallbacks so the copied source works anywhere.
+ */
+
+.pg {
+  display: flex;
+  height: 100%;
+  font: 13px/1.4 system-ui, -apple-system, 'Segoe UI', sans-serif;
+  color: var(--fg, rgb(226 232 240));
+  background: var(--bg, rgb(11 17 32));
+}
+
+.pg-stage {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  background: rgb(7 11 28);
+}
+
+.pg-unmounted {
+  display: grid;
+  height: 100%;
+  place-items: center;
+  color: rgb(203 213 225);
+}
+
+.pg-panel {
+  width: 17rem;
+  flex-shrink: 0;
+  overflow-y: auto;
+  padding: 0.75rem 0.9rem 1.25rem;
+  border-left: 1px solid var(--border, rgb(30 41 59));
+  background: var(--bg-subtle, rgb(15 23 42));
+}
+
+.demo .pg-panel h2 {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+.demo .pg-panel p {
+  margin: 0.15rem 0 0;
+  color: var(--fg-muted, rgb(148 163 184));
+  font-size: 0.75rem;
+}
+
+.pg-section {
+  margin-top: 0.9rem;
+  padding-top: 0.6rem;
+  border-top: 1px solid var(--border, rgb(30 41 59));
+}
+
+.demo .pg-section h3 {
+  margin: 0 0 0.25rem;
+  font-size: 0.68rem;
+  line-height: 1.6;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--fg-muted, rgb(148 163 184));
+}
+
+.pg-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.18rem 0;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.72rem;
+}
+
+.pg-row input[type='number'] {
+  width: 4.5rem;
+  text-align: right;
+}
+
+.pg-row input,
+.pg-row select,
+.pg-button {
+  font: inherit;
+  color: inherit;
+  background: var(--bg, rgb(11 17 32));
+  border: 1px solid var(--border, rgb(51 65 85));
+  border-radius: 4px;
+}
+
+.pg-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.3rem;
+}
+
+.pg-button {
+  padding: 0.25rem 0.4rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  cursor: pointer;
+}
+
+.pg-button:hover {
+  border-color: var(--accent, rgb(126 166 255));
+}
+
+.pg-log {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.68rem;
+  color: var(--fg-muted, rgb(148 163 184));
+}
+
+/* Render-override demos */
+
+.pg-square-pin {
+  display: block;
+  width: 12px;
+  height: 12px;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border: 1px solid rgb(255 255 255 / 0.7);
+  background: rgb(169 107 255);
+}
+
+.pg-square-pin[data-hovered='true'] {
+  border-color: white;
+  background: rgb(63 224 197);
+}
+
+.pg-popup {
+  pointer-events: auto;
+  width: 14rem;
+  padding: 0.75rem;
+  border: 2px solid rgb(63 224 197);
+  border-radius: 8px;
+  background: rgb(11 16 38);
+  color: white;
+  box-shadow: 0 12px 32px rgb(0 0 0 / 0.35);
+}
+
+.pg-popup p {
+  margin: 0;
+}
+
+.pg-cluster {
+  pointer-events: auto;
+  display: flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  transform: translate(-50%, -50%) rotate(45deg);
+  border: 2px solid white;
+  background: rgb(169 107 255);
+  color: white;
+  cursor: pointer;
+}
+
+.pg-cluster span {
+  transform: rotate(-45deg);
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.pg-bar {
+  pointer-events: none;
+  position: absolute;
+  top: 0.75rem;
+  left: 50%;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  transform: translateX(-50%);
+}
+
+.pg-bar button,
+.pg-bar span {
+  pointer-events: auto;
+  padding: 0.25rem 0.75rem;
+  border: 0;
+  border-radius: 4px;
+  background: rgb(0 0 0 / 0.6);
+  color: white;
+  font: 12px ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+}
+
+.pg-bar button {
+  cursor: pointer;
+}

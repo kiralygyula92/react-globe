@@ -3,12 +3,10 @@
   "/react-globe/": "Overview",
   "/react-globe/getting-started/installation/": "Installation",
   "/react-globe/getting-started/usage/": "Usage",
-  "/react-globe/getting-started/requirements/": "Requirements & compatibility",
+  "/react-globe/getting-started/requirements/": "Requirements",
   "/react-globe/getting-started/faq/": "FAQ",
   "/react-globe/getting-started/support/": "Support",
   "/react-globe/getting-started/versions/": "Versions",
-  "/react-globe/llms.txt": "llms.txt",
-
   "/react-globe/features-group": "Features",
   "/react-globe/all-features/": "All features",
   "/react-globe/core-features-group": "Core features",
@@ -38,19 +36,16 @@
   "/react-globe/developer-tools-group": "Developer tools",
   "/react-globe/lazy-loading/": "Lazy loading",
   "/react-globe/error-handling/": "Error handling",
-
   "/react-globe/demos-group": "Demos",
   "/react-globe/demos/playground/": "Playground",
-
   "/react-globe/api-group": "Reference",
-
   "/react-globe/customization-group": "Customization",
   "/react-globe/customization/": "How to customize",
   "/react-globe/customization/theming/": "Theming",
   "/react-globe/customization/overriding-components/": "Overriding components",
   "/react-globe/customization/stylesheet/": "Stylesheet",
+  "/react-globe/customization/bundled-data/": "Bundled data",
   "/react-globe/customization/recipes/": "Recipes",
-
   "/react-globe/guides-group": "Guides",
   "/react-globe/guides/best-practices/": "Best practices",
   "/react-globe/guides/performance/": "Performance",
@@ -58,15 +53,9 @@
   "/react-globe/guides/localization/": "Localization",
   "/react-globe/guides/accessibility/": "Accessibility",
   "/react-globe/guides/security/": "Security",
-
   "/react-globe/integrations-group": "Integrations",
   "/react-globe/integrations/vite/": "Vite",
-
-  "/react-globe/resources-group": "Resources",
-  "/react-globe/resources/bundled-data/": "Bundled data",
-
   "/react-globe/migration-group": "Migration",
-
   "/react-globe/discover-more-group": "Discover more",
   "/react-globe/discover-more/showcase/": "Showcase",
   "/react-globe/discover-more/roadmap/": "Roadmap",

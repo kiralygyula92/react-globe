@@ -1,6 +1,6 @@
 ---
 pluginId: react-globe
-title: Requirements & compatibility
+title: Requirements
 description: The React, three.js, bundler and browser versions React Globe declares and the ones it is tested with.
 ---
 

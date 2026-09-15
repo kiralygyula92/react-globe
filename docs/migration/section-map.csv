@@ -37,13 +37,13 @@ packages/globe/README.md,Render overrides,/react-globe/customization/overriding-
 packages/globe/README.md,Render overrides,"/react-globe/pins/ /react-globe/pin-popups/ /react-globe/pin-clustering/ /react-globe/connections/ /react-globe/controls/",## Customization,split,One override example per capability page.
 packages/globe/README.md,Theming,/react-globe/customization/theming/,body,port,Token table → generate once a token manifest exists (GAPS G-06).
 packages/globe/README.md,Assets,/react-globe/custom-assets/,## Basics + ## Limitations,port,
-packages/globe/README.md,Assets › Sources,/react-globe/resources/bundled-data/,body,port,
+packages/globe/README.md,Assets › Sources,/react-globe/customization/bundled-data/,body,port,
 packages/globe/README.md,Performance contract,/react-globe/guides/performance/,body,port,Unmeasured figures stay TODO (GAPS G-07).
 packages/globe/README.md,Accessibility,/react-globe/guides/accessibility/,body,port,
 README.md,Layout,— (stays in repository),—,port,Contributor docs.
 README.md,Development,— (stays in repository),—,port,Contributor docs.
 README.md,Releasing,— (stays in repository),—,port,Contributor docs.
-README.md,Data sources,/react-globe/resources/bundled-data/,body,merge,Merged with package README › Assets › Sources.
+README.md,Data sources,/react-globe/customization/bundled-data/,body,merge,Merged with package README › Assets › Sources.
 README.md,License,— (shared footer),—,port,
 packages/globe/README.md,Localization,/react-globe/localization/,## Basics + ### built-in locales / ### overriding strings / ### other languages,port,Added after Phase 2 (C-26).
 packages/globe/README.md,Localization,/react-globe/api/globe/,generated Props table (locale / messages),generate,

@@ -59,7 +59,8 @@
       "id": "integrations"
     },
     {
-      "id": "resources"
+      "id": "resources",
+      "enabled": false
     },
     {
       "id": "migration"

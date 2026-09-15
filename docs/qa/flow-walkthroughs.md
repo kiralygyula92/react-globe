@@ -12,7 +12,8 @@ The marketing landing, capability showcase, feature matrix and pricing do not ex
 | 2 | Click “All features” | `/react-globe/all-features/` | OK |
 | 3 | Click “Connections” | `/react-globe/connections/` | OK |
 | 4 | Capability page shows a live demo | `/react-globe/connections/` | OK |
-| 5 | Click “Installation” | `/react-globe/getting-started/installation/` | OK |
+| 5 | Expand the Getting started section | `/react-globe/connections/` | OK |
+| 6 | Click “Installation” | `/react-globe/getting-started/installation/` | OK |
 
 **Completable.**
 
@@ -59,10 +60,9 @@ There is no migration page yet: 1.0.0 is the first release (EXCEPTIONS E-06).
 | # | Step | Page | Result |
 |---|---|---|---|
 | 1 | Any docs page | `/react-globe/camera/` | OK |
-| 2 | Version selector | `/react-globe/camera/` | OK |
-| 3 | Click “All versions” | `/react-globe/getting-started/versions/` | OK |
-| 4 | Click “Changelog” | `/react-globe/discover-more/changelog/` | OK |
-| 5 | Changelog with its RSS feed | `/react-globe/discover-more/changelog/` | OK |
+| 2 | Version selector → All versions | `/react-globe/getting-started/versions/` | OK |
+| 3 | Click “Changelog” | `/react-globe/discover-more/changelog/` | OK |
+| 4 | Changelog with its RSS feed | `/react-globe/discover-more/changelog/` | OK |
 
 **Completable.**
 
@@ -75,8 +75,9 @@ Not applicable. Untiered: no paid tier, badge, pricing or licence activation exi
 | # | Step | Page | Result |
 |---|---|---|---|
 | 1 | Any docs page | `/react-globe/gestures/` | OK |
-| 2 | Click “Support” | `/react-globe/getting-started/support/` | OK |
-| 3 | Free channel: the issue tracker | `/react-globe/getting-started/support/` | OK — 3 link(s) |
+| 2 | Expand the Getting started section | `/react-globe/gestures/` | OK |
+| 3 | Click “Support” | `/react-globe/getting-started/support/` | OK |
+| 4 | Free channel: the issue tracker | `/react-globe/getting-started/support/` | OK — 3 link(s) |
 
 **Completable.**
 

@@ -52,6 +52,7 @@ const FLOWS = [
       { click: 'All features', within: 'main' },
       { click: 'Connections', within: 'main' },
       { expect: 'figure[data-demo]', label: 'Capability page shows a live demo' },
+      { expand: 'Getting started', label: 'Expand the Getting started section' },
       { click: 'Installation', within: 'nav[aria-label="Documentation"]' },
     ],
   },
@@ -94,8 +95,7 @@ const FLOWS = [
     note: 'There is no migration page yet: 1.0.0 is the first release (EXCEPTIONS E-06).',
     steps: [
       { go: `/${config.id}/camera/`, label: 'Any docs page' },
-      { open: '[data-block="version-selector"] summary', label: 'Version selector' },
-      { click: 'All versions', within: '[data-block="version-selector"]' },
+      { select: 'All versions', within: '[data-block="version-selector"]', label: 'Version selector → All versions' },
       { click: 'Changelog', within: 'main' },
       { expect: '[data-block="rss"]', label: 'Changelog with its RSS feed' },
     ],
@@ -111,6 +111,7 @@ const FLOWS = [
     name: 'Support',
     steps: [
       { go: `/${config.id}/gestures/`, label: 'Any docs page' },
+      { expand: 'Getting started', label: 'Expand the Getting started section' },
       { click: 'Support', within: 'nav[aria-label="Documentation"]' },
       { expectHref: `${config.links.issues}`, label: 'Free channel: the issue tracker' },
     ],
@@ -141,15 +142,26 @@ async function runFlow(page, flow) {
         await link.click();
         await page.waitForLoadState('load');
         label = `Click “${step.click}”`;
-      } else if (step.open) await page.locator(step.open).click();
+      } else if (step.select) {
+        const from = page.url();
+        await Promise.all([page.waitForURL((url) => url.href !== from), page.locator(step.within).selectOption({ label: step.select })]);
+        await page.waitForLoadState('load');
+      } else if (step.expand) {
+        const section = page
+          .locator('nav[aria-label="Documentation"] details', { has: page.locator('summary', { hasText: step.expand }) })
+          .first();
+        if ((await section.getAttribute('open')) === null) await section.locator('summary').click();
+      }
       else if (step.back) {
         await page.goBack();
         await page.waitForLoadState('load');
       } else if (step.search) {
-        const input = page.locator('#search input');
+        await page.locator('[data-search-open]').click();
+        const input = page.locator('#docs-search');
         await input.waitFor({ timeout: 15000 });
         await input.fill(step.search);
-        const result = page.locator('#search .pagefind-ui__result-link', { hasText: step.result }).first();
+        const title = page.locator('.search-result-title', { hasText: new RegExp(`^${escapeRegExp(step.result)}$`) });
+        const result = page.locator('#docs-search-results .search-result', { has: title }).first();
         await result.waitFor({ timeout: 15000 });
         await result.click();
         await page.waitForLoadState('load');

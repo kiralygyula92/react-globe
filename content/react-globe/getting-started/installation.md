@@ -12,7 +12,7 @@ description: Add React Globe and three.js to a React project and import the styl
   of the box (tested with Vite 8).
 - An ES module build: the package ships ES modules only.
 
-See [Requirements & compatibility](/react-globe/getting-started/requirements/) for what is tested.
+See [Requirements](/react-globe/getting-started/requirements/) for what is tested.
 
 ## Installation
 

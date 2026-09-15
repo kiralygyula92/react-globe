@@ -289,7 +289,7 @@ export function footerColumns(): { title: string; links: FooterLink[] }[] {
   const columns: Record<string, FooterLink[]> = {
     Products: [{ title: config.name, href: `/${id}/` }],
     Resources: [
-      { title: titles[`/${id}/resources/bundled-data/`], href: `/${id}/resources/bundled-data/` },
+      { title: titles[`/${id}/customization/bundled-data/`], href: `/${id}/customization/bundled-data/` },
       { title: titles[`/${id}/customization/`], href: `/${id}/customization/` },
       { title: titles[`/${id}/demos/playground/`], href: `/${id}/demos/playground/` },
     ],
@@ -307,6 +307,18 @@ export function footerColumns(): { title: string; links: FooterLink[] }[] {
     ],
   };
   return FOOTER_COLUMNS.map((title: string) => ({ title, links: columns[title] ?? [] }));
+}
+
+/* ------------------------------------------------------------- breadcrumbs */
+
+/** Plugin › section › group, from the nav data. Only the plugin root is a link: sections and groups are virtual. */
+export function breadcrumbs(page: Page): { title: string; href: string | null }[] {
+  const entry = flattenNav(nav).find((e) => e.node.pathname === page.pathname);
+  const crumbs: { title: string; href: string | null }[] = [{ title: config.name, href: `/${config.id}/` }];
+  for (const parent of entry?.parents ?? []) {
+    crumbs.push({ title: parent.subheader ?? titles[parent.pathname] ?? parent.pathname, href: null });
+  }
+  return crumbs;
 }
 
 /* ----------------------------------------------------------- llms / sections */

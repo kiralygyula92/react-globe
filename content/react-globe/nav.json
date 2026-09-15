@@ -3,71 +3,174 @@
     "pathname": "/react-globe/getting-started-group",
     "icon": "getting-started",
     "children": [
-      { "pathname": "/react-globe/" },
-      { "pathname": "/react-globe/getting-started/installation/" },
-      { "pathname": "/react-globe/getting-started/usage/" },
-      { "pathname": "/react-globe/getting-started/requirements/" },
-      { "pathname": "/react-globe/getting-started/faq/" },
-      { "pathname": "/react-globe/getting-started/support/" },
-      { "pathname": "/react-globe/getting-started/versions/" },
-      { "pathname": "/react-globe/llms.txt" }
+      {
+        "pathname": "/react-globe/"
+      },
+      {
+        "pathname": "/react-globe/getting-started/installation/"
+      },
+      {
+        "pathname": "/react-globe/getting-started/usage/"
+      },
+      {
+        "pathname": "/react-globe/getting-started/requirements/"
+      },
+      {
+        "pathname": "/react-globe/getting-started/faq/"
+      },
+      {
+        "pathname": "/react-globe/getting-started/support/"
+      },
+      {
+        "pathname": "/react-globe/getting-started/versions/"
+      }
     ]
   },
   {
     "pathname": "/react-globe/features-group",
     "icon": "features",
     "children": [
-      { "pathname": "/react-globe/all-features/" },
+      {
+        "pathname": "/react-globe/all-features/"
+      },
       {
         "pathname": "/react-globe/core-features-group",
         "subheader": "Core features",
         "children": [
-          { "pathname": "/react-globe/globe/", "capabilityId": "globe", "plan": "free" },
-          { "pathname": "/react-globe/camera/", "capabilityId": "camera", "plan": "free" },
-          { "pathname": "/react-globe/render-styles/", "capabilityId": "render-styles", "plan": "free" }
+          {
+            "pathname": "/react-globe/globe/",
+            "capabilityId": "globe",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/camera/",
+            "capabilityId": "camera",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/render-styles/",
+            "capabilityId": "render-styles",
+            "plan": "free"
+          }
         ]
       },
       {
         "pathname": "/react-globe/content-and-data-group",
         "subheader": "Content & data",
         "children": [
-          { "pathname": "/react-globe/pins/", "capabilityId": "pins", "plan": "free" },
-          { "pathname": "/react-globe/pin-popups/", "capabilityId": "pin-popups", "plan": "free" },
-          { "pathname": "/react-globe/pin-clustering/", "capabilityId": "pin-clustering", "plan": "free" },
-          { "pathname": "/react-globe/connections/", "capabilityId": "connections", "plan": "free" },
-          { "pathname": "/react-globe/custom-assets/", "capabilityId": "custom-assets", "plan": "free" }
+          {
+            "pathname": "/react-globe/pins/",
+            "capabilityId": "pins",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/pin-popups/",
+            "capabilityId": "pin-popups",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/pin-clustering/",
+            "capabilityId": "pin-clustering",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/connections/",
+            "capabilityId": "connections",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/custom-assets/",
+            "capabilityId": "custom-assets",
+            "plan": "free"
+          }
         ]
       },
       {
         "pathname": "/react-globe/display-and-layout-group",
         "subheader": "Display & layout",
         "children": [
-          { "pathname": "/react-globe/borders/", "capabilityId": "borders", "plan": "free" },
-          { "pathname": "/react-globe/country-names/", "capabilityId": "country-names", "plan": "free" },
-          { "pathname": "/react-globe/capitals/", "capabilityId": "capitals", "plan": "free" },
-          { "pathname": "/react-globe/localization/", "capabilityId": "localization", "plan": "free" },
-          { "pathname": "/react-globe/graticule/", "capabilityId": "graticule", "plan": "free" },
-          { "pathname": "/react-globe/background/", "capabilityId": "background", "plan": "free" }
+          {
+            "pathname": "/react-globe/borders/",
+            "capabilityId": "borders",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/country-names/",
+            "capabilityId": "country-names",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/capitals/",
+            "capabilityId": "capitals",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/localization/",
+            "capabilityId": "localization",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/graticule/",
+            "capabilityId": "graticule",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/background/",
+            "capabilityId": "background",
+            "plan": "free"
+          }
         ]
       },
       {
         "pathname": "/react-globe/interaction-group",
         "subheader": "Interaction",
         "children": [
-          { "pathname": "/react-globe/gestures/", "capabilityId": "gestures", "plan": "free" },
-          { "pathname": "/react-globe/controls/", "capabilityId": "controls", "plan": "free" },
-          { "pathname": "/react-globe/country-interaction/", "capabilityId": "country-interaction", "plan": "free" },
-          { "pathname": "/react-globe/camera-api/", "capabilityId": "camera-api", "plan": "free" },
-          { "pathname": "/react-globe/auto-rotate/", "capabilityId": "auto-rotate", "plan": "free" },
-          { "pathname": "/react-globe/screen-projection/", "capabilityId": "screen-projection", "plan": "free" }
+          {
+            "pathname": "/react-globe/gestures/",
+            "capabilityId": "gestures",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/controls/",
+            "capabilityId": "controls",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/country-interaction/",
+            "capabilityId": "country-interaction",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/camera-api/",
+            "capabilityId": "camera-api",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/auto-rotate/",
+            "capabilityId": "auto-rotate",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/screen-projection/",
+            "capabilityId": "screen-projection",
+            "plan": "free"
+          }
         ]
       },
       {
         "pathname": "/react-globe/developer-tools-group",
         "subheader": "Developer tools",
         "children": [
-          { "pathname": "/react-globe/lazy-loading/", "capabilityId": "lazy-loading", "plan": "free" },
-          { "pathname": "/react-globe/error-handling/", "capabilityId": "error-handling", "plan": "free" }
+          {
+            "pathname": "/react-globe/lazy-loading/",
+            "capabilityId": "lazy-loading",
+            "plan": "free"
+          },
+          {
+            "pathname": "/react-globe/error-handling/",
+            "capabilityId": "error-handling",
+            "plan": "free"
+          }
         ]
       }
     ]
@@ -76,7 +179,9 @@
     "pathname": "/react-globe/demos-group",
     "icon": "demos",
     "children": [
-      { "pathname": "/react-globe/demos/playground/" }
+      {
+        "pathname": "/react-globe/demos/playground/"
+      }
     ]
   },
   {
@@ -88,37 +193,57 @@
     "pathname": "/react-globe/customization-group",
     "icon": "customization",
     "children": [
-      { "pathname": "/react-globe/customization/" },
-      { "pathname": "/react-globe/customization/theming/" },
-      { "pathname": "/react-globe/customization/overriding-components/" },
-      { "pathname": "/react-globe/customization/stylesheet/" },
-      { "pathname": "/react-globe/customization/recipes/" }
+      {
+        "pathname": "/react-globe/customization/"
+      },
+      {
+        "pathname": "/react-globe/customization/theming/"
+      },
+      {
+        "pathname": "/react-globe/customization/overriding-components/"
+      },
+      {
+        "pathname": "/react-globe/customization/stylesheet/"
+      },
+      {
+        "pathname": "/react-globe/customization/bundled-data/"
+      },
+      {
+        "pathname": "/react-globe/customization/recipes/"
+      }
     ]
   },
   {
     "pathname": "/react-globe/guides-group",
     "icon": "guides",
     "children": [
-      { "pathname": "/react-globe/guides/best-practices/" },
-      { "pathname": "/react-globe/guides/performance/" },
-      { "pathname": "/react-globe/guides/testing/" },
-      { "pathname": "/react-globe/guides/localization/" },
-      { "pathname": "/react-globe/guides/accessibility/" },
-      { "pathname": "/react-globe/guides/security/" }
+      {
+        "pathname": "/react-globe/guides/best-practices/"
+      },
+      {
+        "pathname": "/react-globe/guides/performance/"
+      },
+      {
+        "pathname": "/react-globe/guides/testing/"
+      },
+      {
+        "pathname": "/react-globe/guides/localization/"
+      },
+      {
+        "pathname": "/react-globe/guides/accessibility/"
+      },
+      {
+        "pathname": "/react-globe/guides/security/"
+      }
     ]
   },
   {
     "pathname": "/react-globe/integrations-group",
     "icon": "integrations",
     "children": [
-      { "pathname": "/react-globe/integrations/vite/" }
-    ]
-  },
-  {
-    "pathname": "/react-globe/resources-group",
-    "icon": "resources",
-    "children": [
-      { "pathname": "/react-globe/resources/bundled-data/" }
+      {
+        "pathname": "/react-globe/integrations/vite/"
+      }
     ]
   },
   {
@@ -130,9 +255,15 @@
     "pathname": "/react-globe/discover-more-group",
     "icon": "discover-more",
     "children": [
-      { "pathname": "/react-globe/discover-more/showcase/" },
-      { "pathname": "/react-globe/discover-more/roadmap/" },
-      { "pathname": "/react-globe/discover-more/changelog/" }
+      {
+        "pathname": "/react-globe/discover-more/showcase/"
+      },
+      {
+        "pathname": "/react-globe/discover-more/roadmap/"
+      },
+      {
+        "pathname": "/react-globe/discover-more/changelog/"
+      }
     ]
   }
 ]

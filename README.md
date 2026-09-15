@@ -1,7 +1,7 @@
 # react-globe
 
-A React component that renders a detailed, interactive 3D Earth with plain three.js, plus a demo
-application that exercises every public prop live.
+A React component that renders a detailed, interactive 3D Earth with plain three.js, plus a
+documentation site whose playground exercises every public prop live.
 
 **Using the package?** See [packages/globe/README.md](packages/globe/README.md) for installation
 and the full API.
@@ -10,16 +10,15 @@ and the full API.
 
 ```
 packages/globe/     the library, published to npm as `react-globe`
-apps/demo/          the playground: a full-viewport globe with a live control for every prop
 apps/docs/          the documentation site (Astro), built to the PPDS v1.0 standard
 content/react-globe/  docs content and nav data: plugin.config.json, nav.json, titles.json, Markdown
 docs/               PPDS audit, migration map, GAPS.md and EXCEPTIONS.md
-e2e/                Playwright suite driving the demo
+e2e/                Playwright suite driving the docs playground (Demos › Playground)
 scripts/            globe-assets.mjs (bundled assets) and ppds/ (docs scaffold, validation, conformance)
 ```
 
-The demo consumes the library's **built** output (`packages/globe/dist`), which keeps the library
-build honest.
+The docs site and its live demos consume the library's **built** output (`packages/globe/dist`),
+which keeps the library build honest.
 
 ## Development
 
@@ -28,10 +27,10 @@ Requires Node 22.12+ and pnpm (the version is pinned in `package.json`; `corepac
 ```bash
 pnpm install
 pnpm build          # library: JS bundle, compiled CSS, declarations, assets
-pnpm dev            # build once, then watch the library and serve the demo at http://localhost:5173
+pnpm dev            # build once, then watch the library and serve the docs at http://localhost:4321/react-globe/
 pnpm test           # unit tests (Vitest + jsdom)
-pnpm typecheck      # library, demo and docs site
-pnpm e2e            # Playwright suite (needs `pnpm build` first; starts the demo itself)
+pnpm typecheck      # library, docs site and its demos
+pnpm e2e            # Playwright suite (needs `pnpm build` first; starts the docs dev server itself)
 pnpm assets         # re-download and regenerate packages/globe/src/assets/*
 ```
 
@@ -55,9 +54,9 @@ Pages and their order are data: add a page to `content/react-globe/nav.json` and
 `docs/ppds/02-plugin-docs-standard.md` before changing pages, templates or nav data, and set
 `DOCS_SITE_URL` to the production origin when building for release. QA reports live in `docs/qa/`.
 
-The first Playwright run may ask for its browser: `npx playwright install chromium`. If port 5173 is
-taken, set `DEMO_PORT` (for example `DEMO_PORT=5199 pnpm e2e`): Playwright otherwise reuses
-whatever server is already listening there.
+The first Playwright run may ask for its browser: `npx playwright install chromium`. The suite serves
+the playground page on port 4400; if that is taken, set `E2E_PORT` (for example `E2E_PORT=4499 pnpm e2e`):
+Playwright otherwise reuses whatever server is already listening there.
 
 ## Releasing
 

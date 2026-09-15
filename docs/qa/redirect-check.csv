@@ -17,4 +17,5 @@ legacy_url,expected_status,expected_location,actual_status,actual_location,resul
 "docs/globe-package/07-PACKAGING.md @ a2ec317",,,,,EXEMPT,"E-04: never had a route"
 "docs/globe-package/08-CONSUMER-GUIDE.md @ a2ec317",,,,,EXEMPT,"E-04: never had a route"
 "/react-globe/getting-started/",301,"/react-globe/",301,"/react-globe/",PASS,"verified over HTTP against the host-like server; re-run against production once hosted (GAPS G-18)"
+"/react-globe/resources/bundled-data/",301,"/react-globe/customization/bundled-data/",301,"/react-globe/customization/bundled-data/",PASS,"verified over HTTP against the host-like server; re-run against production once hosted (GAPS G-18)"
 "/",302,"/react-globe/",302,"/react-globe/",PASS,"site root → docs root until a marketing surface exists (E-02, E-09)"

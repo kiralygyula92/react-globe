@@ -20,9 +20,9 @@ const headings = Astro.props.headings.filter((h) => h.depth === 2 || h.depth ===
           On this page
         </p>
         <ul>
-          {headings.map((h) => (
+          {headings.map((h, i) => (
             <li class={`depth-${h.depth}`}>
-              <a href={`#${h.slug}`} data-toc-link={h.slug}>
+              <a href={`#${h.slug}`} data-toc-link={h.slug} class={i === 0 ? 'active' : undefined}>
                 {h.text}
               </a>
             </li>
@@ -41,9 +41,10 @@ const headings = Astro.props.headings.filter((h) => h.depth === 2 || h.depth ===
   if (links.size > 0 && 'IntersectionObserver' in window) {
     const visible = new Set<string>();
     const order = [...links.keys()];
+    let lastActive = order[0];
     const update = () => {
-      const active = order.find((id) => visible.has(id));
-      for (const [id, a] of links) a.classList.toggle('active', id === active);
+      lastActive = order.find((id) => visible.has(id)) ?? lastActive;
+      for (const [id, a] of links) a.classList.toggle('active', id === lastActive);
     };
     const observer = new IntersectionObserver(
       (entries) => {

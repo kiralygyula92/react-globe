@@ -1,5 +1,9 @@
 ---
-/** The sidebar tree, recursively, exactly as nav.json orders and groups it. */
+/**
+ * The sidebar tree, recursively, exactly as the nav data orders and groups it. Sections are
+ * collapsible <details>: the one holding the current page starts open, the rest closed.
+ * Works without JavaScript and announces its expanded state to assistive technology.
+ */
 import type { SidebarItem } from '../lib/site';
 import Badge from './Badge.astro';
 
@@ -10,26 +14,34 @@ interface Props {
 }
 
 const { items, current, depth } = Astro.props;
+
+const contains = (item: SidebarItem): boolean =>
+  item.kind === 'link' ? item.href === current : item.items.some(contains);
 ---
 
-<ul data-nav-depth={depth}>
+<ul class={`nav-list depth-${depth}`} data-nav-depth={depth}>
   {
     items.map((item) =>
       item.kind === 'section' ? (
-        <li data-nav-section={item.id}>
-          <p class="section-title">{item.title}</p>
-          {item.items.length > 0 && <Astro.self items={item.items} current={current} depth={depth + 1} />}
+        <li class="nav-section" data-nav-section={item.id}>
+          {item.items.length > 0 ? (
+            <details open={contains(item)}>
+              <summary class="section-title">{item.title}</summary>
+              <Astro.self items={item.items} current={current} depth={depth + 1} />
+            </details>
+          ) : (
+            <p class="section-title is-empty">{item.title}</p>
+          )}
         </li>
       ) : item.kind === 'group' ? (
-        <li data-nav-group={item.title}>
+        <li class="nav-group" data-nav-group={item.title}>
           <p class="group-title">{item.title}</p>
-          <div class="group-items">
-            <Astro.self items={item.items} current={current} depth={depth + 1} />
-          </div>
+          <Astro.self items={item.items} current={current} depth={depth + 1} />
         </li>
       ) : (
         <li>
           <a
+            class="nav-link"
             href={item.href}
             title={item.description ?? undefined}
             aria-current={item.href === current ? 'page' : undefined}

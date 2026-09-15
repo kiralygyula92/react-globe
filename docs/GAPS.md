@@ -22,7 +22,7 @@ while the item is open.
 | G-12 | Low | — | Open (acknowledge) |
 | G-13 | Medium | — | **Assumed in Phase 2** — `currentVersion` 1.0.0 (EXCEPTIONS E-06) |
 | G-14 | Medium | — | **Resolved (owner)** — retired (EXCEPTIONS E-04) |
-| G-15 | Low | Phase 3 | **Assumed in Phase 2** — demo app published as Demos › Playground; `/blank` retired |
+| G-15 | Low | Phase 3 | **Resolved (owner)** — `apps/demo` removed; its playground is the Demos › Playground page |
 | G-16 | Low | acceptance #5 | **Resolved (owner)** — homes as proposed |
 | G-17 | Medium | — | **Resolved** — i18n implemented (en, ro, de, es, fr, hu); capability C-26 `localization` |
 | G-18 | Medium | release | **Partly resolved (Phase 6)** — search and RSS delivered; production origin/host and newsletter open |
@@ -161,6 +161,9 @@ as `dist/*.d.ts`). It is **insufficient** for PPDS archetype E:
 - `/blank` has no H1 and reuses the playground's `<title>`; it exists only for the unmount e2e test.
 - **Needs:** decide whether the demo app is part of the published site (Demos/Showcase) or stays a
   test harness; if published, `/blank` needs an archetype or a noindex exception.
+- **Resolution (2026-09-15, owner):** the separate demo app is gone. Its playground is a live demo on
+  `/react-globe/demos/playground/`; `/blank` is replaced by the playground's Lifecycle control
+  (unmount/mount), which the e2e leak test drives.
 
 ---
 

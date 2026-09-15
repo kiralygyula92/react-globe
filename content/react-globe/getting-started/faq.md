@@ -19,7 +19,7 @@ globe makes are for those files, or for the URLs you pass in `assets`.
 
 Yes. Every bundled file is in the public domain — NASA imagery and Natural Earth vectors, with
 translated names from Natural Earth and Wikidata (CC0). The code is MIT-licensed. See
-[Bundled data](/react-globe/resources/bundled-data/).
+[Bundled data](/react-globe/customization/bundled-data/).
 
 ## Does it work with server-side rendering?
 

@@ -1,6 +1,7 @@
 /**
- * End-to-end suite for the globe, driving the demo playground through its
- * controls and the `window.__globe` handle.
+ * End-to-end suite for the globe, driving the docs site's playground page
+ * (content/react-globe/demos/playground) through its controls and the
+ * `window.__globe` handle.
  */
 
 import { expect, test, type Page } from '@playwright/test';
@@ -8,7 +9,7 @@ import { expect, test, type Page } from '@playwright/test';
 type Pose = { lat: number; lng: number; zoom: number; tilt: number };
 type LatLng = { lat: number; lng: number };
 
-const PLAYGROUND = '/';
+const PLAYGROUND = '/react-globe/demos/playground/';
 const LONDON = { lat: 51.5074, lng: -0.1278 };
 const SYDNEY = { lat: -33.8688, lng: 151.2093 };
 const HOME = { lat: 25, lng: 8, zoom: 2.8, tilt: 0 };
@@ -24,7 +25,9 @@ async function openPlayground(page: Page): Promise<string[]> {
   page.on('pageerror', (e) => errors.push(e.message));
 
   await page.goto(PLAYGROUND);
-  await page.waitForFunction(() => '__globe' in window, undefined, { timeout: 30000 });
+  // The demo mounts as it scrolls into view; bring it fully into the viewport, below the sticky header.
+  await page.locator('figure[data-demo]').evaluate((el) => el.scrollIntoView({ block: 'start' }));
+  await page.waitForFunction(() => '__globe' in window, undefined, { timeout: 60000 });
   await page.waitForTimeout(1200);
   return errors;
 }
@@ -306,7 +309,7 @@ test('every render override replaces its default', async ({ page }) => {
   await setToggle(page, 'clusterComponent', true);
   await setCamera(page, { lat: 48.9, lng: 2.4, zoom: 3.4, tilt: 0 });
   await page.waitForTimeout(1000);
-  await expect(page.locator('[data-globe-root] button.rotate-45').first()).toBeVisible();
+  await expect(page.locator('[data-globe-root] [data-testid="diamond-cluster"]').first()).toBeVisible();
 
   await setToggle(page, 'controlsComponent', true);
   await page.waitForTimeout(500);
@@ -315,7 +318,7 @@ test('every render override replaces its default', async ({ page }) => {
   await setToggle(page, 'pinComponent', true);
   await setCamera(page, { lat: 51.5, lng: -0.13, zoom: 1.6, tilt: 0 });
   await page.waitForTimeout(1000);
-  await expect(page.locator('[data-globe-root] span.rotate-45').first()).toBeVisible();
+  await expect(page.locator('[data-globe-root] [data-testid="square-pin"]').first()).toBeVisible();
 
   await setToggle(page, 'connectionComponent', true);
   await setCamera(page, { lat: 25, lng: 8, zoom: 2.8, tilt: 0 });
@@ -385,9 +388,9 @@ test('mounting and unmounting twenty times leaks no WebGL context', async ({ pag
   const errors = await openPlayground(page);
 
   for (let i = 0; i < 20; i++) {
-    await page.getByText('Unmount: go to a blank page').click();
+    await page.getByRole('button', { name: 'Unmount the globe' }).click();
     await expect(canvas(page)).toHaveCount(0);
-    await page.getByText('Back to the playground').click();
+    await page.getByRole('button', { name: 'Mount the globe' }).click();
     await expect(canvas(page)).toHaveCount(1);
     await page.waitForTimeout(150);
   }
