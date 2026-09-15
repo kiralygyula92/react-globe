@@ -7,7 +7,7 @@ export default function BordersBasics() {
 
   return (
     <div style={{ height: '100%', position: 'relative' }}>
-      <Globe showShorelines={shorelines} showCountryBorders={borders} defaultCamera={{ lat: 48, lng: 15, zoom: 1.8 }} />
+      <Globe showShorelines={shorelines} showCountryBorders={borders} defaultCamera={{ lat: 48, lng: 15, zoom: 2.6 }} />
       <div style={{ position: 'absolute', left: 12, top: 12, display: 'flex', gap: 12, color: 'white', font: '13px system-ui, sans-serif' }}>
         <label>
           <input type="checkbox" checked={shorelines} onChange={(e) => setShorelines(e.target.checked)} /> Shorelines

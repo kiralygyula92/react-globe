@@ -301,7 +301,7 @@ export interface GlobeProps<TData = Record<string, unknown>> {
   enableTilt?: boolean;
   /** Controlled camera: each change animates the camera there. Wins over `defaultCamera`. */
   camera?: CameraPose;
-  /** Uncontrolled starting pose, and the pose `reset()` returns to. Unset members fall back to `{ lat: 20, lng: 0, zoom: 2.6, tilt: 0 }`. */
+  /** Uncontrolled starting pose, and the pose `reset()` returns to. Unset members fall back to `{ lat: 20, lng: 0, zoom: 3.2, tilt: 0 }`. */
   defaultCamera?: CameraPose;
   /**
    * Where the globe opens, as a coordinate. A convenience over `defaultCamera`

@@ -12,7 +12,7 @@ type LatLng = { lat: number; lng: number };
 const PLAYGROUND = '/react-globe/demos/playground/';
 const LONDON = { lat: 51.5074, lng: -0.1278 };
 const SYDNEY = { lat: -33.8688, lng: 151.2093 };
-const HOME = { lat: 25, lng: 8, zoom: 2.8, tilt: 0 };
+const HOME = { lat: 25, lng: 8, zoom: 3.2, tilt: 0 };
 
 /* ------------------------------------------------------------------ harness */
 

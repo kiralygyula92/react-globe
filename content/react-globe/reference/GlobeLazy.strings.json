@@ -10,7 +10,7 @@
     "enableRotation": "Left-drag orbit, with inertia on release.",
     "enableTilt": "Right-drag (or shift + left-drag) tilt, pivoting on the grabbed point.",
     "camera": "Controlled camera: each change animates the camera there. Wins over `defaultCamera`.",
-    "defaultCamera": "Uncontrolled starting pose, and the pose `reset()` returns to. Unset members fall back to `{ lat: 20, lng: 0, zoom: 2.6, tilt: 0 }`.",
+    "defaultCamera": "Uncontrolled starting pose, and the pose `reset()` returns to. Unset members fall back to `{ lat: 20, lng: 0, zoom: 3.2, tilt: 0 }`.",
     "defaultCenter": "Where the globe opens, as a coordinate. A convenience over `defaultCamera` for the common case of \"point it at this place\"; `defaultCamera` wins where both name a latitude and longitude. Also the point `reset()` returns to.",
     "showControls": "Built-in rotate, zoom and reset buttons.",
     "controlsComponent": "Replaces the built-in buttons entirely.",

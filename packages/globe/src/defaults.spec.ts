@@ -64,7 +64,7 @@ describe('GLOBE_DEFAULTS', () => {
   });
 
   it('holds the camera and interaction constants', () => {
-    expect(DEFAULT_CAMERA).toEqual({ lat: 20, lng: 0, zoom: 2.6, tilt: 0 });
+    expect(DEFAULT_CAMERA).toEqual({ lat: 20, lng: 0, zoom: 3.2, tilt: 0 });
     expect(Object.isFrozen(DEFAULT_CAMERA)).toBe(true);
     expect(TILT_MIN_DEG).toBe(0);
     expect(TILT_MAX_DEG).toBe(75);
@@ -159,7 +159,7 @@ describe('clampPose', () => {
 
 describe('homePose', () => {
   it('uses defaultCenter for lat/lng and keeps the default zoom', () => {
-    expect(homePose(undefined, { lat: 25, lng: 8 })).toEqual({ lat: 25, lng: 8, zoom: 2.6, tilt: 0 });
+    expect(homePose(undefined, { lat: 25, lng: 8 })).toEqual({ lat: 25, lng: 8, zoom: 3.2, tilt: 0 });
   });
 
   it('lets defaultCamera win member-wise over defaultCenter', () => {

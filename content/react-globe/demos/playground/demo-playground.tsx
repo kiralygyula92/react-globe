@@ -246,7 +246,7 @@ export default function Playground() {
             controlsComponent={useBarControls ? BarControls : undefined}
             camera={controlledCamera}
             defaultCenter={{ lat: 25, lng: 8 }}
-            defaultCamera={controlledCamera ? undefined : { zoom: 2.8, tilt: 0 }}
+            defaultCamera={controlledCamera ? undefined : { zoom: 3.2, tilt: 0 }}
             showShorelines={showShorelines}
             showCountryBorders={showCountryBorders}
             showCountryNames={showCountryNames}

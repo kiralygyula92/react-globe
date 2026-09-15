@@ -104,7 +104,7 @@ Every prop is optional. `TData` is whatever you hang off `Pin.data`; it is passe
 | `enableRotation` | `boolean` | `true` | Left-drag orbit, with inertia on release. |
 | `enableTilt` | `boolean` | `true` | Right-drag (or shift + left-drag) tilt, pivoting on the grabbed point. |
 | `camera` | `CameraPose` | — | Controlled camera: each change animates the camera there. Wins over `defaultCamera`. |
-| `defaultCamera` | `CameraPose` | — | Uncontrolled starting pose, and the pose `reset()` returns to. Unset members fall back to `{ lat: 20, lng: 0, zoom: 2.6, tilt: 0 }`. |
+| `defaultCamera` | `CameraPose` | — | Uncontrolled starting pose, and the pose `reset()` returns to. Unset members fall back to `{ lat: 20, lng: 0, zoom: 3.2, tilt: 0 }`. |
 | `defaultCenter` | `LatLng` | — | Where the globe opens, as a coordinate. A convenience over `defaultCamera` for the common case of "point it at this place"; `defaultCamera` wins where both name a latitude and longitude. Also the point `reset()` returns to. |
 | `showControls` | `boolean` | `false` | Built-in rotate, zoom and reset buttons. |
 | `controlsComponent` | `ComponentType<GlobeControlsRenderProps>` | — | Replaces the built-in buttons entirely. |
@@ -155,7 +155,7 @@ Every prop is optional. `TData` is whatever you hang off `Pin.data`; it is passe
 `zoom` is a **distance from the globe's centre**, so smaller is closer. The field of view is 50°,
 which puts the whole planet in frame from about 2.4 radii outward. **Home** — the pose the globe opens
 on and `reset()` returns to — is `defaultCamera` over `defaultCenter` over
-`{ lat: 20, lng: 0, zoom: 2.6, tilt: 0 }`.
+`{ lat: 20, lng: 0, zoom: 3.2, tilt: 0 }`.
 
 **The default pin marker is WebGL; an override is DOM.** With no `pinComponent`, every pin is one
 instance in an instanced mesh, one draw call however many pins. Passing `pinComponent` switches to one

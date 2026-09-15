@@ -10,7 +10,7 @@ const theme = {
 export default function CapitalsCustomization() {
   return (
     <div style={theme}>
-      <Globe showCapitals capitalsMinZoom={3.2} locale="fr" defaultCamera={{ lat: 5, lng: 20, zoom: 2.4 }} showControls />
+      <Globe showCapitals capitalsMinZoom={3.2} locale="fr" defaultCamera={{ lat: 5, lng: 20, zoom: 3.2 }} showControls />
     </div>
   );
 }

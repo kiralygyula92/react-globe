@@ -55,7 +55,7 @@ export const GLOBE_DEFAULTS = {
 export const DEFAULT_CAMERA: Required<CameraPose> = Object.freeze({
   lat: 20,
   lng: 0,
-  zoom: 2.6,
+  zoom: 3.2,
   tilt: 0,
 });
 

@@ -7,7 +7,7 @@ const theme = { '--globe-color-label': 'rgb(253 224 71)', height: '100%' } as CS
 export default function CountryNamesCustomization() {
   return (
     <div style={theme}>
-      <Globe showCountryNames countryNamesMinZoom={2.4} renderStyle="modern" defaultCamera={{ lat: 10, lng: -60, zoom: 2 }} showControls />
+      <Globe showCountryNames countryNamesMinZoom={2.8} renderStyle="modern" defaultCamera={{ lat: 10, lng: -60, zoom: 2.6 }} showControls />
     </div>
   );
 }

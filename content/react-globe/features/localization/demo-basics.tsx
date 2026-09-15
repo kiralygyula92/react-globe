@@ -6,7 +6,7 @@ export default function LocalizationBasics() {
 
   return (
     <div style={{ height: '100%', position: 'relative' }}>
-      <Globe locale={locale} showCountryNames showCapitals showControls defaultCamera={{ lat: 46, lng: 15, zoom: 1.9 }} />
+      <Globe locale={locale} showCountryNames showCapitals showControls defaultCamera={{ lat: 46, lng: 15, zoom: 2.5 }} />
       <label style={{ position: 'absolute', left: 12, top: 12, color: 'white', font: '13px system-ui, sans-serif' }}>
         Locale{' '}
         <select value={locale} onChange={(e) => setLocale(e.target.value as GlobeLocale)}>

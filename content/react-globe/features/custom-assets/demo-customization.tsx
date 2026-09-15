@@ -10,7 +10,7 @@ const sites: CapitalRecord[] = [
 export default function CustomAssetsCustomization() {
   return (
     <div style={{ height: '100%' }}>
-      <Globe assets={{ capitalsDataset: sites }} showCapitals capitalsMinZoom={4} defaultCamera={{ lat: 10, lng: 15, zoom: 2.8 }} />
+      <Globe assets={{ capitalsDataset: sites }} showCapitals capitalsMinZoom={4} defaultCamera={{ lat: 10, lng: 15, zoom: 3.2 }} />
     </div>
   );
 }

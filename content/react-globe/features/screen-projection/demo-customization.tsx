@@ -21,7 +21,7 @@ export default function ScreenProjectionCustomization() {
 
   return (
     <div style={{ height: '100%', position: 'relative', overflow: 'hidden' }}>
-      <Globe onReady={setHandle} defaultCamera={{ lat: 40, lng: 10, zoom: 2.2 }} />
+      <Globe onReady={setHandle} defaultCamera={{ lat: 40, lng: 10, zoom: 3.2 }} />
       {point && (
         <span
           style={{

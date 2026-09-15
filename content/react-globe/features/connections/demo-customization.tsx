@@ -32,7 +32,7 @@ export default function ConnectionsCustomization() {
         connectionWidth={3}
         archHeight={0.8}
         renderStyle="modern"
-        defaultCamera={{ lat: 50, lng: 8, zoom: 2 }}
+        defaultCamera={{ lat: 50, lng: 8, zoom: 2.6 }}
       />
     </div>
   );

@@ -16,7 +16,7 @@ const italian: GlobeMessages = {
 export default function LocalizationCustomization() {
   return (
     <div style={{ height: '100%' }}>
-      <Globe locale="it" messages={italian} showControls showGraticule showGraticuleLabels defaultCamera={{ lat: 10, lng: 12, zoom: 2.6 }} />
+      <Globe locale="it" messages={italian} showControls showGraticule showGraticuleLabels defaultCamera={{ lat: 10, lng: 12, zoom: 3.2 }} />
     </div>
   );
 }

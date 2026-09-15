@@ -971,9 +971,11 @@ main:focus {
   opacity: 0.55;
 }
 
+/* Tall enough for the whole globe with room to zoom in; never taller than the window. */
 .demo-stage {
   position: relative;
-  height: var(--demo-height, 380px);
+  height: min(var(--demo-height, 520px), calc(100vh - var(--header-h) - 6rem));
+  min-height: 360px;
   background: #0b1026;
   color: #e6edf3;
 }

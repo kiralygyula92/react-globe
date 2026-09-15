@@ -42,8 +42,9 @@ import { SurfaceLayer } from './layers/SurfaceLayer';
 import { VectorLayer } from './layers/VectorLayer';
 
 /**
- * Degrees. A camera d radii out needs a half-angle of at least asin(1/d) to see
- * the whole planet; 50 degrees does it from 2.4 radii without visible fisheye.
+ * Degrees, across the container's shorter side. A camera d radii out needs a half-angle
+ * of at least asin(1/d) to see the whole planet; 50 degrees does it from 2.4 radii
+ * without visible fisheye.
  */
 const FOV = 50;
 const NEAR = 0.01;
@@ -454,6 +455,10 @@ export class GlobeEngine {
     this.width = width;
     this.height = height;
     this.camera.aspect = width / height;
+    // three.js fixes the vertical angle; widen it in a portrait container so the planet
+    // fits the narrow side there too.
+    this.camera.fov =
+      width >= height ? FOV : (2 * Math.atan(Math.tan((FOV * Math.PI) / 360) / this.camera.aspect) * 180) / Math.PI;
     this.camera.updateProjectionMatrix();
     // The canvas CSS size is already 100 %.
     this.renderer.setSize(width, height, false);

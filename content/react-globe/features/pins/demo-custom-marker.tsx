@@ -27,7 +27,7 @@ function Diamond({ pin, hovered, scale }: PinRenderProps<Station>) {
 export default function PinsCustomMarker() {
   return (
     <div style={{ height: '100%' }}>
-      <Globe<Station> pins={pins} pinComponent={Diamond} defaultCamera={{ lat: 60, lng: 5, zoom: 1.8 }} />
+      <Globe<Station> pins={pins} pinComponent={Diamond} defaultCamera={{ lat: 60, lng: 5, zoom: 2.6 }} />
     </div>
   );
 }

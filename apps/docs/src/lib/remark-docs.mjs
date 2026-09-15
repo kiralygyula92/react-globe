@@ -1,7 +1,7 @@
 /**
  * Markdown extensions for docs pages, on top of remark-directive:
  *
- *   ::demo{src="./demo-basics.tsx" title="…" height="380"}
+ *   ::demo{src="./demo-basics.tsx" title="…" height="520"}
  *     A live demo colocated with the page: toolbar (copy, reset), the stage the
  *     client script mounts the component into, and the highlighted source in a
  *     <details> (show/hide source, readable without JavaScript).
@@ -47,7 +47,7 @@ export function remarkDocs({ contentDir }) {
         if (!/[\\/]demo-[\w-]+\.tsx$/.test(abs)) throw new Error(`[docs] demo files must be named demo-*.tsx next to the page: ${src}`);
         const id = relative(contentDir, abs).replace(/\\/g, '/');
         const title = node.attributes.title ?? 'Live demo';
-        const height = Number(node.attributes.height ?? 380);
+        const height = Number(node.attributes.height ?? 520);
         const source = readFileSync(abs, 'utf8').trimEnd();
 
         const open =

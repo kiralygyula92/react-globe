@@ -4,7 +4,7 @@ import { Globe } from 'react-globe';
 export default function BordersCustomization() {
   return (
     <div style={{ height: '100%' }}>
-      <Globe renderStyle="cartoon" showShorelines showCountryBorders defaultCamera={{ lat: 5, lng: 20, zoom: 1.9 }} />
+      <Globe renderStyle="cartoon" showShorelines showCountryBorders defaultCamera={{ lat: 5, lng: 20, zoom: 2.6 }} />
     </div>
   );
 }

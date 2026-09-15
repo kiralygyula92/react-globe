@@ -37,6 +37,7 @@ import type {
   ScreenPoint,
 } from './types';
 import {
+  DEFAULT_CAMERA,
   DEFAULT_FLIGHT_MS,
   ROTATE_STEP_DEG,
   ZOOM_STEP,
@@ -866,7 +867,7 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
   const labelsActive =
     p.showCountryNames && countries !== null && (p.countryNamesMinZoom <= 0 || pose.zoom <= p.countryNamesMinZoom);
   const capitalsActive = p.showCapitals && assets.capitals !== null && pose.zoom <= p.capitalsMinZoom;
-  const markerScale = Math.min(1.6, Math.max(0.55, pose.zoom / 2.6));
+  const markerScale = Math.min(1.6, Math.max(0.55, pose.zoom / DEFAULT_CAMERA.zoom));
 
   const { north, south, east, west } = messages;
   const gridLabels = useMemo(
