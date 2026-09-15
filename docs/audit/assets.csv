@@ -1,0 +1,25 @@
+asset_id,kind,location,demonstrates,capabilities,reusable_as_page_demo,notes
+A-01,live demo (app),apps/demo/src/GlobePlayground.tsx (route /),"Every GlobeProps member as a live control; render-override toggles; GlobeHandle actions; event log",C-01..C-25,partial,"One page of all props. Not hosted, no sandbox link, no copy/show-source/reset toolbar (PPDS §7.2). Must be split into per-capability demos."
+A-02,demo fixture,GlobePlayground.tsx CITIES,"11 pins with {title, subtitle} payload; Paris/Versailles/Saint-Denis within one cluster radius; (0,0) projection landmark",C-17 C-18 C-19,yes,Load-bearing for e2e clustering and projection tests.
+A-03,demo fixture,GlobePlayground.tsx LINKS,"5 connections, each overriding a different visual member (animated, dotted+colour, width+archHeight, type line+dashed); 'broken' references a missing pin id",C-20,yes,The broken link is the unknown-endpoint warning demo.
+A-04,demo fixture,GlobePlayground.tsx stressPins(5000),Deterministic Fibonacci-sphere spread of 5 000 pins,C-17 C-19,yes,Used by the frame-rate e2e test.
+A-05,override demo,GlobePlayground.tsx SquarePin,pinComponent: rotated-square DOM marker with hover state,C-17 C-23,yes,
+A-06,override demo,GlobePlayground.tsx FatPopup,pinPopupComponent: interactive card with coordinates,C-18 C-23,yes,
+A-07,override demo,GlobePlayground.tsx DiamondCluster,clusterComponent: diamond button with count,C-19 C-23,yes,
+A-08,override demo,GlobePlayground.tsx BarControls,controlsComponent: horizontal bar with rotate/zoom and live zoom readout,C-04 C-23,yes,
+A-09,override demo,GlobePlayground.tsx connectionComponent toggle,connectionComponent = exported DefaultConnection (SVG renderer instead of WebGL),C-20 C-23,yes,
+A-10,override demo,GlobePlayground.tsx BACKGROUNDS,"backgroundColor: transparent, two literals, and var(--globe-demo-bg) resolved from the container",C-15,yes,
+A-11,handle demo,GlobePlayground.tsx 'Imperative handle' section,"flyTo London/Sydney, zoomIn/zoomOut, startAutoRotate/stopAutoRotate, reset, toggle controlled camera prop",C-03 C-05 C-06,yes,
+A-12,event demo,GlobePlayground.tsx 'Events' log,"onReady, onError, onCountryClick, onPinClick lines",C-12 C-17 C-24,yes,"onCameraChange, onCountryHover, onPinHover, onClusterClick not logged."
+A-13,test route,apps/demo/src/main.tsx /blank,Unmount target for the leak test,C-24,no,Test infrastructure only.
+A-14,code sample,packages/globe/README.md 'Install',npm install commands + stylesheet import,C-01 C-22,yes,
+A-15,code sample,packages/globe/README.md 'Use',Minimal <Globe /> inside a sized container,C-01,yes,Complete and copy-pasteable.
+A-16,code sample,packages/globe/README.md 'Vite dev server',optimizeDeps.include for three/examples/jsm/lines/*,C-02,yes,Integration recipe.
+A-17,code sample,packages/globe/README.md 'Globe or GlobeLazy',Dynamic import of a consumer module to keep three.js out of a chunk,C-02,yes,
+A-18,code sample,packages/globe/README.md 'GlobeHandle',TypeScript interface block,C-05 C-06,no,Hand-copied declaration — reference content; must be generated (GAPS.md G-06).
+A-19,code sample,packages/globe/README.md 'Render overrides',"SquarePin, MyPopup, MyCluster, MyArc, MyControls",C-04 C-17 C-18 C-19 C-20 C-23,yes,Static code only; no rendered output.
+A-20,code sample,packages/globe/README.md 'Assets',assets prop override with a URL and a parsed FeatureCollection,C-16,yes,
+A-21,test evidence,e2e/globe.spec.ts (27 tests),Behavioural verification in real WebGL (SwiftShader),all,no,"Evidence for capabilities.md, not a presentation asset."
+A-22,test evidence,packages/globe/src/**/*.spec.ts (6 files / 76 cases),"Unit verification: clustering, coordinates, geo, country colours, connections, defaults",C-03 C-19 C-20,no,Evidence only.
+A-23,screenshot / video / GIF,(none),—,—,—,"No screenshots, recordings, GIFs or social images exist anywhere in the repository or history. See GAPS.md G-11."
+A-24,runtime data,packages/globe/src/assets/*,"Bundled textures and datasets consumed by the component",C-16,no,"Product data, not demos. Listed for completeness; sources documented in packages/globe/README.md."
