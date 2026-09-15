@@ -1,0 +1,7 @@
+{
+  "symbolDescription": "A point in the container's coordinate space, origin at its top-left.",
+  "optionDescriptions": {
+    "x": "Pixels from the container's left edge.",
+    "y": "Pixels from the container's top edge."
+  }
+}

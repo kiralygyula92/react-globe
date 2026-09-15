@@ -1,0 +1,15 @@
+{
+  "name": "CountryFeature",
+  "kind": "type",
+  "imports": [
+    "import type { CountryFeature } from 'react-globe';"
+  ],
+  "definition": "Feature<Polygon | MultiPolygon, CountryProperties>",
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/country-interaction/",
+    "/react-globe/custom-assets/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L108"
+}

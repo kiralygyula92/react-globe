@@ -1,0 +1,40 @@
+{
+  "name": "CameraPose",
+  "kind": "type",
+  "imports": [
+    "import type { CameraPose } from 'react-globe';"
+  ],
+  "options": {
+    "lat": {
+      "type": {
+        "name": "number"
+      },
+      "required": false
+    },
+    "lng": {
+      "type": {
+        "name": "number"
+      },
+      "required": false
+    },
+    "zoom": {
+      "type": {
+        "name": "number"
+      },
+      "required": false
+    },
+    "tilt": {
+      "type": {
+        "name": "number"
+      },
+      "required": false
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/camera-api/",
+    "/react-globe/camera/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L74"
+}

@@ -17,6 +17,7 @@ Opened in Phase 2 (Model), 2026-09-15.
 | E-08 | R6, §10, check 22 — local dev-server URLs | Accepted (owner delegated) |
 | E-09 | §6, §7.7, N2 — Phase 3 interpretations | Accepted (owner delegated) |
 | E-10 | §2.2 search, §2.3 newsletter/RSS | Accepted (owner delegated); until Phase 6 (GAPS G-18) |
+| E-11 | §6 E, §8.3–§8.5 — reference generation | Accepted (owner delegated) |
 
 ---
 
@@ -121,3 +122,23 @@ Recorded so the conformance script and the reviewer apply the same reading of PP
   subscribe form that goes nowhere would be fabricated UI (brief operating rule 4). RSS is a Phase 6
   deliverable (brief §6.2).
 - **Removed by:** Phase 6 (static search index and changelog feed); newsletter when a list exists.
+
+## E-11 — Phase 4 reference-generation interpretations
+- **Prose source.** JSDoc in `packages/globe/src` is where reference prose is written, because it also
+  reaches editors through TypeScript. The generator seeds `{Symbol}.strings.json` from it and, as P6
+  requires, never overwrites an existing value; when the source JSDoc later differs it prints a warning so
+  an editor reconciles the two. Missing prose is a warning, not a failure (§8.5).
+- **Constants.** Exported constants (`GLOBE_LOCALES`, `DEFAULT_GLOBE_MESSAGES`, `GLOBE_THEME_TOKENS`) use
+  the schema kind `setting-group`, the closest member of the §8.4 enum.
+- **Structure heading.** §6 E names "Options / Props / Settings". Pages use `Props` (components),
+  `Members` (object types), `Parameters` (functions) or `Definition` (unions and constants, which have no
+  option table); check 1 accepts exactly one of these.
+- **Components' props.** `Globe` and `GlobeLazy` list `GlobeProps` plus React 19's `ref`;
+  `DefaultConnection` lists `ConnectionRenderProps`. `on*` callbacks are listed under `Events` (§8.4).
+- **`usedBy` beyond capability pages.** Any authored page may declare `symbols`; the theming guide
+  declares the token symbols. §8.3 describes the field on capability pages only.
+- **Generated nav titles.** Reference nodes are injected into the Reference section at build time with
+  the symbol name as title; they never appear in `nav.json` or `titles.json` (N3).
+- **README tables.** The API tables in `packages/globe/README.md` are generated between
+  `ppds:reference` markers by the same command, so the npm page stays useful without a hand-written table
+  (brief acceptance criterion 3).

@@ -1,0 +1,3 @@
+{
+  "symbolDescription": "The built-in UI strings for every locale in `GLOBE_LOCALES`. Frozen; spread one into `messages` to start a translation or override a few strings."
+}

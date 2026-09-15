@@ -40,7 +40,7 @@ const CAPABILITIES = {
   'country-names': { symbols: ['Globe'], source: 'packages/globe/src/components/CountryLabel.tsx' },
   capitals: { symbols: ['Globe', 'CapitalRecord'], source: 'packages/globe/src/components/CapitalMarker.tsx' },
   localization: {
-    symbols: ['Globe', 'GLOBE_LOCALES', 'globeMessages', 'localizedName', 'GlobeLocale', 'GlobeMessages'],
+    symbols: ['Globe', 'GLOBE_LOCALES', 'DEFAULT_GLOBE_MESSAGES', 'localizedName', 'GlobeLocale', 'GlobeMessages'],
     source: 'packages/globe/src/i18n.ts',
   },
   graticule: { symbols: ['Globe'], source: 'packages/globe/src/core/layers/GraticuleLayer.ts' },

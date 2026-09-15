@@ -490,3 +490,63 @@ main {
   margin: 1.5rem auto 0;
   color: var(--fg-muted);
 }
+
+/* ------------------------------------------------------------- reference */
+
+.reference-kind {
+  display: inline-block;
+  margin: 0 0 1rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--fg-muted);
+}
+
+.table-wrap {
+  overflow-x: auto;
+}
+
+.article table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.article th,
+.article td {
+  text-align: left;
+  vertical-align: top;
+  padding: 0.5rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.article thead th {
+  font-size: 0.8rem;
+  color: var(--fg-muted);
+}
+
+.article tbody th code {
+  white-space: nowrap;
+}
+
+.article td code {
+  word-break: break-word;
+}
+
+.article tr.deprecated th code {
+  text-decoration: line-through;
+}
+
+.token-description {
+  display: block;
+  margin-top: 0.25rem;
+  font-weight: 400;
+  color: var(--fg-muted);
+}
+
+.sidebar code.symbol {
+  font-size: 0.82rem;
+  background: none;
+  padding: 0;
+}

@@ -1,0 +1,75 @@
+{
+  "name": "GlobeMessages",
+  "kind": "type",
+  "imports": [
+    "import type { GlobeMessages } from 'react-globe';"
+  ],
+  "options": {
+    "zoomIn": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "zoomOut": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "rotateLeft": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "rotateRight": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "resetView": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "cluster": {
+      "type": {
+        "name": "(count: number) => string"
+      },
+      "required": true
+    },
+    "north": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "south": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "east": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "west": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/localization/"
+  ],
+  "filename": "/packages/globe/src/i18n.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/i18n.ts#L17"
+}

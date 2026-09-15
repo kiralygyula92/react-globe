@@ -4,7 +4,7 @@ import { describe, expect, it } from 'vitest';
 import countriesRaw from './assets/countries-50m.geojson?raw';
 import capitalsRaw from './assets/capitals-50m.json?raw';
 import { graticuleLabels } from './core/layers/GraticuleLayer';
-import { GLOBE_LOCALES, globeMessages, languageOf, localizedName, resolveLocale, type GlobeMessages } from './i18n';
+import { GLOBE_LOCALES, DEFAULT_GLOBE_MESSAGES, languageOf, localizedName, resolveLocale, type GlobeMessages } from './i18n';
 import type { CapitalRecord, CountryCollection } from './types';
 
 const STRING_KEYS = ['zoomIn', 'zoomOut', 'rotateLeft', 'rotateRight', 'resetView', 'north', 'south', 'east', 'west'] as const;
@@ -23,14 +23,14 @@ describe('languageOf', () => {
   });
 });
 
-describe('globeMessages', () => {
+describe('DEFAULT_GLOBE_MESSAGES', () => {
   it('ships exactly the six built-in locales', () => {
-    expect(Object.keys(globeMessages).sort()).toEqual([...GLOBE_LOCALES].sort());
+    expect(Object.keys(DEFAULT_GLOBE_MESSAGES).sort()).toEqual([...GLOBE_LOCALES].sort());
     expect([...GLOBE_LOCALES]).toEqual(['en', 'ro', 'de', 'es', 'fr', 'hu']);
   });
 
   it.each(GLOBE_LOCALES)('%s has every string, non-empty', (locale) => {
-    const messages = globeMessages[locale];
+    const messages = DEFAULT_GLOBE_MESSAGES[locale];
     for (const key of STRING_KEYS) expect(messages[key].trim(), key).not.toBe('');
     expect(typeof messages.cluster).toBe('function');
     expect(messages.cluster(3)).toContain('3');
@@ -38,27 +38,27 @@ describe('globeMessages', () => {
 
   it.each(GLOBE_LOCALES.filter((l) => l !== 'en'))('%s translates every control label', (locale) => {
     for (const key of ['zoomIn', 'zoomOut', 'rotateLeft', 'rotateRight', 'resetView'] as const) {
-      expect(globeMessages[locale][key], key).not.toBe(globeMessages.en[key]);
+      expect(DEFAULT_GLOBE_MESSAGES[locale][key], key).not.toBe(DEFAULT_GLOBE_MESSAGES.en[key]);
     }
   });
 
   it('pluralises clusters by each language’s rules', () => {
-    expect(globeMessages.en.cluster(1)).toBe('1 pin');
-    expect(globeMessages.en.cluster(2)).toBe('2 pins');
-    expect(globeMessages.ro.cluster(1)).toBe('1 marcaj');
-    expect(globeMessages.ro.cluster(2)).toBe('2 marcaje');
-    expect(globeMessages.ro.cluster(20)).toBe('20 de marcaje');
-    expect(globeMessages.ro.cluster(101)).toBe('101 marcaje');
-    expect(globeMessages.de.cluster(1)).toBe('1 Markierung');
-    expect(globeMessages.de.cluster(5)).toBe('5 Markierungen');
-    expect(globeMessages.es.cluster(5)).toBe('5 marcadores');
-    expect(globeMessages.fr.cluster(1)).toBe('1 repère');
-    expect(globeMessages.fr.cluster(5)).toBe('5 repères');
-    expect(globeMessages.hu.cluster(5)).toBe('5 jelölő');
+    expect(DEFAULT_GLOBE_MESSAGES.en.cluster(1)).toBe('1 pin');
+    expect(DEFAULT_GLOBE_MESSAGES.en.cluster(2)).toBe('2 pins');
+    expect(DEFAULT_GLOBE_MESSAGES.ro.cluster(1)).toBe('1 marcaj');
+    expect(DEFAULT_GLOBE_MESSAGES.ro.cluster(2)).toBe('2 marcaje');
+    expect(DEFAULT_GLOBE_MESSAGES.ro.cluster(20)).toBe('20 de marcaje');
+    expect(DEFAULT_GLOBE_MESSAGES.ro.cluster(101)).toBe('101 marcaje');
+    expect(DEFAULT_GLOBE_MESSAGES.de.cluster(1)).toBe('1 Markierung');
+    expect(DEFAULT_GLOBE_MESSAGES.de.cluster(5)).toBe('5 Markierungen');
+    expect(DEFAULT_GLOBE_MESSAGES.es.cluster(5)).toBe('5 marcadores');
+    expect(DEFAULT_GLOBE_MESSAGES.fr.cluster(1)).toBe('1 repère');
+    expect(DEFAULT_GLOBE_MESSAGES.fr.cluster(5)).toBe('5 repères');
+    expect(DEFAULT_GLOBE_MESSAGES.hu.cluster(5)).toBe('5 jelölő');
   });
 
   it('is frozen, so a consumer cannot edit the shared defaults', () => {
-    expect(Object.isFrozen(globeMessages)).toBe(true);
+    expect(Object.isFrozen(DEFAULT_GLOBE_MESSAGES)).toBe(true);
   });
 });
 
@@ -72,7 +72,7 @@ describe('resolveLocale', () => {
   });
 
   it('defaults to English', () => {
-    expect(resolveLocale(undefined).messages).toEqual(globeMessages.en);
+    expect(resolveLocale(undefined).messages).toEqual(DEFAULT_GLOBE_MESSAGES.en);
   });
 
   it('lays overrides over the locale, ignoring undefined members', () => {
@@ -109,7 +109,7 @@ describe('resolveLocale', () => {
 
   it('never mutates the built-in messages', () => {
     resolveLocale('en', { zoomIn: 'Changed' });
-    expect(globeMessages.en.zoomIn).toBe('Zoom in');
+    expect(DEFAULT_GLOBE_MESSAGES.en.zoomIn).toBe('Zoom in');
   });
 });
 

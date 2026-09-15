@@ -1,0 +1,15 @@
+{
+  "symbolDescription": "Every string the built-in components render or announce.",
+  "optionDescriptions": {
+    "zoomIn": "Accessible name of the zoom-in control.",
+    "zoomOut": "Accessible name of the zoom-out control.",
+    "rotateLeft": "Accessible name of the rotate-left control.",
+    "rotateRight": "Accessible name of the rotate-right control.",
+    "resetView": "Accessible name of the reset-view control.",
+    "cluster": "Accessible name of a cluster marker holding `count` pins.",
+    "north": "Suffix for northern latitudes on graticule labels, as in 30°N.",
+    "south": "Suffix for southern latitudes on graticule labels, as in 30°S.",
+    "east": "Suffix for eastern longitudes on graticule labels, as in 90°E.",
+    "west": "Suffix for western longitudes on graticule labels, as in 90°W."
+  }
+}

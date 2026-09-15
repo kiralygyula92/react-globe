@@ -35,7 +35,7 @@ const { items, current, depth } = Astro.props;
             aria-current={item.href === current ? 'page' : undefined}
             data-nav-link={item.href}
           >
-            <span>{item.title}</span>
+            {item.code ? <code class="symbol">{item.title}</code> : <span>{item.title}</span>}
             {item.badges.map((badge) => (
               <Badge badge={badge} href={item.href} />
             ))}

@@ -1,0 +1,405 @@
+{
+  "name": "Globe",
+  "kind": "component",
+  "imports": [
+    "import { Globe } from 'react-globe';",
+    "import 'react-globe/globe.css';"
+  ],
+  "propsType": "GlobeProps",
+  "options": {
+    "width": {
+      "type": {
+        "name": "number | string"
+      },
+      "default": "'100%'",
+      "required": false
+    },
+    "height": {
+      "type": {
+        "name": "number | string"
+      },
+      "default": "'100%'",
+      "required": false
+    },
+    "className": {
+      "type": {
+        "name": "string"
+      },
+      "required": false
+    },
+    "enableZoom": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "true",
+      "required": false
+    },
+    "minZoom": {
+      "type": {
+        "name": "number"
+      },
+      "default": "1.1",
+      "required": false
+    },
+    "maxZoom": {
+      "type": {
+        "name": "number"
+      },
+      "default": "4",
+      "required": false
+    },
+    "enableRotation": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "true",
+      "required": false
+    },
+    "enableTilt": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "true",
+      "required": false
+    },
+    "camera": {
+      "type": {
+        "name": "CameraPose"
+      },
+      "required": false
+    },
+    "defaultCamera": {
+      "type": {
+        "name": "CameraPose"
+      },
+      "required": false
+    },
+    "defaultCenter": {
+      "type": {
+        "name": "LatLng"
+      },
+      "required": false
+    },
+    "showControls": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "false",
+      "required": false
+    },
+    "controlsComponent": {
+      "type": {
+        "name": "ComponentType<GlobeControlsRenderProps>"
+      },
+      "required": false
+    },
+    "showShorelines": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "true",
+      "required": false
+    },
+    "showCountryBorders": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "true",
+      "required": false
+    },
+    "showCountryNames": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "false",
+      "required": false
+    },
+    "showCapitals": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "false",
+      "required": false
+    },
+    "capitalsMinZoom": {
+      "type": {
+        "name": "number"
+      },
+      "default": "2.5",
+      "required": false
+    },
+    "countryNamesMinZoom": {
+      "type": {
+        "name": "number"
+      },
+      "default": "0",
+      "required": false
+    },
+    "highlightCountryOnHover": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "false",
+      "required": false
+    },
+    "countryHighlightColor": {
+      "type": {
+        "name": "string | Partial<Record<RenderStyle, string>>"
+      },
+      "required": false
+    },
+    "showCountryNameOnHover": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "false",
+      "required": false
+    },
+    "showGraticule": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "false",
+      "required": false
+    },
+    "showGraticuleLabels": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "false",
+      "required": false
+    },
+    "renderStyle": {
+      "type": {
+        "name": "RenderStyle"
+      },
+      "default": "'standard'",
+      "required": false
+    },
+    "colorScheme": {
+      "type": {
+        "name": "'color' | 'grayscale'"
+      },
+      "default": "'color'",
+      "required": false
+    },
+    "showClouds": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "true",
+      "required": false
+    },
+    "assets": {
+      "type": {
+        "name": "GlobeAssets"
+      },
+      "required": false
+    },
+    "backgroundColor": {
+      "type": {
+        "name": "string"
+      },
+      "default": "'transparent'",
+      "required": false
+    },
+    "pins": {
+      "type": {
+        "name": "Pin<TData>[]"
+      },
+      "required": false
+    },
+    "pinComponent": {
+      "type": {
+        "name": "ComponentType<PinRenderProps<TData>>"
+      },
+      "required": false
+    },
+    "showPinPopup": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "false",
+      "required": false
+    },
+    "pinPopupComponent": {
+      "type": {
+        "name": "ComponentType<PinPopupRenderProps<TData>>"
+      },
+      "required": false
+    },
+    "enablePinClustering": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "true",
+      "required": false
+    },
+    "clusterZoomThreshold": {
+      "type": {
+        "name": "number"
+      },
+      "default": "2",
+      "required": false
+    },
+    "clusterRadiusPx": {
+      "type": {
+        "name": "number"
+      },
+      "default": "44",
+      "required": false
+    },
+    "clusterComponent": {
+      "type": {
+        "name": "ComponentType<ClusterRenderProps<TData>>"
+      },
+      "required": false
+    },
+    "enableConnections": {
+      "type": {
+        "name": "boolean"
+      },
+      "default": "false",
+      "required": false
+    },
+    "connections": {
+      "type": {
+        "name": "PinConnection[]"
+      },
+      "required": false
+    },
+    "connectionType": {
+      "type": {
+        "name": "ConnectionType"
+      },
+      "default": "'arch'",
+      "required": false
+    },
+    "archHeight": {
+      "type": {
+        "name": "number"
+      },
+      "default": "0.55",
+      "required": false
+    },
+    "connectionLineStyle": {
+      "type": {
+        "name": "ConnectionLineStyle"
+      },
+      "default": "'solid'",
+      "required": false
+    },
+    "connectionWidth": {
+      "type": {
+        "name": "number"
+      },
+      "default": "2",
+      "required": false
+    },
+    "connectionColor": {
+      "type": {
+        "name": "string"
+      },
+      "default": "'rgb(255, 181, 61)'",
+      "required": false
+    },
+    "connectionComponent": {
+      "type": {
+        "name": "ComponentType<ConnectionRenderProps<TData>>"
+      },
+      "required": false
+    },
+    "locale": {
+      "type": {
+        "name": "string"
+      },
+      "default": "'en'",
+      "required": false
+    },
+    "messages": {
+      "type": {
+        "name": "Partial<GlobeMessages>"
+      },
+      "required": false
+    },
+    "ref": {
+      "type": {
+        "name": "Ref<GlobeHandle>"
+      },
+      "required": false
+    }
+  },
+  "events": {
+    "onCameraChange": {
+      "type": {
+        "name": "(pose: Required<CameraPose>) => void"
+      },
+      "required": false
+    },
+    "onCountryHover": {
+      "type": {
+        "name": "(country: CountryFeature | null) => void"
+      },
+      "required": false
+    },
+    "onCountryClick": {
+      "type": {
+        "name": "(country: CountryFeature) => void"
+      },
+      "required": false
+    },
+    "onPinHover": {
+      "type": {
+        "name": "(pin: Pin<TData> | null, event: PointerEvent) => void"
+      },
+      "required": false
+    },
+    "onPinClick": {
+      "type": {
+        "name": "(pin: Pin<TData>, event: PointerEvent) => void"
+      },
+      "required": false
+    },
+    "onClusterClick": {
+      "type": {
+        "name": "(pins: Pin<TData>[]) => void"
+      },
+      "required": false
+    },
+    "onReady": {
+      "type": {
+        "name": "(handle: GlobeHandle) => void"
+      },
+      "required": false
+    },
+    "onError": {
+      "type": {
+        "name": "(error: Error) => void"
+      },
+      "required": false
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/background/",
+    "/react-globe/borders/",
+    "/react-globe/camera/",
+    "/react-globe/capitals/",
+    "/react-globe/connections/",
+    "/react-globe/controls/",
+    "/react-globe/country-interaction/",
+    "/react-globe/country-names/",
+    "/react-globe/custom-assets/",
+    "/react-globe/error-handling/",
+    "/react-globe/gestures/",
+    "/react-globe/globe/",
+    "/react-globe/graticule/",
+    "/react-globe/localization/",
+    "/react-globe/pin-clustering/",
+    "/react-globe/pin-popups/",
+    "/react-globe/pins/",
+    "/react-globe/render-styles/"
+  ],
+  "filename": "/packages/globe/src/Globe.tsx",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/Globe.tsx#L1102"
+}

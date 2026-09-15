@@ -1,0 +1,64 @@
+{
+  "name": "CapitalRecord",
+  "kind": "type",
+  "imports": [
+    "import type { CapitalRecord } from 'react-globe';"
+  ],
+  "options": {
+    "id": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "name": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "country": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "isoA2": {
+      "type": {
+        "name": "string | null"
+      },
+      "required": true
+    },
+    "lat": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    },
+    "lng": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    },
+    "labelPriority": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    },
+    "names": {
+      "type": {
+        "name": "Readonly<Record<string, string>>"
+      },
+      "required": false
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/capitals/",
+    "/react-globe/custom-assets/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L114"
+}

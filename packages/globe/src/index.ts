@@ -3,7 +3,9 @@
 export { Globe } from './Globe';
 export { GlobeLazy } from './Globe.lazy';
 export { DefaultConnection } from './components/DefaultConnection';
-export { GLOBE_LOCALES, globeMessages, localizedName } from './i18n';
+export { GLOBE_LOCALES, DEFAULT_GLOBE_MESSAGES, localizedName } from './i18n';
+export { GLOBE_THEME_TOKENS } from './tokens';
+export type { GlobeThemeToken, GlobeThemeTokenUsage } from './tokens';
 export type { GlobeLocale, GlobeMessages } from './i18n';
 
 export type {

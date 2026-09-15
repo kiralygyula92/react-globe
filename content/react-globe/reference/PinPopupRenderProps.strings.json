@@ -1,0 +1,9 @@
+{
+  "symbolDescription": "Props passed to `pinPopupComponent`.",
+  "optionDescriptions": {
+    "pin": "The pin the popup belongs to.",
+    "position": "Projected position of the pin.",
+    "placement": "Where the popup was flipped to so it stays inside the canvas bounds.",
+    "close": "Closes the popup."
+  }
+}

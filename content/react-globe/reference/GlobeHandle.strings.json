@@ -1,0 +1,15 @@
+{
+  "symbolDescription": "Imperative control of a mounted globe, from a `ref` or `onReady`. Its identity is stable for the life of the mount.",
+  "optionDescriptions": {
+    "setCamera": "Moves the camera to a pose; members left out keep their current value. Animated unless `animate: false` or reduced motion is on.",
+    "reset": "Returns the camera to the pose the globe opened on: centre, zoom and tilt.",
+    "flyTo": "Flies the camera to centre a coordinate, optionally at a new zoom.",
+    "zoomIn": "Moves the camera closer by a fraction of the current distance (default 0.2).",
+    "zoomOut": "Moves the camera away by a fraction of the current distance (default 0.2).",
+    "startAutoRotate": "Spins the globe until stopped. Speed 1 is about 7 degrees per second. Paused under reduced motion.",
+    "stopAutoRotate": "Stops auto-rotation.",
+    "getCamera": "The current camera pose.",
+    "latLngToScreen": "Projects a coordinate into the container; null when the globe hides it.",
+    "screenToLatLng": "The coordinate under a container point; null when the ray misses the globe."
+  }
+}

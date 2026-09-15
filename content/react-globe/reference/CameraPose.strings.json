@@ -1,0 +1,9 @@
+{
+  "symbolDescription": "Where the camera looks from. Every member is optional wherever a pose is accepted.",
+  "optionDescriptions": {
+    "lat": "Latitude the camera is centred over, in degrees. Clamped to ±85.",
+    "lng": "Longitude the camera is centred over, in degrees.",
+    "zoom": "Distance from the globe centre in globe radii, clamped to [minZoom, maxZoom]. Smaller is closer.",
+    "tilt": "Degrees away from the surface normal at the centred point, clamped to 0–75."
+  }
+}

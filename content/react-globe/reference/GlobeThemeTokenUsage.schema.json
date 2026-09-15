@@ -1,0 +1,33 @@
+{
+  "name": "GlobeThemeTokenUsage",
+  "kind": "type",
+  "imports": [
+    "import type { GlobeThemeTokenUsage } from 'react-globe';"
+  ],
+  "options": {
+    "element": {
+      "type": {
+        "name": "'Capital marker' | 'Country label' | 'Country tooltip' | 'Cluster marker' | 'Controls' | 'Pin popup' | 'Graticule label'"
+      },
+      "required": true
+    },
+    "property": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "fallback": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/customization/theming/"
+  ],
+  "filename": "/packages/globe/src/tokens.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/tokens.ts#L12"
+}

@@ -12,8 +12,8 @@ while the item is open.
 | G-02 | High | Phase 5, 6 | Open — `repo`/`issues` links point at the private repo |
 | G-03 | High | Phase 5 | **Resolved (owner)** — narrow the claim; unsupported layers become a Limitation |
 | G-04 | Medium | Phase 5 | Open |
-| G-05 | Medium | Phase 4 | Open |
-| G-06 | High | Phase 4 | **Decided (owner)** — add JSDoc + `@default` to `types.ts` and a typed token manifest before Phase 4 |
+| G-05 | Medium | — | **Resolved (Phase 4)** — reference is generated from the types; README table regenerated |
+| G-06 | High | — | **Resolved (Phase 4)** — JSDoc + `@default` on every public member (held equal to GLOBE_DEFAULTS by a test), GLOBE_THEME_TOKENS manifest (held equal to the components by a test), `pnpm docs:reference` |
 | G-07 | High | Phase 5 | **Decided (owner)** — measure with stated hardware/browser, or reword without numbers |
 | G-08 | High | Phase 5 | **Decided (owner)** — compatibility test matrix or narrowed claims; EXCEPTIONS E-07 |
 | G-09 | Medium | — | **Resolved (owner)** — free for now (EXCEPTIONS E-01) |

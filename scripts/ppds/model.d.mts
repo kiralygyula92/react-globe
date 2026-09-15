@@ -1,6 +1,6 @@
 /** Types for model.mjs, for TypeScript consumers (the docs site). */
 
-export type Archetype = 'A' | 'B' | 'C' | 'F' | 'I';
+export type Archetype = 'A' | 'B' | 'C' | 'E' | 'F' | 'I';
 
 export type NavNode = {
   pathname: string;
@@ -10,6 +10,8 @@ export type NavNode = {
   plan?: string;
   lifecycle?: 'new' | 'preview' | 'beta' | 'planned' | 'deprecated' | 'legacy';
   capabilityId?: string;
+  /** Set only on generated reference nodes. */
+  symbol?: string;
   children?: NavNode[];
 };
 
@@ -46,7 +48,36 @@ export const SECTIONS: Section[];
 export const TAXONOMY: string[];
 export const LIFECYCLE_BADGES: Record<string, string>;
 export const FOOTER_COLUMNS: string[];
-export const ARCHETYPES: Record<Archetype, { name: string; h2: string[]; layout: string[] }>;
+export const ARCHETYPES: Record<Archetype, { name: string; h2: string[]; h2AnyOf?: string[]; layout: string[] }>;
+export const REFERENCE_DIR: string;
+
+export type ReferenceOption = { type: { name: string; description?: string }; default?: string | number | boolean | null; required?: boolean; deprecated?: boolean };
+export type ReferenceSchema = {
+  name: string;
+  kind: 'component' | 'function' | 'hook' | 'type' | 'setting-group' | 'command' | 'event' | 'filter';
+  imports: string[];
+  signature?: string;
+  definition?: string;
+  propsType?: string;
+  options?: Record<string, ReferenceOption>;
+  returns?: string;
+  events?: Record<string, ReferenceOption>;
+  tokens?: { name: string; usages: { element: string; property: string; fallback: string }[] }[];
+  inheritance: { symbol: string; pathname: string } | null;
+  usedBy: string[];
+  filename: string;
+  sourceUrl: string;
+};
+export type ReferenceStrings = {
+  symbolDescription?: string;
+  optionDescriptions?: Record<string, string>;
+  eventDescriptions?: Record<string, string>;
+  tokenDescriptions?: Record<string, string>;
+};
+export type ReferenceEntry = { symbol: string; pathname: string; schema: ReferenceSchema; strings: ReferenceStrings };
+export function referenceEntries(config: PluginConfig): ReferenceEntry[];
+export function navWithReference(nav: NavNode[], config: PluginConfig): NavNode[];
+export function titlesWithReference(titles: Record<string, string>, config: PluginConfig): Record<string, string>;
 
 export function loadModel(): { config: PluginConfig; nav: NavNode[]; titles: Record<string, string> };
 export function isGroup(node: NavNode): boolean;

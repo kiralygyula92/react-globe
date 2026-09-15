@@ -10,7 +10,7 @@ import DocsLayout from '../../layouts/DocsLayout.astro';
 import { config, featureGroups, getPages, referenceHref, resourceChips, symbolPath, type Page } from '../../lib/site';
 
 export async function getStaticPaths() {
-  const pages = await getPages();
+  const pages = (await getPages()).filter((page) => page.entry);
   return pages.map((page) => ({
     params: { slug: page.pathname.slice(`/${config.id}/`.length).replace(/\/$/, '') || undefined },
     props: { page },
@@ -22,8 +22,9 @@ interface Props {
 }
 
 const { page } = Astro.props;
-const { Content, headings: authored } = await render(page.entry);
-const symbols = page.entry.data.symbols ?? [];
+const entry = page.entry!;
+const { Content, headings: authored } = await render(entry);
+const symbols = entry.data.symbols ?? [];
 const groups = page.archetype === 'C' ? await featureGroups() : [];
 
 const headings = [
@@ -31,7 +32,7 @@ const headings = [
   ...(page.archetype === 'B' ? [{ depth: 2, slug: 'api', text: 'API' }] : []),
   ...groups.map((g) => ({ depth: 2, slug: g.group.toLowerCase().replace(/[^a-z0-9]+/g, '-'), text: g.group })),
 ];
-const date = page.entry.data.date;
+const date = entry.data.date;
 ---
 
 <DocsLayout page={page} headings={headings}>
@@ -62,7 +63,7 @@ const date = page.entry.data.date;
     {
       page.archetype === 'B' && (
         <ul class="resource-chips" data-block="resource-chips" aria-label="Resources">
-          {resourceChips(page.entry).map((chip) => (
+          {resourceChips(entry).map((chip) => (
             <li>
               <a href={chip.href} data-chip={chip.key}>
                 {chip.label}

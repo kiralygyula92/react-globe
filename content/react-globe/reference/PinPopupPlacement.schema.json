@@ -1,0 +1,14 @@
+{
+  "name": "PinPopupPlacement",
+  "kind": "type",
+  "imports": [
+    "import type { PinPopupPlacement } from 'react-globe';"
+  ],
+  "definition": "'top' | 'bottom' | 'left' | 'right'",
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/pin-popups/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L174"
+}

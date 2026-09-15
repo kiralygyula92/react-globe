@@ -21,6 +21,10 @@ type GlobeLazyComponent = <TData = Record<string, unknown>>(
   props: GlobeProps<TData> & { ref?: Ref<GlobeHandle> },
 ) => ReactElement;
 
+/**
+ * `Globe` behind `React.lazy` and `Suspense`, with a wordless placeholder while it loads.
+ * Takes the same props and ref.
+ */
 export const GlobeLazy = ((props: AnyGlobeProps) => (
   <Suspense fallback={<GlobeFallback />}>
     <LoadedGlobe {...props} />

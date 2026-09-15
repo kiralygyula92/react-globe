@@ -1,0 +1,8 @@
+{
+  "symbolDescription": "One sample of a projected connection path.",
+  "optionDescriptions": {
+    "x": "Pixels from the container's left edge.",
+    "y": "Pixels from the container's top edge.",
+    "visible": "False where the globe occludes this sample."
+  }
+}

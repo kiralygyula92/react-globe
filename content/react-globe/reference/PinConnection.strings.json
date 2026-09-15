@@ -1,0 +1,15 @@
+{
+  "symbolDescription": "A link between two pins. Every visual member is an override: leave it out and the globe's matching `connection*` prop decides, so a set of links can share one look while a few of them break ranks.",
+  "optionDescriptions": {
+    "id": "Stable, unique identifier.",
+    "from": "`Pin.id` of the start point. An unknown id skips the connection with a development warning.",
+    "to": "`Pin.id` of the end point. An unknown id skips the connection with a development warning.",
+    "type": "Overrides `connectionType` for this link alone.",
+    "archHeight": "Overrides `archHeight`. Ignored when this link is drawn as a line.",
+    "lineStyle": "Overrides `connectionLineStyle`.",
+    "color": "Overrides `connectionColor`.",
+    "width": "Overrides `connectionWidth`.",
+    "animated": "Draws a flowing stroke. A solid link has no pattern to move, so it is drawn dashed. Stops under `prefers-reduced-motion`.",
+    "data": "Arbitrary consumer payload, passed through to `connectionComponent`."
+  }
+}

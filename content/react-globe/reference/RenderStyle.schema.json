@@ -1,0 +1,14 @@
+{
+  "name": "RenderStyle",
+  "kind": "type",
+  "imports": [
+    "import type { RenderStyle } from 'react-globe';"
+  ],
+  "definition": "'standard' | 'realistic' | 'cartoon' | 'modern'",
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/render-styles/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L134"
+}

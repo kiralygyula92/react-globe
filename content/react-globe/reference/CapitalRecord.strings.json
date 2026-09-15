@@ -1,0 +1,13 @@
+{
+  "symbolDescription": "One capital city in the capitals dataset.",
+  "optionDescriptions": {
+    "id": "Stable, unique identifier.",
+    "name": "English name.",
+    "country": "Country the capital belongs to, as named by the dataset.",
+    "isoA2": "ISO A2 of that country, where the dataset has one.",
+    "lat": "Latitude in degrees.",
+    "lng": "Longitude in degrees.",
+    "labelPriority": "Lower sorts first when labels collide.",
+    "names": "The name in other languages, keyed by language subtag ('de', 'ro'). `name` is used where a language is missing."
+  }
+}

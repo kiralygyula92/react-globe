@@ -1,11 +1,11 @@
 /**
  * PPDS §7.7 Markdown twin of every docs page: the heading, the one-line description,
- * the authored Markdown, and the data-driven blocks the HTML page renders (API links,
- * feature groups). Generated reference for the page's symbols is appended in Phase 4.
+ * the authored Markdown, the data-driven blocks the HTML page renders (feature
+ * groups, API links), and the generated reference for the page's symbols.
  */
 
 import type { APIRoute, GetStaticPaths } from 'astro';
-import { config, featureGroups, getPages, referenceHref, symbolPath, type Page } from '../../lib/site';
+import { config, featureGroups, getPages, referenceFor, referenceHref, referenceMarkdown, symbolPath, type Page } from '../../lib/site';
 
 export const getStaticPaths: GetStaticPaths = async () => {
   const pages = await getPages();
@@ -15,22 +15,31 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }));
 };
 
-/** Authoring comments (TODOs, porting hints) are for editors, not readers. */
+/** Authoring comments (TODOs, porting hints) and demo directives' source paths are for editors, not readers. */
 const stripComments = (markdown: string): string => markdown.replace(/<!--[\s\S]*?-->\n?/g, '').trim();
+
+const markdown = (parts: string[]) =>
+  new Response(`${parts.filter(Boolean).join('\n\n')}\n`, { headers: { 'Content-Type': 'text/markdown; charset=utf-8' } });
 
 export const GET: APIRoute<{ page: Page }> = async ({ props, site }) => {
   const { page } = props;
   const parts = [`# ${page.heading}`, page.description];
-  const body = stripComments(page.entry.body ?? '');
-  if (body) parts.push(body);
+
+  if (page.reference) {
+    parts.push(referenceMarkdown(page.reference, site));
+    return markdown(parts);
+  }
+
+  parts.push(stripComments(page.entry?.body ?? ''));
 
   if (page.archetype === 'C') {
     for (const group of await featureGroups()) {
       parts.push(`## ${group.group}`, group.pages.map((p) => `- [${p.title}](${new URL(p.twin, site).href}): ${p.description}`).join('\n'));
     }
   }
+
+  const symbols = page.entry?.data.symbols ?? [];
   if (page.archetype === 'B') {
-    const symbols = page.entry.data.symbols ?? [];
     parts.push(
       '## API',
       symbols
@@ -38,5 +47,9 @@ export const GET: APIRoute<{ page: Page }> = async ({ props, site }) => {
         .join('\n'),
     );
   }
-  return new Response(`${parts.join('\n\n')}\n`, { headers: { 'Content-Type': 'text/markdown; charset=utf-8' } });
+  for (const symbol of symbols) {
+    const ref = referenceFor(symbol);
+    if (ref) parts.push(`## ${symbol} reference`, referenceMarkdown(ref, site, 3));
+  }
+  return markdown(parts);
 };

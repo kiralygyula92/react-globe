@@ -1,0 +1,42 @@
+{
+  "name": "Pin",
+  "kind": "type",
+  "imports": [
+    "import type { Pin } from 'react-globe';"
+  ],
+  "options": {
+    "lat": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    },
+    "lng": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    },
+    "id": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "data": {
+      "type": {
+        "name": "TData"
+      },
+      "required": false
+    }
+  },
+  "inheritance": {
+    "symbol": "LatLng",
+    "pathname": "/react-globe/api/lat-lng/"
+  },
+  "usedBy": [
+    "/react-globe/pins/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L32"
+}

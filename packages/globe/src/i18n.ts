@@ -10,6 +10,7 @@
 /** Locales with built-in UI strings and bundled place names. */
 export const GLOBE_LOCALES = ['en', 'ro', 'de', 'es', 'fr', 'hu'] as const;
 
+/** A locale with built-in UI strings: one of `GLOBE_LOCALES`. */
 export type GlobeLocale = (typeof GLOBE_LOCALES)[number];
 
 /** Every string the built-in components render or announce. */
@@ -26,10 +27,13 @@ export type GlobeMessages = {
   resetView: string;
   /** Accessible name of a cluster marker holding `count` pins. */
   cluster: (count: number) => string;
-  /** Hemisphere suffixes on graticule labels, e.g. 30°N. */
+  /** Suffix for northern latitudes on graticule labels, as in 30°N. */
   north: string;
+  /** Suffix for southern latitudes on graticule labels, as in 30°S. */
   south: string;
+  /** Suffix for eastern longitudes on graticule labels, as in 90°E. */
   east: string;
+  /** Suffix for western longitudes on graticule labels, as in 90°W. */
   west: string;
 };
 
@@ -39,7 +43,11 @@ function plural(locale: string, count: number, forms: Partial<Record<Intl.LDMLPl
   return (forms[category] ?? forms.other).replace('#', String(count));
 }
 
-export const globeMessages: Readonly<Record<GlobeLocale, Readonly<GlobeMessages>>> = Object.freeze({
+/**
+ * The built-in UI strings for every locale in `GLOBE_LOCALES`. Frozen; spread one into
+ * `messages` to start a translation or override a few strings.
+ */
+export const DEFAULT_GLOBE_MESSAGES: Readonly<Record<GlobeLocale, Readonly<GlobeMessages>>> = Object.freeze({
   en: {
     zoomIn: 'Zoom in',
     zoomOut: 'Zoom out',
@@ -134,14 +142,14 @@ export type ResolvedLocale = {
   fellBack: boolean;
 };
 
-const MESSAGE_KEYS = Object.keys(globeMessages.en) as (keyof GlobeMessages)[];
+const MESSAGE_KEYS = Object.keys(DEFAULT_GLOBE_MESSAGES.en) as (keyof GlobeMessages)[];
 
 /** The locale's built-in messages, with every defined override on top. */
 export function resolveLocale(locale: string | undefined, overrides?: Partial<GlobeMessages>): ResolvedLocale {
   const language = languageOf(locale);
   const builtIn = isGlobeLocale(language);
   const messagesLocale: GlobeLocale = builtIn ? language : 'en';
-  const messages = { ...globeMessages[messagesLocale] } as GlobeMessages;
+  const messages = { ...DEFAULT_GLOBE_MESSAGES[messagesLocale] } as GlobeMessages;
   for (const key of MESSAGE_KEYS) {
     const value = overrides?.[key];
     if (value !== undefined) (messages as Record<string, unknown>)[key] = value;
@@ -150,7 +158,12 @@ export function resolveLocale(locale: string | undefined, overrides?: Partial<Gl
   return { language, messagesLocale, messages, fellBack };
 }
 
-/** A place's name in `language`, falling back to its English `name`. */
+/**
+ * A place's name in `language`, falling back to its English `name` — the name the globe
+ * itself shows for that locale.
+ * @param place A country's properties or a capital record.
+ * @param language A BCP 47 tag; only its language subtag is used.
+ */
 export function localizedName(
   place: { name: string; names?: Readonly<Record<string, string>> | null },
   language: string,

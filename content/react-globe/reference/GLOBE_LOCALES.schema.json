@@ -1,0 +1,14 @@
+{
+  "name": "GLOBE_LOCALES",
+  "kind": "setting-group",
+  "imports": [
+    "import { GLOBE_LOCALES } from 'react-globe';"
+  ],
+  "definition": "readonly [\"en\", \"ro\", \"de\", \"es\", \"fr\", \"hu\"]",
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/localization/"
+  ],
+  "filename": "/packages/globe/src/i18n.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/i18n.ts#L11"
+}

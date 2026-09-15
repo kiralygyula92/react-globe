@@ -1,0 +1,11 @@
+{
+  "symbolDescription": "Replacements for bundled textures and datasets. Anything left out uses the bundled file. Coastlines, borders, elevation and land cover are not replaceable.",
+  "optionDescriptions": {
+    "dayTexture": "URL of the equirectangular day imagery used by the `realistic` style.",
+    "normalMap": "URL of the tangent-space normal map used by the `realistic` style.",
+    "specularMap": "URL of the specular (water) mask used by the `realistic` style.",
+    "cloudsTexture": "URL of the cloud layer used by the `realistic` style.",
+    "countriesGeoJson": "URL of, or the parsed, countries FeatureCollection. Raw Natural Earth property names are accepted.",
+    "capitalsDataset": "URL of, or the parsed, capitals array."
+  }
+}

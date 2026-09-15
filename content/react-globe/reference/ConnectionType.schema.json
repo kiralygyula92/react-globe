@@ -1,0 +1,14 @@
+{
+  "name": "ConnectionType",
+  "kind": "type",
+  "imports": [
+    "import type { ConnectionType } from 'react-globe';"
+  ],
+  "definition": "'arch' | 'line'",
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/connections/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L43"
+}

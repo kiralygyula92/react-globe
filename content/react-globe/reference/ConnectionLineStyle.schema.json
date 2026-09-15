@@ -1,0 +1,14 @@
+{
+  "name": "ConnectionLineStyle",
+  "kind": "type",
+  "imports": [
+    "import type { ConnectionLineStyle } from 'react-globe';"
+  ],
+  "definition": "'solid' | 'dashed' | 'dotted'",
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/connections/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L40"
+}

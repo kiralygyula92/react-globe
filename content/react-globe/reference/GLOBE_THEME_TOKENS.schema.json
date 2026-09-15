@@ -1,0 +1,226 @@
+{
+  "name": "GLOBE_THEME_TOKENS",
+  "kind": "setting-group",
+  "imports": [
+    "import { GLOBE_THEME_TOKENS } from 'react-globe';"
+  ],
+  "definition": "readonly GlobeThemeToken[]",
+  "tokens": [
+    {
+      "name": "--globe-color-label",
+      "usages": [
+        {
+          "element": "Country label",
+          "property": "color",
+          "fallback": "rgb(247 251 253)"
+        },
+        {
+          "element": "Capital marker",
+          "property": "color",
+          "fallback": "rgb(247 251 253)"
+        },
+        {
+          "element": "Graticule label",
+          "property": "color",
+          "fallback": "rgb(247 251 253)"
+        },
+        {
+          "element": "Country tooltip",
+          "property": "color",
+          "fallback": "rgb(247 251 253)"
+        },
+        {
+          "element": "Controls",
+          "property": "color",
+          "fallback": "rgb(247 251 253)"
+        }
+      ]
+    },
+    {
+      "name": "--globe-color-accent",
+      "usages": [
+        {
+          "element": "Capital marker",
+          "property": "background",
+          "fallback": "rgb(63 224 197)"
+        },
+        {
+          "element": "Cluster marker",
+          "property": "outline-color",
+          "fallback": "rgb(63 224 197)"
+        },
+        {
+          "element": "Controls",
+          "property": "outline-color",
+          "fallback": "rgb(63 224 197)"
+        }
+      ]
+    },
+    {
+      "name": "--globe-color-outline",
+      "usages": [
+        {
+          "element": "Capital marker",
+          "property": "box-shadow",
+          "fallback": "rgb(255 255 255)"
+        },
+        {
+          "element": "Cluster marker",
+          "property": "border-color",
+          "fallback": "rgb(255 255 255)"
+        }
+      ]
+    },
+    {
+      "name": "--globe-color-cluster",
+      "usages": [
+        {
+          "element": "Cluster marker",
+          "property": "background",
+          "fallback": "rgb(255 181 61)"
+        }
+      ]
+    },
+    {
+      "name": "--globe-color-cluster-hover",
+      "usages": [
+        {
+          "element": "Cluster marker",
+          "property": "background",
+          "fallback": "rgb(255 226 172)"
+        }
+      ]
+    },
+    {
+      "name": "--globe-color-cluster-text",
+      "usages": [
+        {
+          "element": "Cluster marker",
+          "property": "color",
+          "fallback": "rgb(17 37 58)"
+        }
+      ]
+    },
+    {
+      "name": "--globe-color-tooltip",
+      "usages": [
+        {
+          "element": "Country tooltip",
+          "property": "background",
+          "fallback": "rgb(11 16 38)"
+        }
+      ]
+    },
+    {
+      "name": "--globe-surface-card",
+      "usages": [
+        {
+          "element": "Pin popup",
+          "property": "background",
+          "fallback": "rgb(255 255 255)"
+        },
+        {
+          "element": "Controls",
+          "property": "background",
+          "fallback": "rgb(15 18 38 / 0.72)"
+        }
+      ]
+    },
+    {
+      "name": "--globe-surface-sunken",
+      "usages": [
+        {
+          "element": "Controls",
+          "property": "background",
+          "fallback": "rgb(35 42 78 / 0.9)"
+        }
+      ]
+    },
+    {
+      "name": "--globe-border-strong",
+      "usages": [
+        {
+          "element": "Pin popup",
+          "property": "border-color",
+          "fallback": "rgb(0 0 0 / 0.12)"
+        },
+        {
+          "element": "Controls",
+          "property": "border-color",
+          "fallback": "rgb(255 255 255 / 0.3)"
+        }
+      ]
+    },
+    {
+      "name": "--globe-text-primary",
+      "usages": [
+        {
+          "element": "Pin popup",
+          "property": "color",
+          "fallback": "rgb(17 37 58)"
+        }
+      ]
+    },
+    {
+      "name": "--globe-text-secondary",
+      "usages": [
+        {
+          "element": "Pin popup",
+          "property": "color",
+          "fallback": "rgb(60 90 114)"
+        }
+      ]
+    },
+    {
+      "name": "--globe-r-sm",
+      "usages": [
+        {
+          "element": "Country tooltip",
+          "property": "border-radius",
+          "fallback": "0.375rem"
+        }
+      ]
+    },
+    {
+      "name": "--globe-r-md",
+      "usages": [
+        {
+          "element": "Pin popup",
+          "property": "border-radius",
+          "fallback": "0.625rem"
+        }
+      ]
+    },
+    {
+      "name": "--globe-shadow-md",
+      "usages": [
+        {
+          "element": "Cluster marker",
+          "property": "box-shadow",
+          "fallback": "0 4px 12px rgb(0 0 0 / 0.28)"
+        },
+        {
+          "element": "Country tooltip",
+          "property": "box-shadow",
+          "fallback": "0 4px 12px rgb(0 0 0 / 0.28)"
+        }
+      ]
+    },
+    {
+      "name": "--globe-shadow-lg",
+      "usages": [
+        {
+          "element": "Pin popup",
+          "property": "box-shadow",
+          "fallback": "0 12px 32px rgb(0 0 0 / 0.3)"
+        }
+      ]
+    }
+  ],
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/customization/theming/"
+  ],
+  "filename": "/packages/globe/src/tokens.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/tokens.ts#L35"
+}

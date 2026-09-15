@@ -1,0 +1,36 @@
+{
+  "name": "ConnectionPathPoint",
+  "kind": "type",
+  "imports": [
+    "import type { ConnectionPathPoint } from 'react-globe';"
+  ],
+  "options": {
+    "x": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    },
+    "y": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    },
+    "visible": {
+      "type": {
+        "name": "boolean"
+      },
+      "required": true
+    }
+  },
+  "inheritance": {
+    "symbol": "ScreenPoint",
+    "pathname": "/react-globe/api/screen-point/"
+  },
+  "usedBy": [
+    "/react-globe/connections/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L207"
+}

@@ -1,0 +1,8 @@
+{
+  "symbolDescription": "Where one token is read, and the value used when it is not set.",
+  "optionDescriptions": {
+    "element": "The built-in element that reads the token.",
+    "property": "The CSS property the token sets.",
+    "fallback": "Applied when the token is not defined on an ancestor."
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "name": "DEFAULT_GLOBE_MESSAGES",
+  "kind": "setting-group",
+  "imports": [
+    "import { DEFAULT_GLOBE_MESSAGES } from 'react-globe';"
+  ],
+  "definition": "Readonly<Record<\"en\" | \"ro\" | \"de\" | \"es\" | \"fr\" | \"hu\", Readonly<GlobeMessages>>>",
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/localization/"
+  ],
+  "filename": "/packages/globe/src/i18n.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/i18n.ts#L50"
+}

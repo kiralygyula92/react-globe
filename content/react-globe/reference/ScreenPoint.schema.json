@@ -1,0 +1,27 @@
+{
+  "name": "ScreenPoint",
+  "kind": "type",
+  "imports": [
+    "import type { ScreenPoint } from 'react-globe';"
+  ],
+  "options": {
+    "x": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    },
+    "y": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/screen-projection/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L24"
+}

@@ -1,0 +1,7 @@
+{
+  "symbolDescription": "A geographic coordinate in degrees.",
+  "optionDescriptions": {
+    "lat": "Latitude in degrees, positive north, from -90 to 90.",
+    "lng": "Longitude in degrees, positive east, from -180 to 180."
+  }
+}

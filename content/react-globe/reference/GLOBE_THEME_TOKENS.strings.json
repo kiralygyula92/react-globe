@@ -1,0 +1,21 @@
+{
+  "symbolDescription": "Every CSS custom property the built-in components read. Set any of them on an ancestor of the globe to theme it; each use falls back to a literal when unset.",
+  "tokenDescriptions": {
+    "--globe-color-label": "Text on the globe: country and capital names, graticule labels, tooltip text and control icons.",
+    "--globe-color-accent": "Accent: the capital dot and focus outlines.",
+    "--globe-color-outline": "Outline around markers: the capital dot ring and the cluster border.",
+    "--globe-color-cluster": "Cluster marker fill.",
+    "--globe-color-cluster-hover": "Cluster marker fill while hovered.",
+    "--globe-color-cluster-text": "Cluster marker count.",
+    "--globe-color-tooltip": "Country tooltip background.",
+    "--globe-surface-card": "Raised surfaces: the pin popup and the control buttons.",
+    "--globe-surface-sunken": "Control button background while hovered.",
+    "--globe-border-strong": "Borders of the pin popup and the control buttons.",
+    "--globe-text-primary": "Pin popup title.",
+    "--globe-text-secondary": "Pin popup subtitle.",
+    "--globe-r-sm": "Small corner radius: the country tooltip.",
+    "--globe-r-md": "Medium corner radius: the pin popup.",
+    "--globe-shadow-md": "Medium drop shadow: the cluster marker and the country tooltip.",
+    "--globe-shadow-lg": "Large drop shadow: the pin popup."
+  }
+}

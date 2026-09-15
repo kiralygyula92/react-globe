@@ -1,0 +1,51 @@
+{
+  "name": "GlobeAssets",
+  "kind": "type",
+  "imports": [
+    "import type { GlobeAssets } from 'react-globe';"
+  ],
+  "options": {
+    "dayTexture": {
+      "type": {
+        "name": "string"
+      },
+      "required": false
+    },
+    "normalMap": {
+      "type": {
+        "name": "string"
+      },
+      "required": false
+    },
+    "specularMap": {
+      "type": {
+        "name": "string"
+      },
+      "required": false
+    },
+    "cloudsTexture": {
+      "type": {
+        "name": "string"
+      },
+      "required": false
+    },
+    "countriesGeoJson": {
+      "type": {
+        "name": "string | FeatureCollection"
+      },
+      "required": false
+    },
+    "capitalsDataset": {
+      "type": {
+        "name": "string | CapitalRecord[]"
+      },
+      "required": false
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/custom-assets/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L140"
+}

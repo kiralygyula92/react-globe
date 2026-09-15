@@ -15,6 +15,6 @@ All notable changes to this package are documented here. The format follows
 - Render overrides for pins, popups, clusters, connections and controls.
 - `GlobeHandle` imperative API: camera control, fly-to, zoom, auto-rotate and projection.
 - Localization: `locale` and `messages` props with built-in English, Romanian, German, Spanish,
-  French and Hungarian UI strings and bundled country and capital names; `globeMessages`,
+  French and Hungarian UI strings and bundled country and capital names; `DEFAULT_GLOBE_MESSAGES`,
   `GLOBE_LOCALES` and `localizedName` exports.
 - Bundled public-domain textures (NASA) and vector data (Natural Earth).

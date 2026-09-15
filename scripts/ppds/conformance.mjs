@@ -32,9 +32,12 @@ import {
   legacyRows,
   loadModel,
   navPages,
+  navWithReference,
   pageSpec,
+  referenceEntries,
   siteRedirects,
   symbolPath,
+  titlesWithReference,
   twinPath,
 } from './model.mjs';
 import { startServer } from './serve.mjs';
@@ -49,13 +52,18 @@ const DIST = resolve(ROOT, arg('dist', 'apps/docs/dist'));
 const GATE = arg('gate', null);
 const REPORT = arg('report', null);
 
-/** Checks each gate requires (brief §3 Phase 3 gate: structural checks 1–2, 5–9, 18–23). */
-const GATES = {
-  phase3: [1, 2, 5, 6, 7, 8, 9, 18, 19, 20, 21, 22, 23],
-  phase4: [10, 11, 12],
-  phase5: [1, 2, 3, 4],
-  all: Array.from({ length: 26 }, (_, i) => i + 1),
-};
+/**
+ * Checks each gate requires, cumulatively: a later gate keeps every earlier one.
+ * Phase 3 (brief §3): structural checks 1–2, 5–9, 18–23. Phase 4: + 10–12. Phase 5: + 3–4
+ * and no content placeholders left. Phase 6 / all: every check.
+ */
+const PHASE3 = [1, 2, 5, 6, 7, 8, 9, 18, 19, 20, 21, 22, 23];
+const PHASE4 = [...PHASE3, 10, 11, 12];
+const PHASE5 = [...PHASE4, 3, 4];
+const ALL = Array.from({ length: 26 }, (_, i) => i + 1);
+const GATES = { phase3: PHASE3, phase4: PHASE4, phase5: PHASE5, phase6: ALL, all: ALL };
+/** Gates that also require every authored placeholder to be gone. */
+const CONTENT_GATES = new Set(['phase5', 'phase6', 'all']);
 
 if (!existsSync(join(DIST, 'react-globe'))) {
   console.error(`no build at ${DIST} — run the docs build first`);
@@ -64,7 +72,13 @@ if (!existsSync(join(DIST, 'react-globe'))) {
 
 /* -------------------------------------------------------------------- setup */
 
-const { config, nav, titles } = loadModel();
+const model = loadModel();
+const { config } = model;
+/** The nav the site renders: nav.json plus the generated Reference children (N3). */
+const nav = navWithReference(model.nav, config);
+const titles = titlesWithReference(model.titles, config);
+const references = new Map(referenceEntries(config).map((r) => [r.symbol, r]));
+const plain = (text) => String(text ?? '').replace(/`([^`]+)`/g, '$1');
 const schema = JSON.parse(readFileSync(join(ROOT, 'docs', 'ppds', 'plugin-site.schema.json'), 'utf8'));
 const ajv = new Ajv2020({ allErrors: true, strict: false });
 addFormats(ajv);
@@ -72,6 +86,10 @@ ajv.addSchema(schema, 'ppds');
 
 const pages = navPages(nav).map((entry) => {
   const spec = pageSpec(entry, config);
+  if (entry.node.symbol) {
+    const reference = references.get(entry.node.symbol);
+    return { entry, node: entry.node, pathname: entry.node.pathname, spec, reference, description: plain(reference?.strings.symbolDescription), frontmatter: null, body: '' };
+  }
   const raw = readFileSync(join(CONTENT_DIR, spec.file), 'utf8');
   const match = /^---\r?\n([\s\S]*?)\r?\n---\r?\n?([\s\S]*)$/.exec(raw);
   return {
@@ -82,7 +100,8 @@ const pages = navPages(nav).map((entry) => {
     frontmatter: match ? parseYaml(match[1]) : null,
     body: match ? match[2] : raw,
   };
-});
+}).map((page) => ({ ...page, description: page.reference ? page.description : page.frontmatter?.description }));
+const authored = pages.filter((p) => !p.reference);
 
 const { server, origin } = await startServer(DIST);
 const SITE_ORIGINS = new Set([origin]);
@@ -163,7 +182,10 @@ await check(1, 'Every docs page resolves to exactly one archetype and contains a
     }
     const archetype = ARCHETYPES[page.spec.archetype];
     if (doc.querySelector('body')?.getAttribute('data-archetype') !== page.spec.archetype) details.push(`${where}: body data-archetype mismatch`);
-    if (!page.frontmatter) details.push(`${where}: no frontmatter`);
+    if (page.reference) {
+      if (text(doc.querySelector('h1')) !== `${page.node.symbol} reference`) details.push(`${where}: H1 must be "${page.node.symbol} reference"`);
+      if (!page.description) details.push(`${where}: no symbol description`);
+    } else if (!page.frontmatter) details.push(`${where}: no frontmatter`);
     else {
       if (page.frontmatter.title !== titles[page.pathname]) details.push(`${where}: frontmatter title ≠ titles.json`);
       if (page.frontmatter.pluginId !== config.id) details.push(`${where}: pluginId ≠ ${config.id}`);
@@ -180,6 +202,7 @@ await check(1, 'Every docs page resolves to exactly one archetype and contains a
     const required = archetype.h2.map((h) => h.replace('{name}', config.name));
     const present = h2Texts(doc);
     for (const h of required) if (!present.includes(h)) details.push(`${where}: missing ## ${h}`);
+    if (archetype.h2AnyOf && !archetype.h2AnyOf.some((h) => present.includes(h))) details.push(`${where}: needs one of ## ${archetype.h2AnyOf.join(' / ')}`);
     for (const block of archetype.layout) {
       if (!doc.querySelector(`[data-block="${block}"]`)) details.push(`${where}: missing block ${block}`);
     }
@@ -324,13 +347,13 @@ await check(10, 'No reference/*.schema.json hand-edited since the last generatio
 
 await check(11, 'Every symbols entry has a reference page', async () => {
   const details = [];
-  const symbols = new Set(pages.flatMap((p) => p.frontmatter?.symbols ?? []));
+  const symbols = new Set(authored.flatMap((p) => p.frontmatter?.symbols ?? []));
   for (const symbol of symbols) {
     const hasSchema = schemaFiles.includes(`${symbol}.schema.json`);
     const res = await get(symbolPath(symbol, config));
     if (!hasSchema || res.status !== 200) details.push(`${symbol}: ${hasSchema ? '' : 'no schema; '}${symbolPath(symbol, config)} HTTP ${res.status}`);
   }
-  return verdict(details, { note: `${symbols.size} distinct symbol(s) declared.`, expectedUntil: 'Phase 4' });
+  return verdict(details, { note: `${symbols.size} distinct symbol(s) declared across pages; ${schemaFiles.length} generated.` });
 });
 
 await check(12, "Every reference page's usedBy is non-empty or marked internal", () => {
@@ -442,7 +465,7 @@ await check(20, 'llms.txt description == meta description == H1 subtitle, per pa
     const meta = doc.querySelector('meta[name="description"]')?.getAttribute('content');
     const subtitle = text(doc.querySelector('[data-block="subtitle"]'));
     const listed = byUrl.get(twinPath(page.pathname, config));
-    if (!(meta === subtitle && subtitle === listed && listed === page.frontmatter?.description)) {
+    if (!(meta === subtitle && subtitle === listed && listed === page.description)) {
       details.push(`${page.pathname}: meta=${JSON.stringify(meta)} subtitle=${JSON.stringify(subtitle)} llms=${JSON.stringify(listed)}`);
     }
   }
@@ -569,7 +592,7 @@ if (GATE && !gateIds) {
   process.exit(2);
 }
 
-const todoDescriptions = pages.filter((p) => String(p.frontmatter?.description ?? '').startsWith('TODO')).length;
+const todoDescriptions = authored.filter((p) => String(p.frontmatter?.description ?? '').startsWith('TODO')).length;
 const todoComments = pages.reduce((n, p) => n + (p.body.match(/<!-- TODO/g)?.length ?? 0), 0);
 const emptySections = pages.reduce((n, p) => n + (p.body.match(/^## .+\n(?=\s*(## |$))/gm)?.length ?? 0), 0);
 
@@ -593,7 +616,7 @@ for (const r of results) {
   lines.push('');
 }
 lines.push('## Content readiness (informational)', '');
-lines.push(`- ${todoDescriptions} of ${pages.length} pages still have a TODO one-line description.`);
+lines.push(`- ${todoDescriptions} of ${authored.length} authored pages still have a TODO one-line description.`);
 lines.push(`- ${todoComments} TODO authoring comments remain.`);
 lines.push(`- ${emptySections} required headings are still empty.`);
 
@@ -605,7 +628,8 @@ if (REPORT) {
 }
 
 if (gateIds) {
-  const blocking = results.filter((r) => gateIds.includes(r.id) && r.status !== 'pass' && r.status !== 'na');
-  console.log(blocking.length ? `\nGATE ${GATE}: FAILED — ${blocking.map((r) => r.id).join(', ')}` : `\nGATE ${GATE}: PASSED`);
+  const blocking = results.filter((r) => gateIds.includes(r.id) && r.status !== 'pass' && r.status !== 'na').map((r) => String(r.id));
+  if (CONTENT_GATES.has(GATE) && todoDescriptions + todoComments + emptySections > 0) blocking.push('content readiness');
+  console.log(blocking.length ? `\nGATE ${GATE}: FAILED — ${blocking.join(', ')}` : `\nGATE ${GATE}: PASSED`);
   process.exit(blocking.length ? 1 : 0);
 }

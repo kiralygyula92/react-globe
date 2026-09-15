@@ -1,0 +1,78 @@
+{
+  "name": "GlobeHandle",
+  "kind": "type",
+  "imports": [
+    "import type { GlobeHandle } from 'react-globe';"
+  ],
+  "options": {
+    "setCamera": {
+      "type": {
+        "name": "(pose: CameraPose, opts?: { animate?: boolean; durationMs?: number }) => void"
+      },
+      "required": true
+    },
+    "reset": {
+      "type": {
+        "name": "(opts?: { animate?: boolean; durationMs?: number }) => void"
+      },
+      "required": true
+    },
+    "flyTo": {
+      "type": {
+        "name": "(target: LatLng, opts?: { zoom?: number; durationMs?: number }) => void"
+      },
+      "required": true
+    },
+    "zoomIn": {
+      "type": {
+        "name": "(step?: number) => void"
+      },
+      "required": true
+    },
+    "zoomOut": {
+      "type": {
+        "name": "(step?: number) => void"
+      },
+      "required": true
+    },
+    "startAutoRotate": {
+      "type": {
+        "name": "(speed?: number) => void"
+      },
+      "required": true
+    },
+    "stopAutoRotate": {
+      "type": {
+        "name": "() => void"
+      },
+      "required": true
+    },
+    "getCamera": {
+      "type": {
+        "name": "() => Required<CameraPose>"
+      },
+      "required": true
+    },
+    "latLngToScreen": {
+      "type": {
+        "name": "(point: LatLng) => ScreenPoint | null"
+      },
+      "required": true
+    },
+    "screenToLatLng": {
+      "type": {
+        "name": "(x: number, y: number) => LatLng | null"
+      },
+      "required": true
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/auto-rotate/",
+    "/react-globe/camera-api/",
+    "/react-globe/error-handling/",
+    "/react-globe/screen-projection/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L504"
+}

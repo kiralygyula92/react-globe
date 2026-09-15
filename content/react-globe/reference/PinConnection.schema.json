@@ -1,0 +1,75 @@
+{
+  "name": "PinConnection",
+  "kind": "type",
+  "imports": [
+    "import type { PinConnection } from 'react-globe';"
+  ],
+  "options": {
+    "id": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "from": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "to": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "type": {
+      "type": {
+        "name": "ConnectionType"
+      },
+      "required": false
+    },
+    "archHeight": {
+      "type": {
+        "name": "number"
+      },
+      "required": false
+    },
+    "lineStyle": {
+      "type": {
+        "name": "ConnectionLineStyle"
+      },
+      "required": false
+    },
+    "color": {
+      "type": {
+        "name": "string"
+      },
+      "required": false
+    },
+    "width": {
+      "type": {
+        "name": "number"
+      },
+      "required": false
+    },
+    "animated": {
+      "type": {
+        "name": "boolean"
+      },
+      "required": false
+    },
+    "data": {
+      "type": {
+        "name": "Record<string, unknown>"
+      },
+      "required": false
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/connections/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L50"
+}

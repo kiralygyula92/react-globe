@@ -8,7 +8,7 @@ plan: free
 symbols:
   - Globe
   - GLOBE_LOCALES
-  - globeMessages
+  - DEFAULT_GLOBE_MESSAGES
   - localizedName
   - GlobeLocale
   - GlobeMessages

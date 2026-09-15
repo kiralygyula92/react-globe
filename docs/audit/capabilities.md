@@ -55,7 +55,7 @@ lifecycles are assigned in Phase 2.
 | C-23 | Render overrides (cross-cutting) | `pinComponent`, `pinPopupComponent`, `clusterComponent`, `connectionComponent`, `controlsComponent` | Render overrides | e2e every override | Confirmed |
 | C-24 | Lifecycle & error handling | `onReady`, `onError` | Props › Lifecycle | e2e 20× mount/unmount | Confirmed (onError untested) |
 | C-25 | Accessibility & reduced motion | *(behaviour only)* | Accessibility | — | Confirmed (untested) |
-| C-26 | Localization *(added after the audit)* | `locale`, `messages`, `GlobeMessages`, `GlobeLocale`, `GLOBE_LOCALES`, `globeMessages`, `localizedName`, `CountryProperties.names`, `CapitalRecord.names` | Localization | e2e locale; unit `i18n.spec.ts` | Confirmed |
+| C-26 | Localization *(added after the audit)* | `locale`, `messages`, `GlobeMessages`, `GlobeLocale`, `GLOBE_LOCALES`, `DEFAULT_GLOBE_MESSAGES`, `localizedName`, `CountryProperties.names`, `CapitalRecord.names` | Localization | e2e locale; unit `i18n.spec.ts` | Confirmed |
 
 ---
 

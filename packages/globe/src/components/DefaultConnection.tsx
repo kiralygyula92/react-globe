@@ -8,6 +8,10 @@ import type { ConnectionRenderProps } from '../types';
 /** Dash periods run a whole number of times per flow cycle, so the loop is seamless. */
 const FLOW_PERIODS = 4;
 
+/**
+ * The package's SVG connection renderer. Pass it as `connectionComponent` to draw
+ * connections as SVG instead of WebGL, or wrap it in your own component.
+ */
 export function DefaultConnection<TData>({ connection, path, progress, lineStyle, width, color }: ConnectionRenderProps<TData>) {
   let d = '';
   let pen = false;

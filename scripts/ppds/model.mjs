@@ -6,7 +6,7 @@
  * blocks that archetype requires. Nothing here reads Markdown bodies.
  */
 
-import { existsSync, readFileSync } from 'node:fs';
+import { existsSync, readFileSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
@@ -112,6 +112,13 @@ export const ARCHETYPES = {
     h2: [],
     layout: ['subtitle', 'date', 'page-actions'],
   },
+  E: {
+    name: 'Reference page',
+    h2: ['Used by', 'Import', 'Source'],
+    /** One of these carries the symbol's structure (§6 E "Options / Props / Settings"; E-09). */
+    h2AnyOf: ['Props', 'Members', 'Parameters', 'Definition'],
+    layout: ['subtitle', 'page-actions'],
+  },
 };
 
 /* ------------------------------------------------------------------------ nav */
@@ -150,6 +157,7 @@ export const groupOf = (entry) => [...entry.parents].reverse().find((p) => p.sub
  */
 export function pageSpec(entry, config) {
   const { node, section } = entry;
+  if (node.symbol) return { file: `reference/${node.symbol}.strings.json`, archetype: 'E' };
   const prefix = `/${config.id}/`;
   if (!node.pathname.startsWith(prefix)) throw new Error(`outside namespace: ${node.pathname}`);
   const rest = node.pathname.slice(prefix.length).replace(/\/$/, '');
@@ -203,10 +211,47 @@ export function symbolPath(symbol, config) {
   return `/${config.id}/api/${kebab}/`;
 }
 
-/** H1 text for a page: the Overview's is fixed by archetype A. */
+/** H1 text for a page: fixed by archetype A (Overview) and E (reference). */
 export function headingFor(entry, config, titles) {
-  const title = titles[entry.node.pathname];
-  return pageSpec(entry, config).archetype === 'A' ? `${config.name} — Overview` : title;
+  const archetype = pageSpec(entry, config).archetype;
+  if (archetype === 'A') return `${config.name} — Overview`;
+  if (archetype === 'E') return `${entry.node.symbol} reference`;
+  return titles[entry.node.pathname];
+}
+
+/* ------------------------------------------------------------------ reference */
+
+export const REFERENCE_DIR = join(CONTENT_DIR, 'reference');
+
+/** Generated reference entries, alphabetical (N1 allows it only here). */
+export function referenceEntries(config) {
+  if (!existsSync(REFERENCE_DIR)) return [];
+  return readdirSync(REFERENCE_DIR)
+    .filter((f) => f.endsWith('.schema.json'))
+    .map((f) => {
+      const symbol = f.replace('.schema.json', '');
+      const read = (name) => (existsSync(join(REFERENCE_DIR, name)) ? JSON.parse(readFileSync(join(REFERENCE_DIR, name), 'utf8')) : {});
+      return { symbol, pathname: symbolPath(symbol, config), schema: read(f), strings: read(`${symbol}.strings.json`) };
+    })
+    .sort((a, b) => a.symbol.localeCompare(b.symbol, 'en', { sensitivity: 'base' }));
+}
+
+/**
+ * nav.json with the Reference section's children injected from the generated array
+ * (N3). Injected nodes carry `symbol`; they exist only at build time.
+ */
+export function navWithReference(nav, config) {
+  const refs = referenceEntries(config);
+  return nav.map((node) =>
+    node.pathname.endsWith('/api-group')
+      ? { ...node, children: refs.map((r) => ({ pathname: r.pathname, symbol: r.symbol })) }
+      : node,
+  );
+}
+
+/** Titles for generated nodes join titles.json at build time. */
+export function titlesWithReference(titles, config) {
+  return { ...titles, ...Object.fromEntries(referenceEntries(config).map((r) => [r.pathname, r.symbol])) };
 }
 
 /** Badges for a nav node, derived only from its plan and lifecycle (N4/P7). */

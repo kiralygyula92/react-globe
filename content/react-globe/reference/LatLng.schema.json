@@ -1,0 +1,29 @@
+{
+  "name": "LatLng",
+  "kind": "type",
+  "imports": [
+    "import type { LatLng } from 'react-globe';"
+  ],
+  "options": {
+    "lat": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    },
+    "lng": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/camera-api/",
+    "/react-globe/camera/",
+    "/react-globe/screen-projection/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L16"
+}

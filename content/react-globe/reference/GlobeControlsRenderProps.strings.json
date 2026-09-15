@@ -1,0 +1,15 @@
+{
+  "symbolDescription": "Props passed to `controlsComponent`. Position it yourself; the container is the positioning context.",
+  "optionDescriptions": {
+    "rotateLeft": "Rotates the globe one step to the left.",
+    "rotateRight": "Rotates the globe one step to the right.",
+    "zoomIn": "Moves the camera one step closer.",
+    "zoomOut": "Moves the camera one step away.",
+    "reset": "Returns the camera to the pose the globe opened on.",
+    "canZoomIn": "False once the camera is at `minZoom`.",
+    "canZoomOut": "False once the camera is at `maxZoom`.",
+    "canReset": "False while the camera is already sitting at the home pose.",
+    "camera": "The current camera pose.",
+    "messages": "The globe's resolved UI strings, for the buttons' accessible names."
+  }
+}

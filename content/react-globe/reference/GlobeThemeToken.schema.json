@@ -1,0 +1,33 @@
+{
+  "name": "GlobeThemeToken",
+  "kind": "type",
+  "imports": [
+    "import type { GlobeThemeToken } from 'react-globe';"
+  ],
+  "options": {
+    "name": {
+      "type": {
+        "name": "`--globe-${string}`"
+      },
+      "required": true
+    },
+    "description": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "usages": {
+      "type": {
+        "name": "readonly GlobeThemeTokenUsage[]"
+      },
+      "required": true
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/customization/theming/"
+  ],
+  "filename": "/packages/globe/src/tokens.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/tokens.ts#L22"
+}

@@ -1,0 +1,14 @@
+{
+  "symbolDescription": "Props passed to `connectionComponent`, rendered inside an `<svg>` that covers the canvas.",
+  "optionDescriptions": {
+    "connection": "The connection being drawn.",
+    "from": "The resolved start pin.",
+    "to": "The resolved end pin.",
+    "path": "The great-circle path, already projected and occlusion-tested.",
+    "progress": "0 -> 1, advances while `connection.animated` is true.",
+    "type": "Resolved from the connection's override, else the globe's prop.",
+    "lineStyle": "Resolved from the connection's override, else the globe's prop.",
+    "width": "Stroke width in pixels, resolved from the connection's override, else the globe's prop.",
+    "color": "Stroke colour, resolved from the connection's override, else the globe's prop."
+  }
+}

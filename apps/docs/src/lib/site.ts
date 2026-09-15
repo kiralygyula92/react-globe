@@ -1,15 +1,13 @@
 /**
- * Everything the templates need, derived from the plugin's data files and the
- * content collection. Templates never read nav.json, titles.json or
- * plugin.config.json themselves: one derivation, rendered everywhere (P7, P10).
+ * Everything the templates need, derived from the plugin's data files, the content
+ * collection and the generated reference. Templates never read nav.json, titles.json,
+ * plugin.config.json or reference/*.json themselves: one derivation, rendered
+ * everywhere (P7, P10).
  */
 
-import { existsSync } from 'node:fs';
-import { join } from 'node:path';
 import { getCollection, type CollectionEntry } from 'astro:content';
 import {
   ARCHETYPES,
-  CONTENT_DIR,
   FOOTER_COLUMNS,
   SECTIONS,
   badgesFor,
@@ -19,20 +17,30 @@ import {
   isMachine,
   loadModel,
   navPages,
+  navWithReference,
   ogImagePath,
   pageSpec,
+  referenceEntries,
   symbolPath,
+  titlesWithReference,
   twinPath,
   type Archetype,
   type Badge,
   type NavEntry,
   type NavNode,
+  type ReferenceEntry,
 } from '../../../../scripts/ppds/model.mjs';
 
-export const model = loadModel();
-export const { config, nav, titles } = model;
+const model = loadModel();
+export const { config } = model;
+/** nav.json with the generated Reference children injected (N3). */
+export const nav: NavNode[] = navWithReference(model.nav, config);
+/** titles.json plus the generated reference titles. */
+export const titles: Record<string, string> = titlesWithReference(model.titles, config);
+export const references: ReferenceEntry[] = referenceEntries(config);
 
-export type { Archetype, Badge, NavNode };
+export type { Archetype, Badge, NavNode, ReferenceEntry };
+export type DocEntry = CollectionEntry<'docs'>;
 
 /** Destinations the docs chrome links to; plugin.config.json must declare them. */
 const REQUIRED_LINKS = ['issues', 'support', 'changelog', 'roadmap'] as const;
@@ -43,50 +51,61 @@ const links = Object.fromEntries(
     return [key, value];
   }),
 ) as Record<(typeof REQUIRED_LINKS)[number], string>;
-export type DocEntry = CollectionEntry<'docs'>;
 
 export type Page = {
   pathname: string;
-  /** Title from titles.json (N2). */
+  /** Title from titles.json (N2), or the symbol name for a reference page. */
   title: string;
-  /** The H1: the Overview's is fixed by archetype A. */
+  /** The H1: fixed by archetype A (Overview) and E (reference). */
   heading: string;
+  /** The one description: meta, H1 subtitle and llms.txt (P10). Plain text. */
   description: string;
   archetype: Archetype;
+  /** Source file relative to content/{id}/ — the file "Edit this page" opens. */
   file: string;
   section: string | null;
   node: NavNode;
   badges: Badge[];
-  entry: DocEntry;
+  /** Authored pages. */
+  entry?: DocEntry;
+  /** Generated reference pages. */
+  reference?: ReferenceEntry;
   twin: string;
   ogImage: string;
 };
 
+/** Reference prose may carry inline code marks; the description field is plain text. */
+const plain = (text: string): string => text.replace(/`([^`]+)`/g, '$1');
+
 let pagesCache: Page[] | null = null;
 
-/** Every nav page with its content entry. A nav page without a file fails the build. */
+/** Every nav page, authored and generated. A nav page without a source fails the build. */
 export async function getPages(): Promise<Page[]> {
   if (pagesCache) return pagesCache;
   const entries = await getCollection('docs');
   const byId = new Map(entries.map((e) => [e.id, e]));
+  const bySymbol = new Map(references.map((r) => [r.symbol, r]));
   const pages = navPages(nav).map((navEntry: NavEntry): Page => {
     const spec = pageSpec(navEntry, config);
-    const entry = byId.get(spec.file);
-    if (!entry) throw new Error(`[ppds] ${navEntry.node.pathname} has no content file ${spec.file} — run the scaffold`);
-    return {
+    const base = {
       pathname: navEntry.node.pathname,
       title: titles[navEntry.node.pathname],
       heading: headingFor(navEntry, config, titles),
-      description: entry.data.description,
       archetype: spec.archetype,
       file: spec.file,
       section: navEntry.section,
       node: navEntry.node,
       badges: badgesFor(navEntry.node, config),
-      entry,
       twin: twinPath(navEntry.node.pathname, config),
       ogImage: ogImagePath(navEntry.node.pathname),
     };
+    if (navEntry.node.symbol) {
+      const reference = bySymbol.get(navEntry.node.symbol)!;
+      return { ...base, description: plain(reference.strings.symbolDescription ?? ''), reference };
+    }
+    const entry = byId.get(spec.file);
+    if (!entry) throw new Error(`[ppds] ${navEntry.node.pathname} has no content file ${spec.file} — run the scaffold`);
+    return { ...base, description: entry.data.description, entry };
   });
   pagesCache = pages;
   return pages;
@@ -101,9 +120,9 @@ export async function pageByPath(pathname: string): Promise<Page | undefined> {
 export type SidebarItem =
   | { kind: 'section'; id: string; title: string; icon: string | null; items: SidebarItem[] }
   | { kind: 'group'; title: string; items: SidebarItem[] }
-  | { kind: 'link'; href: string; title: string; description: string | null; badges: Badge[] };
+  | { kind: 'link'; href: string; title: string; description: string | null; badges: Badge[]; code: boolean };
 
-/** The sidebar, straight from nav.json: order, grouping and badges are the data's (N1, N4). */
+/** The sidebar, straight from the nav data: order, grouping and badges are the data's (N1, N4). */
 export async function sidebar(): Promise<SidebarItem[]> {
   const pages = new Map((await getPages()).map((p) => [p.pathname, p]));
   const toItem = (node: NavNode, depth: number): SidebarItem => {
@@ -119,6 +138,7 @@ export async function sidebar(): Promise<SidebarItem[]> {
       title: titles[node.pathname],
       description: pages.get(node.pathname)?.description ?? null,
       badges: badgesFor(node, config),
+      code: Boolean(node.symbol),
     };
   };
   return nav.map((n) => toItem(n, 1));
@@ -138,9 +158,67 @@ export async function featureGroups(): Promise<{ group: string; pages: Page[] }[
 
 /* -------------------------------------------------------------- reference */
 
-/** A symbol's reference page, or null until Phase 4 has generated it (never a dead link). */
+const referenceSymbols = new Set(references.map((r) => r.symbol));
+
+/** A symbol's reference page, or null when the generator has not produced one (never a dead link). */
 export function referenceHref(symbol: string): string | null {
-  return existsSync(join(CONTENT_DIR, 'reference', `${symbol}.schema.json`)) ? symbolPath(symbol, config) : null;
+  return referenceSymbols.has(symbol) ? symbolPath(symbol, config) : null;
+}
+
+export const referenceFor = (symbol: string): ReferenceEntry | undefined => references.find((r) => r.symbol === symbol);
+
+/** The H2 that carries a symbol's structure (ARCHETYPES.E.h2AnyOf). */
+export function structureHeading(ref: ReferenceEntry): 'Props' | 'Members' | 'Parameters' | 'Definition' {
+  if (ref.schema.kind === 'component') return 'Props';
+  if (ref.schema.kind === 'function') return 'Parameters';
+  if (ref.schema.options && Object.keys(ref.schema.options).length > 0) return 'Members';
+  return 'Definition';
+}
+
+const escapeHtml = (s: string): string => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+
+/** Reference prose to HTML: escaped text with `code` spans. */
+export const inlineHtml = (text: string | undefined): string =>
+  escapeHtml(text ?? '').replace(/`([^`]+)`/g, (_, code: string) => `<code>${code}</code>`);
+
+const mdCell = (text: string | undefined): string => (text ?? '').replace(/\|/g, '\\|').replace(/\n/g, ' ');
+const mdCode = (text: string | number | boolean | null | undefined): string =>
+  text === undefined || text === null || text === '' ? '—' : `\`${mdCell(String(text))}\``;
+
+/** A reference page as Markdown, for its twin and for the twins of pages that use it (§7.7). */
+export function referenceMarkdown(ref: ReferenceEntry, site: URL | undefined, depth = 2): string {
+  const h = '#'.repeat(depth);
+  const { schema, strings } = ref;
+  const abs = (path: string) => (site ? new URL(path, site).href : path);
+  const out: string[] = [];
+  const pagesUsing = schema.usedBy.map((p) => `- [${titles[p] ?? p}](${abs(twinPath(p, config))})`);
+  out.push(`${h} Used by`, pagesUsing.length ? pagesUsing.join('\n') : 'Not used by any page.');
+  out.push(`${h} Import`, ['```ts', ...schema.imports, '```'].join('\n'));
+  if (schema.inheritance) out.push(`${h} Extends`, `[\`${schema.inheritance.symbol}\`](${abs(twinPath(schema.inheritance.pathname, config))})`);
+
+  const heading = structureHeading(ref);
+  if (heading === 'Definition') {
+    out.push(`${h} Definition`, ['```ts', `${schema.kind === 'type' ? `type ${schema.name} = ` : `const ${schema.name}: `}${schema.definition ?? 'unknown'}`, '```'].join('\n'));
+  } else {
+    if (schema.signature) out.push(`${h} Signature`, ['```ts', schema.signature, '```'].join('\n'));
+    const rows = Object.entries(schema.options ?? {}).map(
+      ([name, o]) => `| \`${name}\` | ${mdCode(o.type.name)} | ${mdCode(o.default)} | ${o.required ? 'Yes' : 'No'} | ${mdCell(strings.optionDescriptions?.[name])} |`,
+    );
+    out.push(`${h} ${heading}`, ['| Name | Type | Default | Required | Description |', '|---|---|---|---|---|', ...rows].join('\n'));
+    if (schema.returns) out.push(`${h} Returns`, mdCode(schema.returns));
+  }
+  if (schema.events && Object.keys(schema.events).length) {
+    const rows = Object.entries(schema.events).map(([name, o]) => `| \`${name}\` | ${mdCode(o.type.name)} | ${mdCell(strings.eventDescriptions?.[name])} |`);
+    out.push(`${h} Events`, ['| Name | Type | Description |', '|---|---|---|', ...rows].join('\n'));
+  }
+  if (schema.tokens?.length) {
+    const rows = schema.tokens.flatMap((t) =>
+      t.usages.map((u, i) => `| ${i === 0 ? `\`${t.name}\`` : ''} | ${u.element} | ${u.property} | \`${u.fallback}\` | ${i === 0 ? mdCell(strings.tokenDescriptions?.[t.name]) : ''} |`),
+    );
+    out.push(`${h} Tokens`, ['| Token | Element | Property | Fallback | Controls |', '|---|---|---|---|---|', ...rows].join('\n'));
+  }
+  out.push(`${h} Source`, `[${schema.filename}](${schema.sourceUrl})`);
+  return out.join('\n\n');
 }
 
 /* ------------------------------------------------------------- page links */
@@ -155,9 +233,9 @@ export function feedbackUrl(page: Page, helpful: boolean): string {
 
 /** Resource chip row (archetype B) from frontmatter `links`, never hand-written. */
 export function resourceChips(entry: DocEntry): { key: string; label: string; href: string }[] {
-  const links = entry.data.links ?? {};
+  const chipLinks = entry.data.links ?? {};
   const LABELS: Record<string, string> = { issues: 'Feedback', source: 'Source', spec: 'Standard', design: 'Design asset', size: 'Size' };
-  return Object.entries(links).map(([key, value]) => ({
+  return Object.entries(chipLinks).map(([key, value]) => ({
     key,
     label: LABELS[key] ?? key,
     href: key === 'source' && !/^https?:/.test(value) ? `${config.repo}/tree/main/${value}` : value,
@@ -170,13 +248,13 @@ export function resourceChips(entry: DocEntry): { key: string; label: string; hr
 export const THEME_COLOR = config.branding?.accentColor ?? '#1f4e79';
 
 export const currentVersion = (): { label: string; href: string } =>
-  (config.versions ?? []).find((v: { current?: boolean }) => v.current) ?? { label: config.currentVersion, href: `/${config.id}/` };
+  (config.versions ?? []).find((v) => v.current) ?? { label: config.currentVersion, href: `/${config.id}/` };
 
 /** The PPDS §7.6 set, all from one title and one description. */
 export function metadata(page: Page, site: URL) {
   const url = new URL(page.pathname, site).href;
   const image = new URL(page.ogImage, site).href;
-  const documentTitle = page.archetype === 'A' ? page.heading : `${page.title} — ${config.name}`;
+  const documentTitle = page.archetype === 'A' ? page.heading : `${page.heading} — ${config.name}`;
   return {
     documentTitle,
     canonical: url,

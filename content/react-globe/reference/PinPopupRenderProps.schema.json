@@ -1,0 +1,39 @@
+{
+  "name": "PinPopupRenderProps",
+  "kind": "type",
+  "imports": [
+    "import type { PinPopupRenderProps } from 'react-globe';"
+  ],
+  "options": {
+    "pin": {
+      "type": {
+        "name": "Pin<TData>"
+      },
+      "required": true
+    },
+    "position": {
+      "type": {
+        "name": "ScreenPoint"
+      },
+      "required": true
+    },
+    "placement": {
+      "type": {
+        "name": "PinPopupPlacement"
+      },
+      "required": true
+    },
+    "close": {
+      "type": {
+        "name": "() => void"
+      },
+      "required": true
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/pin-popups/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L177"
+}

@@ -1,0 +1,64 @@
+{
+  "name": "CountryProperties",
+  "kind": "type",
+  "imports": [
+    "import type { CountryProperties } from 'react-globe';"
+  ],
+  "options": {
+    "id": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "name": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    },
+    "isoA2": {
+      "type": {
+        "name": "string | null"
+      },
+      "required": true
+    },
+    "isoA3": {
+      "type": {
+        "name": "string | null"
+      },
+      "required": true
+    },
+    "labelLat": {
+      "type": {
+        "name": "number | null"
+      },
+      "required": true
+    },
+    "labelLng": {
+      "type": {
+        "name": "number | null"
+      },
+      "required": true
+    },
+    "labelPriority": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    },
+    "names": {
+      "type": {
+        "name": "Readonly<Record<string, string>>"
+      },
+      "required": false
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/country-interaction/",
+    "/react-globe/custom-assets/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L88"
+}

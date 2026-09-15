@@ -1,0 +1,8 @@
+{
+  "symbolDescription": "One theme token: a CSS custom property the built-in components read.",
+  "optionDescriptions": {
+    "name": "The custom property name, including the leading dashes.",
+    "description": "What the token controls.",
+    "usages": "Every place the token is read, each with its own fallback."
+  }
+}

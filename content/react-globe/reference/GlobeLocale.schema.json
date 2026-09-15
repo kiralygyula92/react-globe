@@ -1,0 +1,14 @@
+{
+  "name": "GlobeLocale",
+  "kind": "type",
+  "imports": [
+    "import type { GlobeLocale } from 'react-globe';"
+  ],
+  "definition": "(typeof GLOBE_LOCALES)[number]",
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/localization/"
+  ],
+  "filename": "/packages/globe/src/i18n.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/i18n.ts#L14"
+}

@@ -1,0 +1,75 @@
+{
+  "name": "GlobeControlsRenderProps",
+  "kind": "type",
+  "imports": [
+    "import type { GlobeControlsRenderProps } from 'react-globe';"
+  ],
+  "options": {
+    "rotateLeft": {
+      "type": {
+        "name": "() => void"
+      },
+      "required": true
+    },
+    "rotateRight": {
+      "type": {
+        "name": "() => void"
+      },
+      "required": true
+    },
+    "zoomIn": {
+      "type": {
+        "name": "() => void"
+      },
+      "required": true
+    },
+    "zoomOut": {
+      "type": {
+        "name": "() => void"
+      },
+      "required": true
+    },
+    "reset": {
+      "type": {
+        "name": "() => void"
+      },
+      "required": true
+    },
+    "canZoomIn": {
+      "type": {
+        "name": "boolean"
+      },
+      "required": true
+    },
+    "canZoomOut": {
+      "type": {
+        "name": "boolean"
+      },
+      "required": true
+    },
+    "canReset": {
+      "type": {
+        "name": "boolean"
+      },
+      "required": true
+    },
+    "camera": {
+      "type": {
+        "name": "Required<CameraPose>"
+      },
+      "required": true
+    },
+    "messages": {
+      "type": {
+        "name": "GlobeMessages"
+      },
+      "required": true
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/controls/"
+  ],
+  "filename": "/packages/globe/src/types.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/types.ts#L235"
+}

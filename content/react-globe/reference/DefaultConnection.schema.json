@@ -1,0 +1,71 @@
+{
+  "name": "DefaultConnection",
+  "kind": "component",
+  "imports": [
+    "import { DefaultConnection } from 'react-globe';",
+    "import 'react-globe/globe.css';"
+  ],
+  "propsType": "ConnectionRenderProps",
+  "options": {
+    "connection": {
+      "type": {
+        "name": "PinConnection"
+      },
+      "required": true
+    },
+    "from": {
+      "type": {
+        "name": "Pin<TData>"
+      },
+      "required": true
+    },
+    "to": {
+      "type": {
+        "name": "Pin<TData>"
+      },
+      "required": true
+    },
+    "path": {
+      "type": {
+        "name": "ConnectionPathPoint[]"
+      },
+      "required": true
+    },
+    "progress": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    },
+    "type": {
+      "type": {
+        "name": "ConnectionType"
+      },
+      "required": true
+    },
+    "lineStyle": {
+      "type": {
+        "name": "ConnectionLineStyle"
+      },
+      "required": true
+    },
+    "width": {
+      "type": {
+        "name": "number"
+      },
+      "required": true
+    },
+    "color": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    }
+  },
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/connections/"
+  ],
+  "filename": "/packages/globe/src/components/DefaultConnection.tsx",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/components/DefaultConnection.tsx#L15"
+}

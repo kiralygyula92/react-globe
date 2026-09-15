@@ -1,0 +1,7 @@
+{
+  "symbolDescription": "A place's name in `language`, falling back to its English `name` — the name the globe itself shows for that locale.",
+  "optionDescriptions": {
+    "place": "A country's properties or a capital record.",
+    "language": "A BCP 47 tag; only its language subtag is used."
+  }
+}

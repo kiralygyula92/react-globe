@@ -1,0 +1,13 @@
+{
+  "symbolDescription": "Properties of one country in the countries dataset.",
+  "optionDescriptions": {
+    "id": "Stable key, ISO A3 where the dataset has one, otherwise the name.",
+    "name": "English name.",
+    "isoA2": "ISO 3166-1 alpha-2 code, or null where the dataset has none.",
+    "isoA3": "ISO 3166-1 alpha-3 code, or null where the dataset has none.",
+    "labelLat": "Dataset-provided label anchor latitude; null falls back to the computed centroid.",
+    "labelLng": "Dataset-provided label anchor longitude; null falls back to the computed centroid.",
+    "labelPriority": "Lower sorts first when labels collide.",
+    "names": "The name in other languages, keyed by language subtag ('de', 'ro'). `name` is used where a language is missing."
+  }
+}

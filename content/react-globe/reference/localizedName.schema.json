@@ -1,0 +1,29 @@
+{
+  "name": "localizedName",
+  "kind": "function",
+  "imports": [
+    "import { localizedName } from 'react-globe';"
+  ],
+  "signature": "localizedName(place: { name: string; names?: Readonly<Record<string, string>> | null }, language: string): string",
+  "options": {
+    "place": {
+      "type": {
+        "name": "{ name: string; names?: Readonly<Record<string, string>> | null }"
+      },
+      "required": true
+    },
+    "language": {
+      "type": {
+        "name": "string"
+      },
+      "required": true
+    }
+  },
+  "returns": "string",
+  "inheritance": null,
+  "usedBy": [
+    "/react-globe/localization/"
+  ],
+  "filename": "/packages/globe/src/i18n.ts",
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/i18n.ts#L167"
+}

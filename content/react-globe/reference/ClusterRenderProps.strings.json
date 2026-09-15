@@ -1,0 +1,14 @@
+{
+  "symbolDescription": "Props passed to `clusterComponent`.",
+  "optionDescriptions": {
+    "pins": "The pins merged into this marker.",
+    "count": "Number of pins merged into this marker.",
+    "position": "Projected position of the cluster's centre.",
+    "hovered": "True while the pointer is over this cluster.",
+    "scale": "Suggested scale factor for zoom compensation; 1 at the default distance.",
+    "messages": "The globe's resolved UI strings, for the marker's accessible name."
+  },
+  "eventDescriptions": {
+    "onClick": "Runs the globe's cluster action: `onClusterClick`, or a flight that fits the pins."
+  }
+}
