@@ -28,12 +28,12 @@ export function DefaultPinPopup<TData>({ pin }: PinPopupRenderProps<TData>) {
   const title = pick(pin.data, ['title', 'name', 'label']) ?? pin.id;
   const subtitle = pick(pin.data, ['subtitle', 'description', 'caption']);
   return (
-    <div className="wg:pointer-events-none wg:min-w-32 wg:max-w-60 wg:px-3 wg:py-2" style={CARD}>
-      <p className="wg:m-0 wg:text-sm wg:leading-tight wg:font-semibold" style={{ color: 'var(--globe-text-primary, rgb(17 37 58))' }}>
+    <div className="rg:pointer-events-none rg:min-w-32 rg:max-w-60 rg:px-3 rg:py-2" style={CARD}>
+      <p className="rg:m-0 rg:text-sm rg:leading-tight rg:font-semibold" style={{ color: 'var(--globe-text-primary, rgb(17 37 58))' }}>
         {title}
       </p>
       {subtitle !== null && (
-        <p className="wg:m-0 wg:mt-0.5 wg:text-xs wg:leading-tight" style={{ color: 'var(--globe-text-secondary, rgb(60 90 114))' }}>
+        <p className="rg:m-0 rg:mt-0.5 rg:text-xs rg:leading-tight" style={{ color: 'var(--globe-text-secondary, rgb(60 90 114))' }}>
           {subtitle}
         </p>
       )}

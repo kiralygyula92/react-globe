@@ -8,10 +8,10 @@ import type { ReactNode } from 'react';
 import type { GlobeControlsRenderProps } from '../types';
 
 const BUTTON =
-  'wg:pointer-events-auto wg:flex wg:h-8 wg:w-8 wg:cursor-pointer wg:items-center wg:justify-center wg:rounded-md wg:border wg:transition-colors ' +
-  'wg:bg-[var(--globe-surface-card,rgb(15_18_38/0.72))] wg:border-[var(--globe-border-strong,rgb(255_255_255/0.3))] wg:text-[var(--globe-paper-100,rgb(247_251_253))] ' +
-  'wg:hover:bg-[var(--globe-surface-sunken,rgb(35_42_78/0.9))] wg:disabled:cursor-default wg:disabled:opacity-40 wg:disabled:hover:bg-[var(--globe-surface-card,rgb(15_18_38/0.72))] ' +
-  'wg:focus-visible:outline-2 wg:focus-visible:outline-offset-2 wg:focus-visible:outline-[var(--globe-aurora-500,rgb(63_224_197))]';
+  'rg:pointer-events-auto rg:flex rg:h-8 rg:w-8 rg:cursor-pointer rg:items-center rg:justify-center rg:rounded-md rg:border rg:transition-colors ' +
+  'rg:bg-[var(--globe-surface-card,rgb(15_18_38/0.72))] rg:border-[var(--globe-border-strong,rgb(255_255_255/0.3))] rg:text-[var(--globe-color-label,rgb(247_251_253))] ' +
+  'rg:hover:bg-[var(--globe-surface-sunken,rgb(35_42_78/0.9))] rg:disabled:cursor-default rg:disabled:opacity-40 rg:disabled:hover:bg-[var(--globe-surface-card,rgb(15_18_38/0.72))] ' +
+  'rg:focus-visible:outline-2 rg:focus-visible:outline-offset-2 rg:focus-visible:outline-[var(--globe-color-accent,rgb(63_224_197))]';
 
 function Icon({ children }: { children: ReactNode }) {
   return (
@@ -32,7 +32,7 @@ export function DefaultControls({
   canReset,
 }: GlobeControlsRenderProps) {
   return (
-    <div className="wg:pointer-events-none wg:absolute wg:right-3 wg:bottom-3 wg:flex wg:flex-col wg:gap-1.5">
+    <div className="rg:pointer-events-none rg:absolute rg:right-3 rg:bottom-3 rg:flex rg:flex-col rg:gap-1.5">
       <button type="button" className={BUTTON} aria-label="Zoom in" onClick={() => zoomIn()} disabled={!canZoomIn}>
         <Icon>
           <path d="M8 3.5v9M3.5 8h9" />

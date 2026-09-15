@@ -1,18 +1,23 @@
 {
   "name": "react-globe-workspace",
   "private": true,
+  "license": "MIT",
   "type": "module",
   "packageManager": "pnpm@11.6.0",
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
-    "build": "pnpm --filter @yourscope/react-globe build",
-    "dev": "pnpm build && pnpm --parallel --filter @yourscope/react-globe --filter demo dev",
-    "test": "pnpm --filter @yourscope/react-globe test",
+    "build": "pnpm --filter react-globe build",
+    "dev": "pnpm build && pnpm --parallel --filter react-globe --filter demo dev",
+    "test": "pnpm --filter react-globe test",
     "typecheck": "pnpm -r typecheck",
     "e2e": "playwright test",
     "assets": "node scripts/globe-assets.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
+    "sharp": "^0.35.4",
     "typescript": "^5.9.3"
   }
 }

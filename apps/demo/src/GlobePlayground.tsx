@@ -19,7 +19,7 @@ import {
   type PinPopupRenderProps,
   type PinRenderProps,
   type RenderStyle,
-} from '@yourscope/react-globe';
+} from 'react-globe';
 
 declare global {
   interface Window {
@@ -94,27 +94,27 @@ const T = {
 
   leave: 'Unmount: go to a blank page',
   credits:
-    'Day imagery © Solar System Scope, CC BY 4.0. Clouds: NASA Earth Observatory. Vector data: Natural Earth (public domain).',
+    'Imagery: NASA Blue Marble, GEBCO and Earth Observatory. Vector data: Natural Earth. All public domain.',
 } as const;
 
 /* ------------------------------------------------------------------ fixtures */
 
-type Payload = { title: string; subtitle: string; kind: string };
+type Payload = { title: string; subtitle: string };
 
-// Paris, Orly and Charles de Gaulle sit within a cluster radius of each other on
+// Paris, Versailles and Saint-Denis sit within a cluster radius of each other on
 // purpose; (0, 0) is the projection landmark. Keep all eleven.
 const CITIES: Pin<Payload>[] = [
-  { id: 'london', lat: 51.5074, lng: -0.1278, data: { title: 'London', subtitle: 'United Kingdom', kind: 'city' } },
-  { id: 'sydney', lat: -33.8688, lng: 151.2093, data: { title: 'Sydney', subtitle: 'Australia', kind: 'city' } },
-  { id: 'gulf', lat: 0, lng: 0, data: { title: 'Null Island', subtitle: 'Gulf of Guinea', kind: 'buoy' } },
-  { id: 'tokyo', lat: 35.6762, lng: 139.6503, data: { title: 'Tokyo', subtitle: 'Japan', kind: 'city' } },
-  { id: 'nyc', lat: 40.7128, lng: -74.006, data: { title: 'New York', subtitle: 'United States', kind: 'city' } },
-  { id: 'rio', lat: -22.9068, lng: -43.1729, data: { title: 'Rio de Janeiro', subtitle: 'Brazil', kind: 'city' } },
-  { id: 'cape', lat: -33.9249, lng: 18.4241, data: { title: 'Cape Town', subtitle: 'South Africa', kind: 'city' } },
-  { id: 'reykjavik', lat: 64.1466, lng: -21.9426, data: { title: 'Reykjavik', subtitle: 'Iceland', kind: 'city' } },
-  { id: 'paris', lat: 48.8566, lng: 2.3522, data: { title: 'Paris', subtitle: 'France', kind: 'city' } },
-  { id: 'paris-orly', lat: 48.7262, lng: 2.3652, data: { title: 'Orly', subtitle: 'Near Paris', kind: 'airport' } },
-  { id: 'paris-cdg', lat: 49.0097, lng: 2.5479, data: { title: 'Charles de Gaulle', subtitle: 'Near Paris', kind: 'airport' } },
+  { id: 'london', lat: 51.5074, lng: -0.1278, data: { title: 'London', subtitle: 'United Kingdom' } },
+  { id: 'sydney', lat: -33.8688, lng: 151.2093, data: { title: 'Sydney', subtitle: 'Australia' } },
+  { id: 'gulf', lat: 0, lng: 0, data: { title: 'Null Island', subtitle: 'Gulf of Guinea' } },
+  { id: 'tokyo', lat: 35.6762, lng: 139.6503, data: { title: 'Tokyo', subtitle: 'Japan' } },
+  { id: 'nyc', lat: 40.7128, lng: -74.006, data: { title: 'New York', subtitle: 'United States' } },
+  { id: 'rio', lat: -22.9068, lng: -43.1729, data: { title: 'Rio de Janeiro', subtitle: 'Brazil' } },
+  { id: 'cape', lat: -33.9249, lng: 18.4241, data: { title: 'Cape Town', subtitle: 'South Africa' } },
+  { id: 'reykjavik', lat: 64.1466, lng: -21.9426, data: { title: 'Reykjavik', subtitle: 'Iceland' } },
+  { id: 'paris', lat: 48.8566, lng: 2.3522, data: { title: 'Paris', subtitle: 'France' } },
+  { id: 'versailles', lat: 48.8049, lng: 2.1204, data: { title: 'Versailles', subtitle: 'France' } },
+  { id: 'saint-denis', lat: 48.9362, lng: 2.3574, data: { title: 'Saint-Denis', subtitle: 'France' } },
 ];
 
 // Every link overrides something different. `broken` references a pin that does
@@ -136,7 +136,7 @@ function stressPins(count: number): Pin<Payload>[] {
     const y = 1 - (i / (count - 1)) * 2;
     const lat = Math.asin(y) * (180 / Math.PI);
     const lng = ((i * golden * (180 / Math.PI)) % 360) - 180;
-    pins.push({ id: `s${i}`, lat, lng, data: { title: `Point ${i}`, subtitle: 'Stress set', kind: 'stress' } });
+    pins.push({ id: `s${i}`, lat, lng, data: { title: `Point ${i}`, subtitle: 'Stress set' } });
   }
   return pins;
 }

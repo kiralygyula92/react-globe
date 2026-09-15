@@ -11,7 +11,7 @@ export function GlobeFallback() {
     <div
       data-globe-fallback="true"
       role="presentation"
-      className="wg:flex wg:h-full wg:w-full wg:items-center wg:justify-center"
+      className="rg:flex rg:h-full rg:w-full rg:items-center rg:justify-center"
     >
       <svg
         viewBox="0 0 48 48"

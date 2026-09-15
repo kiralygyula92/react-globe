@@ -1,4 +1,4 @@
-# @yourscope/react-globe
+# react-globe
 
 A detailed, interactive 3D Earth for React, drawn with plain three.js.
 
@@ -17,25 +17,25 @@ Peer dependencies: `react >= 19`, `react-dom >= 19`, `three >= 0.170`. Nothing e
 ## Install
 
 ```bash
-pnpm add @yourscope/react-globe three
-pnpm add -D @types/three
+npm install react-globe three
+npm install -D @types/three
 ```
 
 Import the stylesheet once, at your app entry:
 
 ```tsx
-import '@yourscope/react-globe/globe.css';
+import 'react-globe/globe.css';
 ```
 
 The stylesheet is compiled Tailwind with no preflight (your base styles are untouched) and every
-utility prefixed `wg:`, so it cannot collide with your own Tailwind.
+utility prefixed `rg:`, so it cannot collide with your own Tailwind.
 
 ## Use
 
 The component fills its container, **so the container must have a size**:
 
 ```tsx
-import { Globe } from '@yourscope/react-globe';
+import { Globe } from 'react-globe';
 
 export function Somewhere() {
   return (
@@ -265,13 +265,13 @@ overriding components:
 
 | Token | Fallback | Used by |
 |---|---|---|
-| `--globe-paper-000` | `rgb(255 255 255)` | capital marker ring, cluster border |
-| `--globe-paper-100` | `rgb(247 251 253)` | country label, capital name, graticule label, control icon |
-| `--globe-aurora-500` | `rgb(63 224 197)` | capital dot, focus ring |
-| `--globe-marigold-500` | `rgb(255 181 61)` | cluster fill |
-| `--globe-marigold-200` | `rgb(255 226 172)` | cluster hover fill |
-| `--globe-ink-900` | `rgb(17 37 58)` | cluster text |
-| `--globe-space-800` | `rgb(11 16 38)` | country tooltip background |
+| `--globe-color-outline` | `rgb(255 255 255)` | capital marker ring, cluster border |
+| `--globe-color-label` | `rgb(247 251 253)` | country label, capital name, graticule label, control icon |
+| `--globe-color-accent` | `rgb(63 224 197)` | capital dot, focus ring |
+| `--globe-color-cluster` | `rgb(255 181 61)` | cluster fill |
+| `--globe-color-cluster-hover` | `rgb(255 226 172)` | cluster hover fill |
+| `--globe-color-cluster-text` | `rgb(17 37 58)` | cluster text |
+| `--globe-color-tooltip` | `rgb(11 16 38)` | country tooltip background |
 | `--globe-surface-card` | `rgb(255 255 255)` / `rgb(15 18 38 / 0.72)` | popup background / control background |
 | `--globe-surface-sunken` | `rgb(35 42 78 / 0.9)` | control hover |
 | `--globe-text-primary` | `rgb(17 37 58)` | popup title |
@@ -282,9 +282,9 @@ overriding components:
 
 ## Assets
 
-Every texture and dataset ships in `dist/assets/` (about 9 MB) and resolves relative to the module
+Every texture and dataset ships in `dist/assets/` (about 7 MB) and resolves relative to the module
 with `new URL('./assets/…', import.meta.url)`, which Vite, webpack 5, Rollup and native ESM all
-understand. If your bundler does not copy the files, copy `node_modules/@yourscope/react-globe/dist/assets`
+understand. If your bundler does not copy the files, copy `node_modules/react-globe/dist/assets`
 somewhere you serve and point the `assets` prop at them:
 
 ```tsx
@@ -294,18 +294,22 @@ somewhere you serve and point the `assets` prop at them:
 `countriesGeoJson` and `capitalsDataset` accept a URL or the parsed data. A raw Natural Earth file
 works: `NAME`, `ADMIN`, `ISO_A3` and `ADM0_A3` are accepted as fallbacks.
 
-### Licences and credits
+### Sources
 
-| File | Source | Licence |
-|---|---|---|
-| `countries-50m.geojson`, `coastline-50m.geojson`, `borders-50m.geojson`, `capitals-50m.json` | [Natural Earth](https://www.naturalearthdata.com/) 1:50m | Public domain |
-| `earth-day-8192.jpg`, `earth-day-2048.jpg` | [Solar System Scope](https://www.solarsystemscope.com/textures/), Blue Marble derivative | **CC BY 4.0 — © Solar System Scope** |
-| `earth-topology.png` | [three-globe](https://github.com/vasturiano/three-globe) example imagery | MIT |
-| `earth-clouds-2048.jpg` | NASA Earth Observatory cloud composite | Public domain, credit NASA |
-| `earth-normal-2048.jpg`, `earth-specular-2048.jpg` | three.js example textures (NASA-derived) | MIT |
+Every bundled file is public domain, so shipping the defaults carries no attribution or licence
+obligation. The normal and specular maps are computed from public-domain inputs by the repository's
+asset script rather than copied from anywhere.
 
-**The CC BY 4.0 attribution to Solar System Scope is a legal obligation.** If you ship the
-default day texture, credit Solar System Scope in your app.
+| File | Source |
+|---|---|
+| `countries-50m.geojson`, `coastline-50m.geojson`, `borders-50m.geojson`, `capitals-50m.json` | [Natural Earth](https://www.naturalearthdata.com/) 1:50m vectors |
+| `earth-day-8192.jpg`, `earth-day-2048.jpg` | NASA Blue Marble: Next Generation (July 2004) |
+| `earth-clouds-2048.jpg` | NASA Earth Observatory cloud composite |
+| `earth-topology.png` | NASA Visible Earth GEBCO elevation |
+| `earth-normal-2048.jpg` | Derived from `earth-topology.png` |
+| `earth-specular-2048.jpg` | Rasterised from Natural Earth land and lakes |
+
+Crediting NASA and Natural Earth is appreciated but not required.
 
 ## Performance contract
 

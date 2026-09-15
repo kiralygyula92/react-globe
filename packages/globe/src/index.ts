@@ -1,4 +1,4 @@
-/** Globe feature barrel — the module's only public surface. */
+/** Package entry — the only public surface. */
 
 export { Globe } from './Globe';
 export { GlobeLazy } from './Globe.lazy';

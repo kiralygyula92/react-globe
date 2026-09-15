@@ -6,6 +6,9 @@
 
 import { defineConfig, devices } from '@playwright/test';
 
+/** Override with DEMO_PORT when 5173 is taken by something else. */
+const PORT = Number(process.env.DEMO_PORT ?? 5173);
+
 export default defineConfig({
   testDir: 'e2e',
   timeout: 120_000,
@@ -15,7 +18,7 @@ export default defineConfig({
   retries: 0,
   reporter: [['list']],
   use: {
-    baseURL: 'http://localhost:5173',
+    baseURL: `http://localhost:${PORT}`,
     trace: 'retain-on-failure',
   },
   projects: [
@@ -31,7 +34,7 @@ export default defineConfig({
   ],
   webServer: {
     command: 'pnpm --filter demo dev',
-    url: 'http://localhost:5173',
+    url: `http://localhost:${PORT}`,
     reuseExistingServer: true,
     timeout: 120_000,
   },

@@ -91,7 +91,7 @@ const NEON_SEA_STOPS: readonly RampStop[] = [
 
 /* --------------------------------------------------------------------- cartoon */
 
-/** Six travel-poster hues, assigned by graph colouring. */
+/** Six atlas hues, assigned by graph colouring. */
 export const CARTOON_FILLS = [38, 96, 172, 268, 320, 14].map((h) => `hsl(${h}, 58%, 62%)`);
 export const CARTOON_SEA: Rgb = [55, 122, 168];
 /** Islets too small for the dataset. */

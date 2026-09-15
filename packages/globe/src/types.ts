@@ -1,4 +1,4 @@
-/** Public types for the globe feature. */
+/** Public types. */
 
 import type { ComponentType, MouseEvent as ReactMouseEvent } from 'react';
 import type { Feature, FeatureCollection, MultiPolygon, Polygon } from 'geojson';

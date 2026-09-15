@@ -86,7 +86,7 @@ const MARKER_RADIUS = 1.02;
 const POPUP_FLIP_Y = 120;
 
 const HIDDEN: CSSProperties = { visibility: 'hidden' };
-const ANCHOR_CLASS = 'wg:absolute wg:left-0 wg:top-0 wg:will-change-transform';
+const ANCHOR_CLASS = 'rg:absolute rg:left-0 rg:top-0 rg:will-change-transform';
 const EMPTY_COUNTRIES: readonly PreparedCountry[] = Object.freeze([]);
 const GRATICULE_LABELS = graticuleLabels();
 
@@ -944,7 +944,7 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
 
   if (failed) {
     return (
-      <div className={`wg:relative ${p.className ?? ''}`} style={{ width: p.width, height: p.height }}>
+      <div className={`rg:relative ${p.className ?? ''}`} style={{ width: p.width, height: p.height }}>
         <GlobeFallback />
       </div>
     );
@@ -954,7 +954,7 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
     <div
       ref={containerRef}
       data-globe-root="true"
-      className={`wg:relative wg:isolate wg:overflow-hidden ${p.className ?? ''}`}
+      className={`rg:relative rg:isolate rg:overflow-hidden ${p.className ?? ''}`}
       style={{
         width: p.width,
         height: p.height,
@@ -962,9 +962,9 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
       }}
     >
       {/* The canvas is appended here by the engine. */}
-      <div className="wg:pointer-events-none wg:absolute wg:inset-0 wg:isolate">
+      <div className="rg:pointer-events-none rg:absolute rg:inset-0 rg:isolate">
         {ConnectionComponent && overlay.paths.length > 0 && (
-          <svg className="wg:absolute wg:inset-0 wg:h-full wg:w-full wg:overflow-visible" aria-hidden="true">
+          <svg className="rg:absolute rg:inset-0 rg:h-full rg:w-full rg:overflow-visible" aria-hidden="true">
             {overlay.paths.map((entry) => (
               <ConnectionComponent
                 key={entry.connection.id}
@@ -1037,8 +1037,8 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
             <div
               className={
                 popupPlacement === 'bottom'
-                  ? 'wg:translate-y-2 wg:-translate-x-1/2'
-                  : 'wg:-translate-y-[calc(100%+0.5rem)] wg:-translate-x-1/2'
+                  ? 'rg:translate-y-2 rg:-translate-x-1/2'
+                  : 'rg:-translate-y-[calc(100%+0.5rem)] rg:-translate-x-1/2'
               }
             >
               <PopupComponent
@@ -1055,7 +1055,7 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
 
         {p.showControls && <Controls {...controlsProps} />}
       </div>
-      <span className="wg:sr-only" role="status" aria-live="polite">
+      <span className="rg:sr-only" role="status" aria-live="polite">
         {hoveredCountry?.name ?? ''}
       </span>
     </div>

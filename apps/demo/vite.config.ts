@@ -19,5 +19,5 @@ export default defineConfig({
       'three/examples/jsm/lines/LineSegmentsGeometry.js',
     ],
   },
-  server: { port: 5173, strictPort: true },
+  server: { port: Number(process.env.DEMO_PORT ?? 5173), strictPort: true },
 });

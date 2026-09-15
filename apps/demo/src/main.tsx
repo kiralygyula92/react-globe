@@ -7,7 +7,7 @@
 
 import { StrictMode, useEffect, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import '@yourscope/react-globe/globe.css';
+import 'react-globe/globe.css';
 import './index.css';
 import { GlobePlayground } from './GlobePlayground';
 
