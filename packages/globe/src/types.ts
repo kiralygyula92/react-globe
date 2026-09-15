@@ -2,6 +2,7 @@
 
 import type { ComponentType, MouseEvent as ReactMouseEvent } from 'react';
 import type { Feature, FeatureCollection, MultiPolygon, Polygon } from 'geojson';
+import type { GlobeMessages } from './i18n';
 
 /* ------------------------------------------------------------------ geometry */
 
@@ -69,6 +70,8 @@ export type CountryProperties = {
   labelLng: number | null;
   /** Lower sorts first when labels collide. */
   labelPriority: number;
+  /** The name in other languages, keyed by language subtag ('de', 'ro'). `name` is used where a language is missing. */
+  names?: Readonly<Record<string, string>>;
 };
 
 export type CountryFeature = Feature<Polygon | MultiPolygon, CountryProperties>;
@@ -86,6 +89,8 @@ export type CapitalRecord = {
   lng: number;
   /** Lower sorts first when labels collide. */
   labelPriority: number;
+  /** The name in other languages, keyed by language subtag ('de', 'ro'). `name` is used where a language is missing. */
+  names?: Readonly<Record<string, string>>;
 };
 
 export type RenderStyle = 'standard' | 'realistic' | 'cartoon' | 'modern';
@@ -130,6 +135,8 @@ export interface ClusterRenderProps<TData = Record<string, unknown>> {
   hovered: boolean;
   scale: number;
   onClick: (event: ReactMouseEvent<HTMLElement>) => void;
+  /** The globe's resolved UI strings, for the marker's accessible name. */
+  messages: GlobeMessages;
 }
 
 /** One sample of a projected connection path. */
@@ -165,6 +172,8 @@ export interface GlobeControlsRenderProps {
   /** False while the camera is already sitting at the home pose. */
   canReset: boolean;
   camera: Required<CameraPose>;
+  /** The globe's resolved UI strings, for the buttons' accessible names. */
+  messages: GlobeMessages;
 }
 
 /* ---------------------------------------------------------------------- props */
@@ -256,6 +265,17 @@ export interface GlobeProps<TData = Record<string, unknown>> {
   /** The default stroke colour. A connection's own `color` overrides it. */
   connectionColor?: string;
   connectionComponent?: ComponentType<ConnectionRenderProps<TData>>;
+
+  /* ---- localisation ---- */
+  /**
+   * Language for the built-in UI strings and for country and capital names, as a
+   * BCP 47 tag ('de', 'de-AT'). Built-in: 'en', 'ro', 'de', 'es', 'fr', 'hu'. Any
+   * other language still picks place names from a dataset that carries them, with
+   * English UI strings unless `messages` supplies every one.
+   */
+  locale?: string;
+  /** Replaces any built-in UI string for the current locale. */
+  messages?: Partial<GlobeMessages>;
 
   /* ---- lifecycle ---- */
   onReady?: (handle: GlobeHandle) => void;

@@ -30,30 +30,31 @@ export function DefaultControls({
   canZoomIn,
   canZoomOut,
   canReset,
+  messages,
 }: GlobeControlsRenderProps) {
   return (
     <div className="rg:pointer-events-none rg:absolute rg:right-3 rg:bottom-3 rg:flex rg:flex-col rg:gap-1.5">
-      <button type="button" className={BUTTON} aria-label="Zoom in" onClick={() => zoomIn()} disabled={!canZoomIn}>
+      <button type="button" className={BUTTON} aria-label={messages.zoomIn} onClick={() => zoomIn()} disabled={!canZoomIn}>
         <Icon>
           <path d="M8 3.5v9M3.5 8h9" />
         </Icon>
       </button>
-      <button type="button" className={BUTTON} aria-label="Zoom out" onClick={() => zoomOut()} disabled={!canZoomOut}>
+      <button type="button" className={BUTTON} aria-label={messages.zoomOut} onClick={() => zoomOut()} disabled={!canZoomOut}>
         <Icon>
           <path d="M3.5 8h9" />
         </Icon>
       </button>
-      <button type="button" className={BUTTON} aria-label="Rotate left" onClick={() => rotateLeft()}>
+      <button type="button" className={BUTTON} aria-label={messages.rotateLeft} onClick={() => rotateLeft()}>
         <Icon>
           <path d="M10 3.5 5.5 8 10 12.5" />
         </Icon>
       </button>
-      <button type="button" className={BUTTON} aria-label="Rotate right" onClick={() => rotateRight()}>
+      <button type="button" className={BUTTON} aria-label={messages.rotateRight} onClick={() => rotateRight()}>
         <Icon>
           <path d="M6 3.5 10.5 8 6 12.5" />
         </Icon>
       </button>
-      <button type="button" className={BUTTON} aria-label="Reset view" onClick={() => reset()} disabled={!canReset}>
+      <button type="button" className={BUTTON} aria-label={messages.resetView} onClick={() => reset()} disabled={!canReset}>
         <Icon>
           <path d="M3 8a5 5 0 1 0 1.5-3.6" />
           <path d="M3 3v2.5h2.5" />

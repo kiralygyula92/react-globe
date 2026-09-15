@@ -30,16 +30,20 @@ const GRAY = 'rgb(210, 210, 210)';
 
 export type GraticuleLabel = { key: string; lat: number; lng: number; text: string };
 
+export type HemisphereLetters = { north: string; south: string; east: string; west: string };
+
+const ENGLISH_LETTERS: HemisphereLetters = { north: 'N', south: 'S', east: 'E', west: 'W' };
+
 /** Meridians read off the equator, parallels off Greenwich, plus one 0 degrees at the origin. */
-export function graticuleLabels(): GraticuleLabel[] {
+export function graticuleLabels(letters: HemisphereLetters = ENGLISH_LETTERS): GraticuleLabel[] {
   const labels: GraticuleLabel[] = [{ key: 'origin', lat: 0, lng: 0, text: '0°' }];
   for (let lng = -180 + GRATICULE_STEP; lng <= 180; lng += GRATICULE_STEP) {
     if (lng === 0) continue;
-    labels.push({ key: `m${lng}`, lat: 0, lng, text: `${Math.abs(lng)}°${lng < 0 ? 'W' : 'E'}` });
+    labels.push({ key: `m${lng}`, lat: 0, lng, text: `${Math.abs(lng)}°${lng < 0 ? letters.west : letters.east}` });
   }
   for (let lat = -90 + GRATICULE_STEP; lat < 90; lat += GRATICULE_STEP) {
     if (lat === 0) continue;
-    labels.push({ key: `p${lat}`, lat, lng: 0, text: `${Math.abs(lat)}°${lat < 0 ? 'S' : 'N'}` });
+    labels.push({ key: `p${lat}`, lat, lng: 0, text: `${Math.abs(lat)}°${lat < 0 ? letters.south : letters.north}` });
   }
   return labels;
 }

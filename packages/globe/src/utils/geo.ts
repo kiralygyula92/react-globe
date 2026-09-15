@@ -18,7 +18,10 @@ export type PreparedPolygon = { rings: Position[][]; bbox: Bbox };
 export type PreparedCountry = {
   feature: CountryFeature;
   id: string;
+  /** English. */
   name: string;
+  /** Other languages, keyed by language subtag. */
+  names: Readonly<Record<string, string>>;
   polygons: PreparedPolygon[];
   bbox: Bbox;
   labelPoint: LatLng;
@@ -45,6 +48,27 @@ const text = (value: unknown): string | null =>
 const finite = (value: unknown): number | null =>
   typeof value === 'number' && Number.isFinite(value) ? value : null;
 
+/** Natural Earth's per-language columns: NAME_DE, NAME_ZHT… NAME_EN is English, which `name` already is. */
+const NATURAL_EARTH_NAME = /^NAME_([A-Z]{2,3})$/;
+
+/** A `names` object of strings, or else Natural Earth's NAME_XX columns, keyed by lowercase subtag. */
+function namesOf(p: Record<string, unknown>, name: string): Record<string, string> {
+  const names: Record<string, string> = {};
+  if (p.names && typeof p.names === 'object') {
+    for (const [lang, value] of Object.entries(p.names as Record<string, unknown>)) {
+      const t = text(value);
+      if (t) names[lang.toLowerCase()] = t;
+    }
+    return names;
+  }
+  for (const [key, value] of Object.entries(p)) {
+    const match = NATURAL_EARTH_NAME.exec(key);
+    const t = text(value);
+    if (match && match[1] !== 'EN' && t && t !== name) names[match[1].toLowerCase()] = t;
+  }
+  return names;
+}
+
 /**
  * Fills in whatever a consumer-supplied collection left out, accepting Natural
  * Earth's raw property names as fallbacks.
@@ -61,6 +85,7 @@ export function normaliseProperties(raw: Record<string, unknown> | null | undefi
     labelLat: finite(p.labelLat) ?? finite(p.LABEL_Y),
     labelLng: finite(p.labelLng) ?? finite(p.LABEL_X),
     labelPriority: finite(p.labelPriority) ?? finite(p.LABELRANK) ?? 10,
+    names: namesOf(p, name),
   };
 }
 
@@ -146,6 +171,7 @@ export function prepareCountries(collection: FeatureCollection): PreparedCountry
       feature: { type: 'Feature', geometry, properties: { ...properties, id } },
       id,
       name: properties.name,
+      names: properties.names ?? {},
       polygons,
       bbox,
       labelPoint,

@@ -156,8 +156,22 @@ describe('prepareCountries', () => {
       labelLat: null,
       labelLng: null,
       labelPriority: 3,
+      names: {},
     });
     expect(normaliseProperties({}, 4).labelPriority).toBe(10);
+  });
+
+  it("reads Natural Earth's NAME_XX columns as localised names, skipping English and blanks", () => {
+    const { names } = normaliseProperties(
+      { NAME: 'Germany', NAME_EN: 'Germany', NAME_DE: 'Deutschland', NAME_HU: 'Németország', NAME_ZHT: '德國', NAME_FR: '-99', NAME_LONG: 'Federal Republic of Germany' },
+      0,
+    );
+    expect(names).toEqual({ de: 'Deutschland', hu: 'Németország', zht: '德國' });
+  });
+
+  it('prefers a names object over NAME_XX columns, lowercasing its keys', () => {
+    const { names } = normaliseProperties({ name: 'Spain', names: { ES: 'España', ro: 'Spania', fr: '' }, NAME_DE: 'Spanien' }, 0);
+    expect(names).toEqual({ es: 'España', ro: 'Spania' });
   });
 });
 

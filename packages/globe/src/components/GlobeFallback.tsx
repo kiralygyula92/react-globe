@@ -1,9 +1,9 @@
 /**
  * The wordless placeholder shown while the globe loads or after it fails.
  *
- * The module owns no translations, so any message could only be hardcoded
- * English; it draws a decorative glyph and reports through `onError`, leaving the
- * copy to the consumer.
+ * Deliberately wordless: it shows before the locale's strings matter and after a
+ * failure the consumer reports through `onError` in their own words, so it draws a
+ * decorative glyph and leaves the copy to the consumer.
  */
 
 export function GlobeFallback() {

@@ -48,6 +48,8 @@ export const GLOBE_DEFAULTS = {
   connectionLineStyle: 'solid',
   connectionWidth: 2,
   connectionColor: 'rgb(255, 181, 61)',
+
+  locale: 'en',
 } as const;
 
 export const DEFAULT_CAMERA: Required<CameraPose> = Object.freeze({

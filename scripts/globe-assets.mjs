@@ -83,11 +83,11 @@ function cleanGeometry(geometry) {
   }
 }
 
-async function fetchWithRetry(url, attempts = 3) {
+async function fetchWithRetry(url, attempts = 3, headers = {}) {
   let lastError;
   for (let i = 0; i < attempts; i++) {
     try {
-      const res = await fetch(url, { redirect: 'follow' });
+      const res = await fetch(url, { redirect: 'follow', headers });
       if (!res.ok) throw new Error(`${res.status} ${res.statusText}`);
       return res;
     } catch (error) {
@@ -109,25 +109,76 @@ async function save(file, data) {
 
 const collection = (features) => JSON.stringify({ type: 'FeatureCollection', features });
 
+/* ------------------------------------------------------------ localised names */
+
+/**
+ * Languages with bundled place names, besides English (which is `name`). Keep in
+ * step with GLOBE_LOCALES in packages/globe/src/i18n.
+ */
+const NAME_LANGUAGES = ['ro', 'de', 'es', 'fr', 'hu'];
+
+const WIKIDATA = 'https://www.wikidata.org/w/api.php';
+/** Wikidata asks API clients to identify themselves. */
+const USER_AGENT = 'react-globe-assets/1.0 (https://github.com/kiralygyula92/react-globe)';
+
+/** Labels for every id, in every NAME_LANGUAGES language. Wikidata labels are CC0. */
+async function wikidataLabels(ids) {
+  const labels = new Map();
+  const unique = [...new Set(ids.filter(Boolean))];
+  for (let i = 0; i < unique.length; i += 50) {
+    const batch = unique.slice(i, i + 50);
+    const url = `${WIKIDATA}?action=wbgetentities&format=json&props=labels&maxlag=5&languages=${NAME_LANGUAGES.join('|')}&ids=${batch.join('|')}`;
+    let data;
+    for (let attempt = 0; ; attempt++) {
+      data = await (await fetchWithRetry(url, 3, { 'User-Agent': USER_AGENT })).json();
+      if (data.error?.code !== 'maxlag' || attempt >= 5) break;
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+    }
+    if (data.error) throw new Error(`wikidata: ${data.error.code} ${data.error.info}`);
+    for (const [id, entity] of Object.entries(data.entities ?? {})) {
+      labels.set(id, Object.fromEntries(Object.entries(entity.labels ?? {}).map(([lang, l]) => [lang, l.value])));
+    }
+  }
+  return labels;
+}
+
+/**
+ * Natural Earth's own NAME_XX first (it is edited for map labels), Wikidata where
+ * Natural Earth has no column for the language (Romanian) or no value. Entries
+ * that merely repeat the English name are dropped: the component falls back to
+ * `name` anyway.
+ */
+function localisedNames(properties, english, labels) {
+  const names = {};
+  for (const lang of NAME_LANGUAGES) {
+    const value = nullIfDash(properties[`NAME_${lang.toUpperCase()}`]) ?? labels?.[lang] ?? null;
+    if (value && value !== english) names[lang] = value;
+  }
+  return names;
+}
+
 /* ----------------------------------------------------------------- datasets */
 
 async function countries() {
   const source = await fetchJson(`${NATURAL_EARTH}/ne_50m_admin_0_countries.geojson`);
-  const features = source.features
-    .filter((f) => f.geometry && (f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon'))
+  const kept = source.features.filter((f) => f.geometry && (f.geometry.type === 'Polygon' || f.geometry.type === 'MultiPolygon'));
+  const labels = await wikidataLabels(kept.map((f) => nullIfDash(f.properties.WIKIDATAID)));
+  const features = kept
     .map((f) => {
       const p = f.properties;
+      const name = p.NAME ?? p.ADMIN ?? p.NAME_LONG ?? 'Unknown';
       return {
         type: 'Feature',
         properties: {
           id: nullIfDash(p.ADM0_A3) ?? nullIfDash(p.ISO_A3) ?? nullIfDash(p.SOV_A3) ?? String(p.NAME).toUpperCase().slice(0, 3),
-          name: p.NAME ?? p.ADMIN ?? p.NAME_LONG ?? 'Unknown',
+          name,
           isoA2: nullIfDash(p.ISO_A2),
           isoA3: nullIfDash(p.ISO_A3),
           labelLat: round(p.LABEL_Y),
           labelLng: round(p.LABEL_X),
           // LABELRANK runs 1 (most important) upward, which is exactly our priority order.
           labelPriority: p.LABELRANK ?? 10,
+          names: localisedNames(p, name, labels.get(nullIfDash(p.WIKIDATAID))),
         },
         geometry: cleanGeometry(f.geometry),
       };
@@ -145,10 +196,16 @@ async function lines(source, file) {
 
 async function capitals() {
   const data = await fetchJson(`${NATURAL_EARTH}/ne_50m_populated_places_simple.geojson`);
-  const records = data.features
-    .filter((f) => String(f.properties.featurecla ?? '').startsWith('Admin-0 capital'))
+  // The simple file has no Wikidata ids or NAME_XX columns; the full one does.
+  const full = await fetchJson(`${NATURAL_EARTH}/ne_50m_populated_places.geojson`);
+  const fullByKey = new Map(full.features.map((f) => [`${f.properties.NAME}|${f.properties.ADM0_A3}`, f.properties]));
+  const kept = data.features.filter((f) => String(f.properties.featurecla ?? '').startsWith('Admin-0 capital'));
+  const detail = (p) => fullByKey.get(`${p.name}|${p.adm0_a3}`) ?? {};
+  const labels = await wikidataLabels(kept.map((f) => nullIfDash(detail(f.properties).WIKIDATAID)));
+  const records = kept
     .map((f) => {
       const p = f.properties;
+      const d = detail(p);
       const [lng, lat] = f.geometry.coordinates;
       return {
         id: `${p.adm0_a3 ?? p.sov_a3 ?? 'XXX'}-${String(p.name).replace(/\s+/g, '-')}`,
@@ -159,6 +216,7 @@ async function capitals() {
         lng: round(lng),
         // scalerank runs 0 (biggest) upward; capitals of larger nations show first.
         labelPriority: p.scalerank ?? 8,
+        names: localisedNames(d, p.name, labels.get(nullIfDash(d.WIKIDATAID))),
       };
     })
     .sort((a, b) => a.labelPriority - b.labelPriority || a.name.localeCompare(b.name));

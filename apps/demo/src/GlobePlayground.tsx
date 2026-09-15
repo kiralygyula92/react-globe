@@ -7,6 +7,7 @@
 import { useMemo, useRef, useState, type CSSProperties, type ReactNode } from 'react';
 import {
   DefaultConnection,
+  GLOBE_LOCALES,
   Globe,
   type CameraPose,
   type ClusterRenderProps,
@@ -14,6 +15,7 @@ import {
   type ConnectionType,
   type GlobeControlsRenderProps,
   type GlobeHandle,
+  type GlobeLocale,
   type Pin,
   type PinConnection,
   type PinPopupRenderProps,
@@ -63,6 +65,9 @@ const T = {
   colorScheme: 'colorScheme',
   showClouds: 'showClouds (realistic)',
   backgroundColor: 'backgroundColor',
+
+  localization: 'Localization',
+  locale: 'locale',
 
   stress: '5 000-pin stress set',
   showPinPopup: 'showPinPopup',
@@ -306,6 +311,7 @@ export function GlobePlayground() {
   const [showGraticuleLabels, setShowGraticuleLabels] = useState(true);
 
   const [renderStyle, setRenderStyle] = useState<RenderStyle>('standard');
+  const [locale, setLocale] = useState<GlobeLocale>('en');
   const [colorScheme, setColorScheme] = useState<'color' | 'grayscale'>('color');
   const [showClouds, setShowClouds] = useState(true);
   const [backgroundColor, setBackgroundColor] = useState<string>('transparent');
@@ -370,6 +376,7 @@ export function GlobePlayground() {
           colorScheme={colorScheme}
           showClouds={showClouds}
           backgroundColor={backgroundColor}
+          locale={locale}
           pins={stress ? stressSet : CITIES}
           pinComponent={useSquarePin ? SquarePin : undefined}
           pinPopupComponent={useFatPopup ? FatPopup : undefined}
@@ -467,6 +474,12 @@ export function GlobePlayground() {
           </Row>
           <Row label={T.backgroundColor}>
             <Pick value={backgroundColor} options={BACKGROUNDS} onChange={setBackgroundColor} />
+          </Row>
+        </Section>
+
+        <Section title={T.localization}>
+          <Row label={T.locale}>
+            <Pick value={locale} options={GLOBE_LOCALES} onChange={setLocale} />
           </Row>
         </Section>
 

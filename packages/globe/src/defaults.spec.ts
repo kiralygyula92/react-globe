@@ -59,6 +59,8 @@ describe('GLOBE_DEFAULTS', () => {
     expect(GLOBE_DEFAULTS.connectionLineStyle).toBe('solid');
     expect(GLOBE_DEFAULTS.connectionWidth).toBe(2);
     expect(GLOBE_DEFAULTS.connectionColor).toBe('rgb(255, 181, 61)');
+
+    expect(GLOBE_DEFAULTS.locale).toBe('en');
   });
 
   it('holds the camera and interaction constants', () => {

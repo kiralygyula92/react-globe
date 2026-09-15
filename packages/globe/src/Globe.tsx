@@ -50,6 +50,7 @@ import { resolveAssets } from './assets';
 import { GlobeEngine, type EngineCallbacks, type ProjectedPoint } from './core/GlobeEngine';
 import { OverlayPositioner } from './core/OverlayPositioner';
 import { graticuleLabels } from './core/layers/GraticuleLayer';
+import { localizedName, resolveLocale } from './i18n';
 import {
   connectionPath,
   resolveConnection,
@@ -88,7 +89,6 @@ const POPUP_FLIP_Y = 120;
 const HIDDEN: CSSProperties = { visibility: 'hidden' };
 const ANCHOR_CLASS = 'rg:absolute rg:left-0 rg:top-0 rg:will-change-transform';
 const EMPTY_COUNTRIES: readonly PreparedCountry[] = Object.freeze([]);
-const GRATICULE_LABELS = graticuleLabels();
 
 type AnchorOptions = { collides?: boolean; priority?: number; alignToNormal?: boolean };
 type AnchorSpec = { lat: number; lng: number; radius: number; collides: boolean; priority: number; alignToNormal: boolean };
@@ -140,6 +140,17 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
   );
   const homeRef = useRef(home);
   homeRef.current = home;
+
+  /* ----------------------------------------------------------- localisation */
+
+  const m = props.messages;
+  const localeInfo = useMemo(
+    () => resolveLocale(p.locale, m),
+    // Members, not identity, so an inline `messages` object keeps the same strings.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [p.locale, m?.zoomIn, m?.zoomOut, m?.rotateLeft, m?.rotateRight, m?.resetView, m?.cluster, m?.north, m?.south, m?.east, m?.west],
+  );
+  const { language, messages } = localeInfo;
 
   /* ----------------------------------------------------------------- state */
 
@@ -633,6 +644,20 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
     for (const problem of links.problems) devWarn(problem);
   }, [links.problems, p.enableConnections]);
 
+  useEffect(() => {
+    if (localeInfo.fellBack) {
+      devWarn(
+        `[globe] locale "${p.locale}" has no built-in UI strings; using English. Pass \`messages\` to translate them. Place names still use "${language}" where the dataset has it.`,
+      );
+    }
+  }, [localeInfo.fellBack, p.locale, language]);
+
+  // Labels change width with the language, so the collision layout must be redone.
+  useEffect(() => {
+    positioner.markDirty();
+    engineRef.current?.invalidate();
+  }, [language, positioner]);
+
   /* ------------------------------------------------------- prop sync effects */
 
   const grayscale = p.colorScheme === 'grayscale';
@@ -843,10 +868,11 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
   const capitalsActive = p.showCapitals && assets.capitals !== null && pose.zoom <= p.capitalsMinZoom;
   const markerScale = Math.min(1.6, Math.max(0.55, pose.zoom / 2.6));
 
+  const { north, south, east, west } = messages;
   const gridLabels = useMemo(
     () =>
       gridLabelsActive
-        ? GRATICULE_LABELS.map((label) => (
+        ? graticuleLabels({ north, south, east, west }).map((label) => (
             <div
               key={`grid:${label.key}`}
               ref={anchorRef(`grid:${label.key}`, label.lat, label.lng, 1.004, { collides: true, priority: 900 })}
@@ -857,7 +883,7 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
             </div>
           ))
         : null,
-    [gridLabelsActive, anchorRef],
+    [gridLabelsActive, anchorRef, north, south, east, west],
   );
 
   const countryLabels = useMemo(
@@ -873,11 +899,11 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
               className={ANCHOR_CLASS}
               style={HIDDEN}
             >
-              <CountryLabel name={country.name} />
+              <CountryLabel name={localizedName(country, language)} />
             </div>
           ))
         : null,
-    [labelsActive, countries, anchorRef],
+    [labelsActive, countries, anchorRef, language],
   );
 
   const capitals = assets.capitals;
@@ -894,11 +920,11 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
               className={ANCHOR_CLASS}
               style={HIDDEN}
             >
-              <CapitalMarker name={capital.name} />
+              <CapitalMarker name={localizedName(capital, language)} />
             </div>
           ))
         : null,
-    [capitalsActive, capitals, anchorRef],
+    [capitalsActive, capitals, anchorRef, language],
   );
 
   const PinComponent = p.pinComponent as ComponentType<PinRenderProps<TData>> | undefined;
@@ -938,6 +964,7 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
     canZoomOut: pose.zoom < p.maxZoom - 1e-3,
     canReset: !posesMatch(pose, home),
     camera: pose,
+    messages,
   };
 
   const showTooltip = p.showCountryNameOnHover && !p.showCountryNames && hoveredCountry !== null;
@@ -954,6 +981,7 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
     <div
       ref={containerRef}
       data-globe-root="true"
+      lang={language}
       className={`rg:relative rg:isolate rg:overflow-hidden ${p.className ?? ''}`}
       style={{
         width: p.width,
@@ -1021,6 +1049,7 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
               hovered={hoveredClusterId === cluster.id}
               scale={markerScale}
               onClick={() => onClusterClick(cluster)}
+              messages={messages}
             />
           </div>
         ))}
@@ -1051,12 +1080,12 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
           </div>
         )}
 
-        {showTooltip && <CountryTooltip name={hoveredCountry.name} elementRef={tooltipElementRef} />}
+        {showTooltip && <CountryTooltip name={localizedName(hoveredCountry, language)} elementRef={tooltipElementRef} />}
 
         {p.showControls && <Controls {...controlsProps} />}
       </div>
       <span className="rg:sr-only" role="status" aria-live="polite">
-        {hoveredCountry?.name ?? ''}
+        {hoveredCountry ? localizedName(hoveredCountry, language) : ''}
       </span>
     </div>
   );

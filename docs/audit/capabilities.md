@@ -55,6 +55,7 @@ lifecycles are assigned in Phase 2.
 | C-23 | Render overrides (cross-cutting) | `pinComponent`, `pinPopupComponent`, `clusterComponent`, `connectionComponent`, `controlsComponent` | Render overrides | e2e every override | Confirmed |
 | C-24 | Lifecycle & error handling | `onReady`, `onError` | Props › Lifecycle | e2e 20× mount/unmount | Confirmed (onError untested) |
 | C-25 | Accessibility & reduced motion | *(behaviour only)* | Accessibility | — | Confirmed (untested) |
+| C-26 | Localization *(added after the audit)* | `locale`, `messages`, `GlobeMessages`, `GlobeLocale`, `GLOBE_LOCALES`, `globeMessages`, `localizedName`, `CountryProperties.names`, `CapitalRecord.names` | Localization | e2e locale; unit `i18n.spec.ts` | Confirmed |
 
 ---
 
@@ -128,6 +129,19 @@ Only capabilities with something to report beyond "Confirmed" are expanded.
   flights, auto-rotate, cloud drift and connection flow (`GlobeEngine.ts`, `SurfaceLayer.ts`,
   `ConnectionLayer.ts`).
 - D: same claims. Confirmed by reading; untested.
+
+### C-26 Localization *(added 2026-09-15, after the Phase 2 gate; resolves GAPS G-17)*
+- Built on the owner's decision at the Phase 2 gate; not part of the original audit.
+- S (`i18n.ts`): six built-in message sets (en, ro, de, es, fr, hu) for control and cluster accessible
+  names (plurals via `Intl.PluralRules`) and graticule hemisphere letters; `resolveLocale` maps BCP 47
+  tags to a language and merges `messages` overrides; unknown languages fall back to English UI strings
+  with a dev warning but still read place names from the dataset.
+- S (`Globe.tsx`): country labels, capital labels, hover tooltip and the `role="status"` announcement
+  use `localizedName`; the container gets `lang`.
+- Data: bundled `countries-50m.geojson` and `capitals-50m.json` carry `names` for ro/de/es/fr/hu
+  (Natural Earth `NAME_XX`, Wikidata CC0 labels for Romanian and gaps), omitted where identical to
+  English. `normaliseProperties` also reads a raw Natural Earth file's `NAME_XX` columns.
+- D: package README › Localization (prose and examples only; no hand-written table).
 
 ---
 

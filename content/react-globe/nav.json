@@ -45,6 +45,7 @@
           { "pathname": "/react-globe/borders/", "capabilityId": "borders", "plan": "free" },
           { "pathname": "/react-globe/country-names/", "capabilityId": "country-names", "plan": "free" },
           { "pathname": "/react-globe/capitals/", "capabilityId": "capitals", "plan": "free" },
+          { "pathname": "/react-globe/localization/", "capabilityId": "localization", "plan": "free" },
           { "pathname": "/react-globe/graticule/", "capabilityId": "graticule", "plan": "free" },
           { "pathname": "/react-globe/background/", "capabilityId": "background", "plan": "free" }
         ]

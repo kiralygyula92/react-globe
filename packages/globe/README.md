@@ -257,6 +257,50 @@ function MyControls({ zoomIn, zoomOut, reset, canZoomIn, canReset, camera }: Glo
 The overlay layer is `pointer-events: none` so drags reach the canvas; anything interactive must
 opt back in with `pointer-events: auto`.
 
+## Localization
+
+Pass `locale` to translate the built-in UI and the bundled place names. English, Romanian, German,
+Spanish, French and Hungarian are built in (`en`, `ro`, `de`, `es`, `fr`, `hu`); a regional tag such as
+`de-AT` uses its language.
+
+```tsx
+<Globe locale="hu" showCountryNames showCapitals showControls />
+```
+
+What changes with the locale:
+
+- the accessible names of the zoom, rotate and reset buttons and of cluster markers (with the
+  language's plural rules);
+- the hemisphere letters on graticule labels (`30°É` in Hungarian);
+- country and capital names in labels, the hover tooltip and the screen-reader announcement;
+- the container's `lang` attribute.
+
+Override any string with `messages`. Custom controls and clusters receive the resolved strings as a
+`messages` render prop.
+
+```tsx
+import { Globe, globeMessages } from 'react-globe';
+
+<Globe locale="de" messages={{ resetView: 'Zurück zur Startansicht' }} />;
+```
+
+For another language, pass its tag and every string in `messages`. Place names are then read from a
+dataset that carries that language: a raw Natural Earth file works through its `NAME_XX` columns, or
+supply a `names: { it: '…' }` object per country or capital. Missing names fall back to English.
+
+```tsx
+<Globe
+  locale="it"
+  messages={{ ...globeMessages.en, zoomIn: 'Ingrandisci', zoomOut: 'Riduci' /* …every string */ }}
+/>
+```
+
+`localizedName(place, locale)` returns the same name the globe shows, for use in your own
+`onCountryHover` or `onCountryClick` handlers.
+
+The bundled translations come from Natural Earth's name columns and, for Romanian and any gaps, from
+Wikidata labels (CC0).
+
 ## Theming
 
 Components read design tokens through CSS custom properties, each with a literal fallback, so they
@@ -302,14 +346,14 @@ asset script rather than copied from anywhere.
 
 | File | Source |
 |---|---|
-| `countries-50m.geojson`, `coastline-50m.geojson`, `borders-50m.geojson`, `capitals-50m.json` | [Natural Earth](https://www.naturalearthdata.com/) 1:50m vectors |
+| `countries-50m.geojson`, `coastline-50m.geojson`, `borders-50m.geojson`, `capitals-50m.json` | [Natural Earth](https://www.naturalearthdata.com/) 1:50m vectors; translated names from Natural Earth and [Wikidata](https://www.wikidata.org/) labels (CC0) |
 | `earth-day-8192.jpg`, `earth-day-2048.jpg` | NASA Blue Marble: Next Generation (July 2004) |
 | `earth-clouds-2048.jpg` | NASA Earth Observatory cloud composite |
 | `earth-topology.png` | NASA Visible Earth GEBCO elevation |
 | `earth-normal-2048.jpg` | Derived from `earth-topology.png` |
 | `earth-specular-2048.jpg` | Rasterised from Natural Earth land and lakes |
 
-Crediting NASA and Natural Earth is appreciated but not required.
+Crediting NASA, Natural Earth and Wikidata is appreciated but not required.
 
 ## Performance contract
 

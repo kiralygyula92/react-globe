@@ -53,8 +53,9 @@ To preview exactly what would ship: `pnpm --filter react-globe pack` after `pnpm
 
 All bundled imagery and vector data is public domain: NASA Blue Marble: Next Generation, NASA
 Earth Observatory clouds, NASA Visible Earth GEBCO elevation, and
-[Natural Earth](https://www.naturalearthdata.com/) vectors. The normal and specular maps are
-derived from those by `scripts/globe-assets.mjs`.
+[Natural Earth](https://www.naturalearthdata.com/) vectors. Translated country and capital names come
+from Natural Earth and [Wikidata](https://www.wikidata.org/) labels (CC0). The normal and specular
+maps are derived from those by `scripts/globe-assets.mjs`.
 
 ## License
 

@@ -247,6 +247,39 @@ test('clusters carry their count and expand', async ({ page }) => {
   await expect(clusters).toHaveCount(0);
 });
 
+test('locale translates the controls, cluster names and place names', async ({ page }) => {
+  const errors = await openPlayground(page);
+  const root = page.locator('[data-globe-root]');
+  await expect(root).toHaveAttribute('lang', 'en');
+  await expect(root.getByRole('button', { name: 'Zoom in', exact: true })).toBeVisible();
+
+  await select(page, 'locale', 'de');
+  await expect(root).toHaveAttribute('lang', 'de');
+  await expect(root.getByRole('button', { name: 'Vergrößern', exact: true })).toBeVisible();
+  await expect(root.getByRole('button', { name: 'Zoom in', exact: true })).toHaveCount(0);
+
+  // The Paris trio sits in one cluster at this distance.
+  await setCamera(page, { lat: 48.9, lng: 2.4, zoom: 3.4, tilt: 0 });
+  await page.waitForTimeout(1000);
+  await expect(root.getByRole('button', { name: /^\d+ Markierungen$/ }).first()).toBeVisible();
+
+  await setToggle(page, 'showCountryNames', true);
+  await setCamera(page, { lat: 46.5, lng: 2.5, zoom: 2.2, tilt: 0 });
+  await page.waitForTimeout(1500);
+  await expect(root.getByText('Frankreich', { exact: true })).toBeVisible();
+
+  await select(page, 'locale', 'hu');
+  await page.waitForTimeout(1000);
+  await expect(root.getByRole('button', { name: 'Nagyítás', exact: true })).toBeVisible();
+  await expect(root.getByText('Franciaország', { exact: true })).toBeVisible();
+  await expect(root.getByText('Frankreich', { exact: true })).toHaveCount(0);
+
+  await select(page, 'locale', 'ro');
+  await page.waitForTimeout(1000);
+  await expect(root.getByText('Franța', { exact: true })).toBeVisible();
+  expect(errors).toEqual([]);
+});
+
 test('capitals appear only once close enough', async ({ page }) => {
   await openPlayground(page);
   await setToggle(page, 'showCapitals', true);

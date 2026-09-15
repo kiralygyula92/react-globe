@@ -25,6 +25,7 @@
   "/react-globe/borders/": "Borders & shorelines",
   "/react-globe/country-names/": "Country names",
   "/react-globe/capitals/": "Capitals",
+  "/react-globe/localization/": "Localization",
   "/react-globe/graticule/": "Graticule",
   "/react-globe/background/": "Background",
   "/react-globe/interaction-group": "Interaction",

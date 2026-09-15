@@ -2,10 +2,11 @@
 
 import type { ClusterRenderProps } from '../types';
 
-export function DefaultCluster<TData>({ count, hovered, scale, onClick }: ClusterRenderProps<TData>) {
+export function DefaultCluster<TData>({ count, hovered, scale, onClick, messages }: ClusterRenderProps<TData>) {
   return (
     <button
       type="button"
+      aria-label={messages.cluster(count)}
       onClick={onClick}
       className="rg:pointer-events-auto rg:flex rg:h-9 rg:min-w-9 rg:cursor-pointer rg:items-center rg:justify-center rg:rounded-full rg:border-2 rg:px-2 rg:text-xs rg:font-bold rg:leading-none rg:transition-colors rg:focus-visible:outline-2 rg:focus-visible:outline-offset-2 rg:focus-visible:outline-[var(--globe-color-accent,rgb(63_224_197))]"
       style={{

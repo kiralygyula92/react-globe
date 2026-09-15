@@ -45,3 +45,6 @@ README.md,Development,— (stays in repository),—,port,Contributor docs.
 README.md,Releasing,— (stays in repository),—,port,Contributor docs.
 README.md,Data sources,/react-globe/resources/bundled-data/,body,merge,Merged with package README › Assets › Sources.
 README.md,License,— (shared footer),—,port,
+packages/globe/README.md,Localization,/react-globe/localization/,## Basics + ### built-in locales / ### overriding strings / ### other languages,port,Added after Phase 2 (C-26).
+packages/globe/README.md,Localization,/react-globe/api/globe/,generated Props table (locale / messages),generate,
+packages/globe/README.md,Localization,/react-globe/guides/localization/,body,port,Adding a language beyond the six built-in ones.

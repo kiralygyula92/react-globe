@@ -24,7 +24,7 @@ while the item is open.
 | G-14 | Medium | — | **Resolved (owner)** — retired (EXCEPTIONS E-04) |
 | G-15 | Low | Phase 3 | **Assumed in Phase 2** — demo app published as Demos › Playground; `/blank` retired |
 | G-16 | Low | acceptance #5 | **Resolved (owner)** — homes as proposed |
-| G-17 | Medium | Phase 5 | **Decided (owner)** — implement i18n: en, ro, de, es, fr, hu |
+| G-17 | Medium | — | **Resolved** — i18n implemented (en, ro, de, es, fr, hu); capability C-26 `localization` |
 
 ---
 
@@ -194,7 +194,7 @@ All other audit capabilities map 1:1 to a `capabilityId` in `content/react-globe
 C-06 `auto-rotate`, C-07 `gestures`, C-08 `screen-projection`, C-09 `borders`, C-10 `country-names`,
 C-11 `capitals`, C-12 `country-interaction`, C-13 `graticule`, C-14 `render-styles`, C-15 `background`,
 C-16 `custom-assets`, C-17 `pins`, C-18 `pin-popups`, C-19 `pin-clustering`, C-20 `connections`,
-C-24 `error-handling`).
+C-24 `error-handling`, C-26 `localization`).
 - **Needs:** reviewer agreement with the five homes above.
 
 ## G-17 — Built-in UI strings cannot be localized
@@ -206,3 +206,8 @@ C-24 `error-handling`).
   workaround (`controlsComponent`, custom `countriesGeoJson` / `capitalsDataset`), which becomes a
   `## Limitations` entry on `controls`, `country-names` and `capitals`.
 - **Needs:** decide whether to add a labels prop (code change) or document the workaround only.
+- **Resolution (2026-09-15):** owner chose full i18n. Implemented `locale` and `messages` props with
+  built-in en, ro, de, es, fr, hu UI strings; bundled country and capital names in those languages
+  (Natural Earth `NAME_XX`, Wikidata CC0 labels); `lang` on the container. Documented as capability
+  C-26 → `/react-globe/localization/`; `/react-globe/guides/localization/` covers adding further
+  languages.
