@@ -11,8 +11,11 @@ and the full API.
 ```
 packages/globe/     the library, published to npm as `react-globe`
 apps/demo/          the playground: a full-viewport globe with a live control for every prop
+apps/docs/          the documentation site (Astro), built to the PPDS v1.0 standard
+content/react-globe/  docs content and nav data: plugin.config.json, nav.json, titles.json, Markdown
+docs/               PPDS audit, migration map, GAPS.md and EXCEPTIONS.md
 e2e/                Playwright suite driving the demo
-scripts/            globe-assets.mjs, which regenerates every bundled asset
+scripts/            globe-assets.mjs (bundled assets) and ppds/ (docs scaffold, validation, conformance)
 ```
 
 The demo consumes the library's **built** output (`packages/globe/dist`), which keeps the library
@@ -20,17 +23,30 @@ build honest.
 
 ## Development
 
-Requires Node 20+ and pnpm (the version is pinned in `package.json`; `corepack enable` picks it up).
+Requires Node 22.12+ and pnpm (the version is pinned in `package.json`; `corepack enable` picks it up).
 
 ```bash
 pnpm install
 pnpm build          # library: JS bundle, compiled CSS, declarations, assets
 pnpm dev            # build once, then watch the library and serve the demo at http://localhost:5173
 pnpm test           # unit tests (Vitest + jsdom)
-pnpm typecheck      # library and demo
+pnpm typecheck      # library, demo and docs site
 pnpm e2e            # Playwright suite (needs `pnpm build` first; starts the demo itself)
 pnpm assets         # re-download and regenerate packages/globe/src/assets/*
 ```
+
+### Documentation site
+
+```bash
+pnpm docs:dev       # docs site at http://localhost:4321/react-globe/
+pnpm docs:build     # validate the model, check every nav page has a file, build apps/docs/dist
+pnpm docs:check     # PPDS §11 conformance report against the build (--gate phase3 to gate)
+pnpm docs:scaffold  # create stub pages for new nav.json entries; never overwrites
+```
+
+Pages and their order are data: add a page to `content/react-globe/nav.json` and `titles.json`, run
+`pnpm docs:scaffold`, then write the stub. Read `docs/ppds/02-plugin-docs-standard.md` before editing
+pages, templates or nav data. Set `DOCS_SITE_URL` to the production origin when building for release.
 
 The first Playwright run may ask for its browser: `npx playwright install chromium`. If port 5173 is
 taken, set `DEMO_PORT` (for example `DEMO_PORT=5199 pnpm e2e`): Playwright otherwise reuses

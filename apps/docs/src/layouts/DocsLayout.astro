@@ -1,0 +1,85 @@
+---
+/**
+ * PPDS §2.2 docs surface: announcement bar → docs header (logo, plugin name,
+ * version selector, repo link) → sidebar · content · right rail → shared footer.
+ * No marketing chrome (P1). Metadata is the §7.6 set from one title + description.
+ */
+import '../styles/docs.css';
+import SidebarItems from '../components/SidebarItems.astro';
+import SiteFooter from '../components/SiteFooter.astro';
+import Toc from '../components/Toc.astro';
+import { THEME_COLOR, config, currentVersion, metadata, sidebar, type Page } from '../lib/site';
+
+interface Props {
+  page: Page;
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const { page, headings } = Astro.props;
+const meta = metadata(page, Astro.site!);
+const nav = await sidebar();
+const version = currentVersion();
+/** No announcement is configured; the slot renders only when one is (one campaign max). */
+const announcement: string | null = null;
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{meta.documentTitle}</title>
+    <link rel="canonical" href={meta.canonical} />
+    {meta.meta.map((m) => ('property' in m ? <meta property={m.property} content={m.content} /> : <meta name={m.name} content={m.content} />))}
+    <link rel="alternate" type="text/markdown" href={page.twin} />
+    <link rel="sitemap" href="/sitemap.xml" />
+  </head>
+  <body data-archetype={page.archetype} data-pathname={page.pathname}>
+    <a class="skip-link" href="#main">Skip to content</a>
+    {announcement && <div class="announcement" role="region" aria-label="Announcement">{announcement}</div>}
+
+    <header class="docs-header">
+      <a class="logo" href="/" aria-label="Home" data-block="logo">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke={THEME_COLOR} stroke-width="1.6" aria-hidden="true">
+          <circle cx="12" cy="12" r="10"></circle>
+          <ellipse cx="12" cy="12" rx="4" ry="10"></ellipse>
+          <line x1="2" y1="12" x2="22" y2="12"></line>
+        </svg>
+      </a>
+      <a class="plugin-name" href={`/${config.id}/`} data-block="plugin-name">{config.name}</a>
+      <details class="version-select" data-block="version-selector">
+        <summary aria-label={`Version ${version.label}, choose another`}>{version.label}</summary>
+        <ul>
+          {
+            (config.versions ?? []).map((v: { label: string; href: string; current?: boolean }) => (
+              <li>
+                <a href={v.href} aria-current={v.current ? 'true' : undefined}>
+                  {v.label}
+                </a>
+              </li>
+            ))
+          }
+          <li><a href={`/${config.id}/getting-started/versions/`}>All versions</a></li>
+        </ul>
+      </details>
+      <span class="spacer"></span>
+      <label class="nav-toggle-label" for="nav-toggle">Menu</label>
+      <a href={config.repo} data-block="repo-link">GitHub</a>
+    </header>
+
+    <input type="checkbox" id="nav-toggle" class="sr-only" aria-hidden="true" tabindex="-1" />
+    <div class="docs-shell">
+      <nav class="sidebar" aria-label="Documentation" data-block="sidebar">
+        <SidebarItems items={nav} current={page.pathname} depth={1} />
+      </nav>
+
+      <main id="main" tabindex="-1">
+        <slot />
+      </main>
+
+      <Toc headings={headings} />
+    </div>
+
+    <SiteFooter />
+  </body>
+</html>

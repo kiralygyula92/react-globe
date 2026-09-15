@@ -1,0 +1,63 @@
+---
+/**
+ * Right rail (PPDS §7.4): ToC from the article's H2/H3, with the section in view
+ * highlighted. The highlight is enhancement; the links work without JavaScript.
+ * The promo slot stays empty until there is something real to put there.
+ */
+
+interface Props {
+  headings: { depth: number; slug: string; text: string }[];
+}
+
+const headings = Astro.props.headings.filter((h) => h.depth === 2 || h.depth === 3);
+---
+
+<aside class="toc" aria-label="On this page">
+  {
+    headings.length > 0 && (
+      <nav aria-labelledby="toc-title">
+        <p class="toc-title" id="toc-title">
+          On this page
+        </p>
+        <ul>
+          {headings.map((h) => (
+            <li class={`depth-${h.depth}`}>
+              <a href={`#${h.slug}`} data-toc-link={h.slug}>
+                {h.text}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    )
+  }
+  <div class="toc-promo" data-slot="right-rail-promo"></div>
+</aside>
+
+<script>
+  const links = new Map(
+    [...document.querySelectorAll<HTMLAnchorElement>('[data-toc-link]')].map((a) => [a.dataset.tocLink!, a]),
+  );
+  if (links.size > 0 && 'IntersectionObserver' in window) {
+    const visible = new Set<string>();
+    const order = [...links.keys()];
+    const update = () => {
+      const active = order.find((id) => visible.has(id));
+      for (const [id, a] of links) a.classList.toggle('active', id === active);
+    };
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          if (e.isIntersecting) visible.add(e.target.id);
+          else visible.delete(e.target.id);
+        }
+        update();
+      },
+      { rootMargin: '-10% 0px -70% 0px' },
+    );
+    for (const id of order) {
+      const el = document.getElementById(id);
+      if (el) observer.observe(el);
+    }
+  }
+</script>

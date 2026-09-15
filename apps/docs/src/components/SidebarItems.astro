@@ -1,0 +1,47 @@
+---
+/** The sidebar tree, recursively, exactly as nav.json orders and groups it. */
+import type { SidebarItem } from '../lib/site';
+import Badge from './Badge.astro';
+
+interface Props {
+  items: SidebarItem[];
+  current: string;
+  depth: number;
+}
+
+const { items, current, depth } = Astro.props;
+---
+
+<ul data-nav-depth={depth}>
+  {
+    items.map((item) =>
+      item.kind === 'section' ? (
+        <li data-nav-section={item.id}>
+          <p class="section-title">{item.title}</p>
+          {item.items.length > 0 && <Astro.self items={item.items} current={current} depth={depth + 1} />}
+        </li>
+      ) : item.kind === 'group' ? (
+        <li data-nav-group={item.title}>
+          <p class="group-title">{item.title}</p>
+          <div class="group-items">
+            <Astro.self items={item.items} current={current} depth={depth + 1} />
+          </div>
+        </li>
+      ) : (
+        <li>
+          <a
+            href={item.href}
+            title={item.description ?? undefined}
+            aria-current={item.href === current ? 'page' : undefined}
+            data-nav-link={item.href}
+          >
+            <span>{item.title}</span>
+            {item.badges.map((badge) => (
+              <Badge badge={badge} href={item.href} />
+            ))}
+          </a>
+        </li>
+      ),
+    )
+  }
+</ul>

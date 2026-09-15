@@ -1,0 +1,32 @@
+---
+/**
+ * PPDS §2.3 shared footer. Column names are fixed; entries are only destinations
+ * that exist. Newsletter capture and RSS are absent until they exist (GAPS G-18).
+ */
+import { config, footerColumns } from '../lib/site';
+
+const columns = footerColumns();
+---
+
+<footer class="site-footer" data-block="site-footer">
+  <div class="columns">
+    {
+      columns.map((column) => (
+        <nav aria-label={column.title} data-footer-column={column.title}>
+          <p class="footer-title">{column.title}</p>
+          <ul>
+            {column.links.map((link) => (
+              <li>
+                <a href={link.href}>{link.title}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      ))
+    }
+  </div>
+  <p class="legal">
+    © 2026 kiralygyula92 · {config.name} is released under the MIT License ·
+    <a href={config.repo}>Source on GitHub</a>
+  </p>
+</footer>

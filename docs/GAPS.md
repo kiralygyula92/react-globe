@@ -25,6 +25,7 @@ while the item is open.
 | G-15 | Low | Phase 3 | **Assumed in Phase 2** — demo app published as Demos › Playground; `/blank` retired |
 | G-16 | Low | acceptance #5 | **Resolved (owner)** — homes as proposed |
 | G-17 | Medium | — | **Resolved** — i18n implemented (en, ro, de, es, fr, hu); capability C-26 `localization` |
+| G-18 | Medium | Phase 6 | Open — production origin/host, search, RSS, newsletter |
 
 ---
 
@@ -211,3 +212,18 @@ C-24 `error-handling`, C-26 `localization`).
   (Natural Earth `NAME_XX`, Wikidata CC0 labels); `lang` on the container. Documented as capability
   C-26 → `/react-globe/localization/`; `/react-globe/guides/localization/` covers adding further
   languages.
+
+## G-18 — Docs chrome and hosting inputs that do not exist yet (Phase 3)
+- **Production origin and host.** Canonical URLs, `og:url`, `og:image` and `llms.txt` links are built
+  from `DOCS_SITE_URL` (default `http://localhost:4321`). The host must honour `_redirects` (Netlify,
+  Cloudflare Pages) or be given the same rules, or legacy URLs get the meta-refresh fallback instead of a
+  301. Depends on G-02.
+- **Search.** No search provider. Candidate: a static index built at deploy time (e.g. Pagefind); Phase 6.
+- **RSS** for the changelog: Phase 6 (brief §6.2).
+- **Newsletter capture** (§2.3): no mailing list exists.
+- **Announcement bar**: slot exists, nothing to announce; optional by §2.1.
+- **Page feedback** posts to GitHub issues with a `docs-feedback` label; the label must exist and the
+  repository must be public for readers to use it (G-02).
+- **Marketing surface, brand mark, accent colour**: E-02 / G-10. The shell uses a neutral theme and a
+  generic globe glyph, not a product mark.
+- **Needs:** hosting decision (with G-02); search provider choice before Phase 6.

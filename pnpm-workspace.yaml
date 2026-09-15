@@ -3,6 +3,7 @@ packages:
   - apps/*
 allowBuilds:
   '@parcel/watcher': false
+  esbuild: false
 minimumReleaseAgeExclude:
   - react-dom@19.3.0
   - react@19.3.0

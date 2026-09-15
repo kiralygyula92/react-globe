@@ -19,3 +19,5 @@ jobs:
       - run: pnpm build
       - run: pnpm typecheck
       - run: pnpm test
+      - run: pnpm docs:build
+      - run: pnpm docs:check --gate phase3

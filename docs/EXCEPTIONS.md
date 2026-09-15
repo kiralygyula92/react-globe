@@ -14,6 +14,9 @@ Opened in Phase 2 (Model), 2026-09-15.
 | E-05 | R2 vs §3/§5 Overview location | Accepted (interpretation) |
 | E-06 | §5 section 9 Migration "one page per version jump" | Accepted until first breaking release |
 | E-07 | §5 section 7 Integrations "one page per named target" | Pending GAPS G-08 |
+| E-08 | R6, §10, check 22 — local dev-server URLs | Accepted (owner delegated) |
+| E-09 | §6, §7.7, N2 — Phase 3 interpretations | Accepted (owner delegated) |
+| E-10 | §2.2 search, §2.3 newsletter/RSS | Accepted (owner delegated); until Phase 6 (GAPS G-18) |
 
 ---
 
@@ -78,3 +81,43 @@ Opened in Phase 2 (Model), 2026-09-15.
   SSR, Rollup-as-consumer and native ESM are claimed or plausible but unverified; publishing pages for
   them would be an invented compatibility claim (brief operating rule 4; GAPS G-08).
 - **Removed by:** each target verified (build + render check) gets its own page.
+
+## E-08 — Local dev-server legacy URLs are not redirected
+- **Rules:** R6, §10 "every row MUST have a redirect target", conformance check 22.
+- **Deviation:** `http://localhost:5173/` and `http://localhost:5173/blank` (the demo app) keep their
+  mapped redirect target in `url-map.csv` but no HTTP redirect is installed; check 22 lists them as
+  exempt.
+- **Reason:** they were only ever served by a developer's local Vite server, never from a public host,
+  so there is nothing to redirect from.
+- **Removed by:** hosting the demo app — its root and `/blank` then redirect to
+  `/react-globe/demos/playground/`.
+
+## E-09 — Phase 3 interpretations the scaffold relies on
+Recorded so the conformance script and the reviewer apply the same reading of PPDS v1.0.
+- **Archetype for pages the nine archetypes do not name.** FAQ, Support, Versions, every Customization,
+  Guides, Integrations, Resources and Migration page, the Demos scenario, and Showcase / Roadmap /
+  Changelog are archetype **I (Editorial)**: H1, date, one-line summary, body. §6 requires each page to
+  be exactly one archetype but names none for these. Installation, Usage and Requirements are **F**.
+- **`llms.txt` is a nav node but not a docs page.** It is the §7.7 machine surface, so check 1 and the
+  archetype rule do not apply to it; check 16 does.
+- **Markdown twin URLs.** `/{id}/` → `/{id}/index.md`; every other page drops its trailing slash and
+  appends `.md` (`/react-globe/pins.md`). §7.7 says "appending `.md` to any docs URL" without fixing
+  the form for a trailing-slash URL.
+- **Blocks rendered from data, not typed in Markdown.** The H1, the one-line description under it, the
+  archetype-B resource chip row and `## API` list, and the archetype-C feature groups are rendered by
+  the layout from frontmatter and `nav.json` (P5, P7, P10). Checks 1–4 inspect the rendered page.
+- **Frontmatter `title` duplicates `titles.json`.** N2 makes `titles.json` the single title source, but
+  the capability frontmatter schema requires `title`. The scaffold copies it from `titles.json` and
+  check 1 fails any page where the two differ, so a rename still starts in `titles.json`.
+- **Editorial date.** Scaffolded archetype-I pages carry `date: 2026-09-15`, the scaffold date; authors
+  update it when the page is written.
+- **Site root.** With no marketing surface (E-02), `/` answers 302 → `/react-globe/`.
+
+## E-10 — Docs chrome without search, RSS or newsletter capture
+- **Rules:** §2.2 docs header "search"; §2.3 footer "newsletter capture … RSS"; §7.7 RSS for the
+  changelog.
+- **Deviation:** the header has no search control and the footer has no newsletter form or RSS link.
+- **Reason:** nothing real exists to wire them to (GAPS G-18). A search box that does not search or a
+  subscribe form that goes nowhere would be fabricated UI (brief operating rule 4). RSS is a Phase 6
+  deliverable (brief §6.2).
+- **Removed by:** Phase 6 (static search index and changelog feed); newsletter when a list exists.

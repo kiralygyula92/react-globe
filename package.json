@@ -5,19 +5,29 @@
   "type": "module",
   "packageManager": "pnpm@11.6.0",
   "engines": {
-    "node": ">=20"
+    "node": ">=22.12"
   },
   "scripts": {
     "build": "pnpm --filter react-globe build",
     "dev": "pnpm build && pnpm --parallel --filter react-globe --filter demo dev",
     "test": "pnpm --filter react-globe test",
-    "typecheck": "pnpm -r typecheck",
+    "typecheck": "pnpm --filter react-globe --filter demo --filter docs typecheck",
     "e2e": "playwright test",
-    "assets": "node scripts/globe-assets.mjs"
+    "assets": "node scripts/globe-assets.mjs",
+    "docs:scaffold": "node scripts/ppds/scaffold.mjs",
+    "docs:validate": "node scripts/ppds/validate-model.mjs",
+    "docs:dev": "pnpm --filter docs dev",
+    "docs:build": "pnpm docs:validate && node scripts/ppds/scaffold.mjs --check && pnpm --filter docs build",
+    "docs:check": "node scripts/ppds/conformance.mjs",
+    "docs:serve": "node scripts/ppds/serve.mjs apps/docs/dist 4321"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
+    "ajv": "^8.20.0",
+    "ajv-formats": "^3.0.1",
+    "node-html-parser": "^9.0.4",
     "sharp": "^0.35.4",
-    "typescript": "^5.9.3"
+    "typescript": "^5.9.3",
+    "yaml": "^2.9.1"
   }
 }
