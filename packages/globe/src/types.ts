@@ -164,7 +164,7 @@ export interface PinRenderProps<TData = Record<string, unknown>> {
   hovered: boolean;
   /** True after this pin was clicked; a second click, a click elsewhere on the globe, or new `pins` clear it. */
   selected: boolean;
-  /** True while the pin sits on the far side of the globe. */
+  /** Always false: a custom pin is rendered only while it is on the visible side of the globe and not clustered. */
   occluded: boolean;
   /** Suggested scale factor for zoom compensation; 1 at the default distance. */
   scale: number;

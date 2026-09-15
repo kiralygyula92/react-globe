@@ -20,7 +20,8 @@
     "docs:build": "pnpm docs:validate && node scripts/ppds/scaffold.mjs --check && node scripts/ppds/reference.mjs --check && pnpm --filter docs build",
     "docs:check": "node scripts/ppds/conformance.mjs",
     "docs:serve": "node scripts/ppds/serve.mjs apps/docs/dist 4321",
-    "docs:reference": "node scripts/ppds/reference.mjs"
+    "docs:reference": "node scripts/ppds/reference.mjs",
+    "docs:demos": "node scripts/ppds/demos-check.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",

@@ -550,3 +550,107 @@ main {
   background: none;
   padding: 0;
 }
+
+/* ------------------------------------------------------------------ code */
+
+.astro-code {
+  border-radius: var(--radius);
+}
+
+@media (prefers-color-scheme: dark) {
+  .astro-code,
+  .astro-code span {
+    color: var(--shiki-dark) !important;
+    background-color: var(--shiki-dark-bg) !important;
+    font-style: var(--shiki-dark-font-style) !important;
+    font-weight: var(--shiki-dark-font-weight) !important;
+    text-decoration: var(--shiki-dark-text-decoration) !important;
+  }
+}
+
+/* ----------------------------------------------------------------- demos */
+
+.demo {
+  margin: 1.25rem 0 1.75rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+}
+
+.demo-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.6rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-subtle);
+  font-size: 0.85rem;
+}
+
+.demo-title {
+  flex: 1;
+  font-weight: 600;
+}
+
+.demo-toolbar button {
+  font: inherit;
+  padding: 0.15rem 0.6rem;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--fg);
+  cursor: pointer;
+}
+
+.demo-toolbar button:disabled {
+  cursor: default;
+  opacity: 0.5;
+}
+
+.demo-stage {
+  position: relative;
+  height: var(--demo-height, 380px);
+  background: #0b1026;
+  color: #e6edf3;
+}
+
+.demo-fallback {
+  margin: 0;
+  padding: 1rem;
+  font-size: 0.9rem;
+}
+
+.demo-source summary {
+  cursor: pointer;
+  padding: 0.4rem 0.6rem;
+  border-top: 1px solid var(--border);
+  font-size: 0.85rem;
+}
+
+.demo-source pre {
+  margin: 0;
+  border-radius: 0;
+}
+
+/* -------------------------------------------------------------- callouts */
+
+.callout {
+  margin: 1.25rem 0;
+  padding: 0.75rem 1rem;
+  border-left: 4px solid var(--accent);
+  border-radius: var(--radius);
+  background: var(--bg-subtle);
+}
+
+.callout-warning {
+  border-left-color: #c4661f;
+}
+
+.callout > :last-child {
+  margin-bottom: 0;
+}
+
+.callout .callout-title {
+  margin: 0 0 0.35rem;
+  font-weight: 700;
+}

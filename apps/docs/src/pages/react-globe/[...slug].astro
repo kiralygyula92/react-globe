@@ -33,6 +33,7 @@ const headings = [
   ...groups.map((g) => ({ depth: 2, slug: g.group.toLowerCase().replace(/[^a-z0-9]+/g, '-'), text: g.group })),
 ];
 const date = entry.data.date;
+const hasDemos = /^::demo{/m.test(entry.body ?? '');
 ---
 
 <DocsLayout page={page} headings={headings}>
@@ -135,4 +136,5 @@ const date = entry.data.date;
 
     <PageActions page={page} />
   </article>
+  {hasDemos && <script src="../../scripts/demos.ts"></script>}
 </DocsLayout>

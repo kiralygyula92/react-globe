@@ -5,6 +5,8 @@
  */
 
 import type { APIRoute, GetStaticPaths } from 'astro';
+import { CONTENT_DIR } from '../../../../../scripts/ppds/model.mjs';
+import { demosAsCode, includesAsMarkdown } from '../../lib/remark-ppds.mjs';
 import { config, featureGroups, getPages, referenceFor, referenceHref, referenceMarkdown, symbolPath, type Page } from '../../lib/site';
 
 export const getStaticPaths: GetStaticPaths = async () => {
@@ -30,7 +32,7 @@ export const GET: APIRoute<{ page: Page }> = async ({ props, site }) => {
     return markdown(parts);
   }
 
-  parts.push(stripComments(page.entry?.body ?? ''));
+  parts.push(includesAsMarkdown(demosAsCode(stripComments(page.entry?.body ?? ''), page.file, CONTENT_DIR), page.file, CONTENT_DIR));
 
   if (page.archetype === 'C') {
     for (const group of await featureGroups()) {

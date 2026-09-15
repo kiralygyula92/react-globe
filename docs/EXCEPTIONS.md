@@ -18,6 +18,7 @@ Opened in Phase 2 (Model), 2026-09-15.
 | E-09 | §6, §7.7, N2 — Phase 3 interpretations | Accepted (owner delegated) |
 | E-10 | §2.2 search, §2.3 newsletter/RSS | Accepted (owner delegated); until Phase 6 (GAPS G-18) |
 | E-11 | §6 E, §8.3–§8.5 — reference generation | Accepted (owner delegated) |
+| E-12 | §7.2 sandbox action, §6 F tabs | Accepted (owner delegated); sandbox until GAPS G-01 |
 
 ---
 
@@ -142,3 +143,13 @@ Recorded so the conformance script and the reviewer apply the same reading of PP
 - **README tables.** The API tables in `packages/globe/README.md` are generated between
   `ppds:reference` markers by the same command, so the npm page stays useful without a hand-written table
   (brief acceptance criterion 3).
+
+## E-12 — Phase 5 authoring interpretations
+- **No "open in a live sandbox" action.** §7.2 asks every demo for copy, show/hide source, open in a live
+  sandbox and reset. Demos have copy, show/hide source and reset, and run live on the page. A sandbox
+  would install `react-globe` from npm, where that name belongs to an unrelated package (GAPS G-01), so it
+  would run the wrong code. Removed by: publishing under an installable name, then adding the action.
+- **Installation channels as headings, not tabs.** The Installation page lists npm, pnpm and yarn under
+  their own `###` headings, which read without JavaScript and appear in the ToC.
+- **`data-demo-activate`.** A demo that waits for the reader (lazy loading) marks its start button so the
+  automated demo check can press it.

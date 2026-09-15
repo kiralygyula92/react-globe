@@ -168,6 +168,54 @@ const isSubsequence = (needle, hay) => {
   return i === needle.length;
 };
 
+/** The children of an article between one H2 and the next. */
+function sectionNodes(article, heading) {
+  const nodes = [];
+  let inside = false;
+  for (const child of article.childNodes) {
+    if (child.tagName === 'H2') {
+      if (inside) break;
+      inside = text(child) === heading;
+      continue;
+    }
+    if (inside && child.nodeType === 1) nodes.push(child);
+  }
+  return nodes;
+}
+
+const sentences = (value) => value.split(/(?<=[.!?])\s+(?=[A-Z`(])/).filter((s) => s.trim()).length;
+
+/**
+ * Archetype B block rules on rendered HTML (PPDS §6 B, §7.2): the optional context before
+ * `## Basics` is at most 80 words; `## Basics` opens with a live demo after at most one
+ * sentence; `## Customization` holds a live demo; no capability page's only demo is static.
+ */
+function capabilityBlocks(doc) {
+  const issues = [];
+  const article = articleOf(doc);
+  const beforeBasics = [];
+  for (const child of article.childNodes) {
+    if (child.tagName === 'H2') break;
+    if (child.nodeType === 1 && child.tagName === 'P') beforeBasics.push(text(child));
+  }
+  const contextWords = beforeBasics.join(' ').split(' ').filter(Boolean).length;
+  if (contextWords > 80) issues.push(`context before ## Basics is ${contextWords} words (max 80)`);
+
+  const basics = sectionNodes(article, 'Basics');
+  const firstDemo = basics.findIndex((n) => n.tagName === 'FIGURE' && n.getAttribute('data-demo'));
+  if (firstDemo < 0) issues.push('## Basics has no live demo');
+  else {
+    const prose = basics.slice(0, firstDemo).map(text).join(' ');
+    if (basics.slice(0, firstDemo).some((n) => n.tagName !== 'P') || sentences(prose) > 1) issues.push('## Basics has more than one sentence before its demo');
+  }
+  const customization = sectionNodes(article, 'Customization');
+  if (!customization.some((n) => n.tagName === 'FIGURE' && n.getAttribute('data-demo'))) issues.push('## Customization has no live demo');
+  if (!customization.some((n) => n.querySelector?.('a[href*="/customization/"]'))) issues.push('## Customization does not link the customization guide');
+  const limitations = sectionNodes(article, 'Limitations');
+  if (limitations.length === 0) issues.push('## Limitations is empty (write "None known." if so)');
+  return issues;
+}
+
 /* Structure */
 
 await check(1, 'Every docs page resolves to exactly one archetype and contains all its required blocks', () => {
@@ -213,6 +261,7 @@ await check(1, 'Every docs page resolves to exactly one archetype and contains a
       if (JSON.stringify(groups) !== JSON.stringify(expected)) details.push(`${where}: feature groups ${JSON.stringify(groups)} ≠ nav ${JSON.stringify(expected)}`);
     }
     if (!doc.querySelector('[data-action="edit"]') || !doc.querySelector('[data-action="feedback"]')) details.push(`${where}: page footer actions incomplete`);
+    if (page.spec.archetype === 'B') details.push(...capabilityBlocks(doc).map((d) => `${where}: ${d}`));
   }
   return verdict(details);
 });
@@ -594,7 +643,21 @@ if (GATE && !gateIds) {
 
 const todoDescriptions = authored.filter((p) => String(p.frontmatter?.description ?? '').startsWith('TODO')).length;
 const todoComments = pages.reduce((n, p) => n + (p.body.match(/<!-- TODO/g)?.length ?? 0), 0);
-const emptySections = pages.reduce((n, p) => n + (p.body.match(/^## .+\n(?=\s*(## |$))/gm)?.length ?? 0), 0);
+/** An H2 or H3 whose next non-blank line is another heading of the same or higher level, or the end of the file. */
+function countEmptyHeadings(body) {
+  const lines = body.replace(/<!--[\s\S]*?-->/g, '').split(/\r?\n/);
+  let empty = 0;
+  for (let i = 0; i < lines.length; i++) {
+    const heading = /^(#{2,3}) /.exec(lines[i]);
+    if (!heading) continue;
+    let j = i + 1;
+    while (j < lines.length && lines[j].trim() === '') j++;
+    const next = j < lines.length ? /^(#{1,6}) /.exec(lines[j]) : null;
+    if (j >= lines.length || (next && next[1].length <= heading[1].length)) empty++;
+  }
+  return empty;
+}
+const emptySections = authored.reduce((n, p) => n + countEmptyHeadings(p.body), 0);
 
 const lines = [];
 lines.push(`# PPDS v1.0 conformance — ${config.name}`, '');

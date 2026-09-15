@@ -5,7 +5,7 @@
     "position": "Projected position of the pin's surface point.",
     "hovered": "True while the pointer is over this pin.",
     "selected": "True after this pin was clicked; a second click, a click elsewhere on the globe, or new `pins` clear it.",
-    "occluded": "True while the pin sits on the far side of the globe.",
+    "occluded": "Always false: a custom pin is rendered only while it is on the visible side of the globe and not clustered.",
     "scale": "Suggested scale factor for zoom compensation; 1 at the default distance."
   }
 }

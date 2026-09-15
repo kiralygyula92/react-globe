@@ -1,8 +1,8 @@
 ---
 pluginId: react-globe
 title: Changelog
-description: "TODO: one-line description (Phase 5)."
+description: Every notable change to React Globe, by version, following Semantic Versioning.
 date: 2026-09-15
 ---
 
-<!-- TODO: body (Phase 5). -->
+::include{src="../../../packages/globe/CHANGELOG.md"}

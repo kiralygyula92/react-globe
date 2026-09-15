@@ -10,15 +10,15 @@ while the item is open.
 |---|---|---|---|
 | G-01 | Critical | publish | **Resolved (owner, Phase 2 gate)** — docs `id` and npm name both `react-globe`; npm conflict risk accepted |
 | G-02 | High | Phase 5, 6 | Open — `repo`/`issues` links point at the private repo |
-| G-03 | High | Phase 5 | **Resolved (owner)** — narrow the claim; unsupported layers become a Limitation |
-| G-04 | Medium | Phase 5 | Open |
+| G-03 | High | — | **Resolved (Phase 5)** — README, `GlobeAssets` JSDoc and Custom assets page state exactly what is replaceable |
+| G-04 | Medium | — | **Resolved (Phase 5)** — pinch, context menu, missing keyboard control, `data-globe-*` hooks and development warnings documented |
 | G-05 | Medium | — | **Resolved (Phase 4)** — reference is generated from the types; README table regenerated |
 | G-06 | High | — | **Resolved (Phase 4)** — JSDoc + `@default` on every public member (held equal to GLOBE_DEFAULTS by a test), GLOBE_THEME_TOKENS manifest (held equal to the components by a test), `pnpm docs:reference` |
-| G-07 | High | Phase 5 | **Decided (owner)** — measure with stated hardware/browser, or reword without numbers |
-| G-08 | High | Phase 5 | **Decided (owner)** — compatibility test matrix or narrowed claims; EXCEPTIONS E-07 |
+| G-07 | High | — | **Resolved (Phase 5)** — unmeasured figures removed; mechanisms documented; measurements on the Roadmap |
+| G-08 | High | — | **Partly resolved (Phase 5)** — Requirements page separates declared, tested and unverified; verification on the Roadmap; E-07 stands |
 | G-09 | Medium | — | **Resolved (owner)** — free for now (EXCEPTIONS E-01) |
 | G-10 | Medium | Phase 5 | Open — EXCEPTIONS E-02 |
-| G-11 | Medium | Phase 5 | Open |
+| G-11 | Medium | — | **Resolved (Phase 5)** — 45 colocated live demos, all verified by `scripts/ppds/demos-check.mjs`; sandbox action per E-12 |
 | G-12 | Low | — | Open (acknowledge) |
 | G-13 | Medium | — | **Assumed in Phase 2** — `currentVersion` 1.0.0 (EXCEPTIONS E-06) |
 | G-14 | Medium | — | **Resolved (owner)** — retired (EXCEPTIONS E-04) |
@@ -26,6 +26,7 @@ while the item is open.
 | G-16 | Low | acceptance #5 | **Resolved (owner)** — homes as proposed |
 | G-17 | Medium | — | **Resolved** — i18n implemented (en, ro, de, es, fr, hu); capability C-26 `localization` |
 | G-18 | Medium | Phase 6 | Open — production origin/host, search, RSS, newsletter |
+| G-19 | Medium | — | Open — library behaviours surfaced while authoring; documented as Limitations, candidates for code fixes |
 
 ---
 
@@ -227,3 +228,21 @@ C-24 `error-handling`, C-26 `localization`).
 - **Marketing surface, brand mark, accent colour**: E-02 / G-10. The shell uses a neutral theme and a
   generic globe glyph, not a product mark.
 - **Needs:** hosting decision (with G-02); search provider choice before Phase 6.
+
+
+## G-19 — Library behaviours surfaced while authoring (Phase 5)
+Each is documented as a Limitation or warning on its capability page. They are candidates for code
+changes; none was changed during the docs work.
+- **Controlled `camera` re-animates on identity change.** An inline `camera={{…}}` with state set from
+  `onCameraChange` fights the user's drag (Camera page warning). Candidate: compare members only.
+- **`backgroundColor` tokens are read only when the prop changes**, and an alpha channel is dropped
+  (Background page). Candidate: re-resolve on theme change; honour alpha.
+- **`PinPopupPlacement` declares `left`/`right`**, but only `top`/`bottom` are produced (Pin popups page).
+- **`PinRenderProps.occluded` is always `false`** (JSDoc corrected; Pins page).
+- **The canvas sets `touch-action: none` unconditionally**, so touch scrolling stops at the globe, even with
+  gestures off (Gestures page). Candidate: derive it from the enabled gestures.
+- **No two-finger tilt and no keyboard control of the canvas** (Gestures page).
+- **`modern` draws shorelines at zero opacity**, so `showShorelines` has no visible effect there (Borders page).
+- **Drags do not stop auto-rotation** (Auto-rotate page).
+- **A failed globe never retries** without a remount (Error handling page).
+- **Needs:** owner decision on which to fix in the library; each fix must also update the page's Limitations.
