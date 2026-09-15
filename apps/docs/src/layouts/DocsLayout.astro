@@ -35,8 +35,9 @@ const announcement: string | null = null;
     <link rel="alternate" type="application/rss+xml" title={`${config.name} changelog`} href={`${links.changelog}rss.xml`} />
     <link rel="sitemap" href="/sitemap.xml" />
     {(config.versions ?? []).length > 1 && <meta data-pagefind-filter="version[content]" content={currentVersion().label} />}
-    <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
-    <script is:inline src="/pagefind/pagefind-ui.js" defer></script>
+    {/* The search index is built after `astro build`; `astro dev` has none to load. */}
+    {import.meta.env.PROD && <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />}
+    {import.meta.env.PROD && <script is:inline src="/pagefind/pagefind-ui.js" defer></script>}
   </head>
   <body data-archetype={page.archetype} data-pathname={page.pathname}>
     <a class="skip-link" href="#main">Skip to content</a>
