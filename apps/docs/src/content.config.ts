@@ -2,9 +2,9 @@
  * The plugin's authored Markdown, read in place from content/react-globe/.
  *
  * Entry ids are the file paths relative to that directory, exactly as
- * scripts/ppds/model.mjs#pageSpec names them, so a nav node finds its file
- * without any file deciding its own URL (P2). The frontmatter contract is checked
- * in full by the conformance script against plugin-site.schema.json.
+ * scripts/docs/model.mjs#pageSpec names them, so a nav node finds its file
+ * without any file deciding its own URL. The frontmatter contract is checked
+ * by the schema below.
  */
 
 import { defineCollection } from 'astro:content';

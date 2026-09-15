@@ -1,8 +1,7 @@
 ---
 /**
- * Right rail (PPDS §7.4): ToC from the article's H2/H3, with the section in view
+ * Right rail: ToC from the article's H2/H3, with the section in view
  * highlighted. The highlight is enhancement; the links work without JavaScript.
- * The promo slot stays empty until there is something real to put there.
  */
 
 interface Props {
@@ -31,7 +30,6 @@ const headings = Astro.props.headings.filter((h) => h.depth === 2 || h.depth ===
       </nav>
     )
   }
-  <div class="toc-promo" data-slot="right-rail-promo"></div>
 </aside>
 
 <script>

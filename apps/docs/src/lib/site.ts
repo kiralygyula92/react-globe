@@ -2,12 +2,11 @@
  * Everything the templates need, derived from the plugin's data files, the content
  * collection and the generated reference. Templates never read nav.json, titles.json,
  * plugin.config.json or reference/*.json themselves: one derivation, rendered
- * everywhere (P7, P10).
+ * everywhere.
  */
 
 import { getCollection, type CollectionEntry } from 'astro:content';
 import {
-  ARCHETYPES,
   FOOTER_COLUMNS,
   SECTIONS,
   badgesFor,
@@ -29,11 +28,11 @@ import {
   type NavEntry,
   type NavNode,
   type ReferenceEntry,
-} from '../../../../scripts/ppds/model.mjs';
+} from '../../../../scripts/docs/model.mjs';
 
 const model = loadModel();
 export const { config } = model;
-/** nav.json with the generated Reference children injected (N3). */
+/** nav.json with the generated Reference children injected. */
 export const nav: NavNode[] = navWithReference(model.nav, config);
 /** titles.json plus the generated reference titles. */
 export const titles: Record<string, string> = titlesWithReference(model.titles, config);
@@ -47,18 +46,18 @@ const REQUIRED_LINKS = ['issues', 'support', 'changelog', 'roadmap'] as const;
 export const links = Object.fromEntries(
   REQUIRED_LINKS.map((key) => {
     const value = config.links?.[key];
-    if (!value) throw new Error(`[ppds] plugin.config.json links.${key} is required by the docs chrome`);
+    if (!value) throw new Error(`[docs] plugin.config.json links.${key} is required by the docs chrome`);
     return [key, value];
   }),
 ) as Record<(typeof REQUIRED_LINKS)[number], string>;
 
 export type Page = {
   pathname: string;
-  /** Title from titles.json (N2), or the symbol name for a reference page. */
+  /** Title from titles.json, or the symbol name for a reference page. */
   title: string;
   /** The H1: fixed by archetype A (Overview) and E (reference). */
   heading: string;
-  /** The one description: meta, H1 subtitle and llms.txt (P10). Plain text. */
+  /** The one description: meta, H1 subtitle and llms.txt. Plain text. */
   description: string;
   archetype: Archetype;
   /** Source file relative to content/{id}/ — the file "Edit this page" opens. */
@@ -104,7 +103,7 @@ export async function getPages(): Promise<Page[]> {
       return { ...base, description: plain(reference.strings.symbolDescription ?? ''), reference };
     }
     const entry = byId.get(spec.file);
-    if (!entry) throw new Error(`[ppds] ${navEntry.node.pathname} has no content file ${spec.file} — run the scaffold`);
+    if (!entry) throw new Error(`[docs] ${navEntry.node.pathname} has no content file ${spec.file}`);
     return { ...base, description: entry.data.description, entry };
   });
   pagesCache = pages;
@@ -122,7 +121,7 @@ export type SidebarItem =
   | { kind: 'group'; title: string; items: SidebarItem[] }
   | { kind: 'link'; href: string; title: string; description: string | null; badges: Badge[]; code: boolean };
 
-/** The sidebar, straight from the nav data: order, grouping and badges are the data's (N1, N4). */
+/** The sidebar, straight from the nav data: order, grouping and badges are the data's. */
 export async function sidebar(): Promise<SidebarItem[]> {
   const pages = new Map((await getPages()).map((p) => [p.pathname, p]));
   const toItem = (node: NavNode, depth: number): SidebarItem => {
@@ -144,7 +143,7 @@ export async function sidebar(): Promise<SidebarItem[]> {
   return nav.map((n) => toItem(n, 1));
 }
 
-/** Capability pages grouped by subheader, in sidebar order (archetype C renders this; check 6). */
+/** Capability pages grouped by subheader, in sidebar order. */
 export async function featureGroups(): Promise<{ group: string; pages: Page[] }[]> {
   const pages = new Map((await getPages()).map((p) => [p.pathname, p]));
   const features = nav.find((n) => n.pathname.endsWith('/features-group'));
@@ -167,7 +166,7 @@ export function referenceHref(symbol: string): string | null {
 
 export const referenceFor = (symbol: string): ReferenceEntry | undefined => references.find((r) => r.symbol === symbol);
 
-/** The H2 that carries a symbol's structure (ARCHETYPES.E.h2AnyOf). */
+/** The H2 that carries a symbol's structure. */
 export function structureHeading(ref: ReferenceEntry): 'Props' | 'Members' | 'Parameters' | 'Definition' {
   if (ref.schema.kind === 'component') return 'Props';
   if (ref.schema.kind === 'function') return 'Parameters';
@@ -185,7 +184,7 @@ const mdCell = (text: string | undefined): string => (text ?? '').replace(/\|/g,
 const mdCode = (text: string | number | boolean | null | undefined): string =>
   text === undefined || text === null || text === '' ? '—' : `\`${mdCell(String(text))}\``;
 
-/** A reference page as Markdown, for its twin and for the twins of pages that use it (§7.7). */
+/** A reference page as Markdown, for its twin and for the twins of pages that use it. */
 export function referenceMarkdown(ref: ReferenceEntry, site: URL | undefined, depth = 2): string {
   const h = '#'.repeat(depth);
   const { schema, strings } = ref;
@@ -244,13 +243,13 @@ export function resourceChips(entry: DocEntry): { key: string; label: string; hr
 
 /* --------------------------------------------------------------- metadata */
 
-/** Site-wide design constant, not plugin branding (PPDS §12 allows branding.accentColor to override). */
+/** Site-wide design constant, not plugin branding. */
 export const THEME_COLOR = config.branding?.accentColor ?? '#1f4e79';
 
 export const currentVersion = (): { label: string; href: string } =>
   (config.versions ?? []).find((v) => v.current) ?? { label: config.currentVersion, href: `/${config.id}/` };
 
-/** The PPDS §7.6 set, all from one title and one description. */
+/** Page metadata, all from one title and one description. */
 export function metadata(page: Page, site: URL) {
   const url = new URL(page.pathname, site).href;
   const image = new URL(page.ogImage, site).href;
@@ -271,10 +270,6 @@ export function metadata(page: Page, site: URL) {
       { name: 'twitter:description', content: page.description },
       { name: 'twitter:image', content: image },
       { name: 'theme-color', content: THEME_COLOR },
-      { name: 'search:language', content: 'en' },
-      { name: 'search:version', content: currentVersion().label },
-      { name: 'plugin:id', content: config.id },
-      { name: 'plugin:categoryId', content: config.categoryId ?? '' },
     ],
   };
 }
@@ -283,7 +278,7 @@ export function metadata(page: Page, site: URL) {
 
 type FooterLink = { title: string; href: string };
 
-/** PPDS §2.3 columns, with only destinations that exist (operating rule 4). */
+/** Footer columns, with only destinations that exist. */
 export function footerColumns(): { title: string; links: FooterLink[] }[] {
   const id = config.id;
   const columns: Record<string, FooterLink[]> = {
@@ -326,7 +321,7 @@ export function breadcrumbs(page: Page): { title: string; href: string | null }[
 /** Section title for a page, for llms.txt grouping. */
 export function sectionTitle(sectionId: string | null): string {
   const section = SECTIONS.find((s) => s.id === sectionId);
-  return section ? titles[`/${config.id}/${section.group}`] ?? section.name : String(sectionId);
+  return section ? titles[`/${config.id}/${section.group}`] ?? section.id : String(sectionId);
 }
 
-export { ARCHETYPES, flattenNav, isGroup, isMachine, symbolPath };
+export { symbolPath };

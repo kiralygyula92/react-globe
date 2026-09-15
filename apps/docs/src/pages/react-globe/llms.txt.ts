@@ -1,7 +1,7 @@
 /**
- * PPDS §7.7 `llms.txt`: `# {Plugin}`, a two-line description, then one `## {Section}`
+ * `llms.txt`: `# {Plugin}`, a two-line description, then one `## {Section}`
  * per section listing every published page as `- [Title](url.md): description`.
- * Descriptions are the same field as each page's meta description and H1 subtitle (P10).
+ * Descriptions are the same field as each page's meta description and H1 subtitle.
  */
 
 import type { APIRoute } from 'astro';

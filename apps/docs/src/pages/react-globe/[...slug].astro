@@ -1,7 +1,7 @@
 ---
 /**
  * Every docs page. The route list is nav.json's pages; the archetype decides which
- * data-driven blocks surround the authored Markdown (PPDS §6).
+ * data-driven blocks surround the authored Markdown.
  */
 import { render } from 'astro:content';
 import Badge from '../../components/Badge.astro';
@@ -45,7 +45,7 @@ const hasDemos = /^::demo{/m.test(entry.body ?? '');
           page.badges.length > 0 && (
             <span class="heading-badges">
               {page.badges.map((badge) => (
-                <Badge badge={badge} href={page.pathname} />
+                <Badge badge={badge} />
               ))}
             </span>
           )
@@ -53,20 +53,20 @@ const hasDemos = /^::demo{/m.test(entry.body ?? '');
       </h1>
       {
         page.archetype === 'I' && date && (
-          <time class="page-date" datetime={date.toISOString().slice(0, 10)} data-block="date">
+          <time class="page-date" datetime={date.toISOString().slice(0, 10)}>
             {date.toISOString().slice(0, 10)}
           </time>
         )
       }
-      <p class="page-subtitle" data-block="subtitle">{page.description}</p>
+      <p class="page-subtitle">{page.description}</p>
     </header>
 
     {
       page.archetype === 'B' && (
-        <ul class="resource-chips" data-block="resource-chips" aria-label="Resources">
+        <ul class="resource-chips" aria-label="Resources">
           {resourceChips(entry).map((chip) => (
             <li>
-              <a href={chip.href} data-chip={chip.key}>
+              <a href={chip.href}>
                 {chip.label}
               </a>
             </li>
@@ -77,7 +77,7 @@ const hasDemos = /^::demo{/m.test(entry.body ?? '');
 
     {
       page.archetype === 'C' ? (
-        <div data-block="scope">
+        <div>
           <Content />
         </div>
       ) : (
@@ -87,7 +87,7 @@ const hasDemos = /^::demo{/m.test(entry.body ?? '');
 
     {
       page.archetype === 'C' && (
-        <div data-block="feature-groups">
+        <div>
           {groups.map((g) => (
             <section data-feature-group={g.group}>
               <h2 id={g.group.toLowerCase().replace(/[^a-z0-9]+/g, '-')}>{g.group}</h2>
@@ -97,7 +97,7 @@ const hasDemos = /^::demo{/m.test(entry.body ?? '');
                     <a class="feature-card" href={p.pathname} data-feature-card={p.pathname}>
                       <span class="name">{p.title}</span>
                       {p.badges.map((badge) => (
-                        <Badge badge={badge} href={p.pathname} />
+                        <Badge badge={badge} />
                       ))}
                       <span class="one-line">{p.description}</span>
                     </a>
@@ -112,7 +112,7 @@ const hasDemos = /^::demo{/m.test(entry.body ?? '');
 
     {
       page.archetype === 'B' && (
-        <section class="api-links" data-block="api-links">
+        <section class="api-links">
           <h2 id="api">API</h2>
           <ul>
             {symbols.map((symbol) => {

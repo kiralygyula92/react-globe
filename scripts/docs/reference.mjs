@@ -1,22 +1,20 @@
 /**
- * PPDS Phase 4 reference generator (§8.4–§8.5).
+ * API reference generator.
  *
- *   node scripts/ppds/reference.mjs          regenerate
- *   node scripts/ppds/reference.mjs --check  exit 1 if anything would change
+ *   node scripts/docs/reference.mjs          regenerate
+ *   node scripts/docs/reference.mjs --check  exit 1 if anything would change
  *
  * Reads the package's public surface with the TypeScript compiler, starting from
  * packages/globe/src/index.ts, and writes content/react-globe/reference/:
  *
- *   {Symbol}.schema.json   structure only; always overwritten (P5)
- *   {Symbol}.strings.json  prose; seeded from JSDoc, existing values never overwritten (P6)
- *   checksums.json         sha256 of every schema file (conformance check 10)
+ *   {Symbol}.schema.json   structure only; always overwritten
+ *   {Symbol}.strings.json  prose; seeded from JSDoc, existing values never overwritten
  *
  * `usedBy` inverts the `symbols` frontmatter of every page. The generated API tables
- * in packages/globe/README.md (between `ppds:reference` markers) come from the same
+ * in packages/globe/README.md (between `docs:reference` markers) come from the same
  * data, so the repository holds no hand-written reference table.
  */
 
-import { createHash } from 'node:crypto';
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, statSync, writeFileSync } from 'node:fs';
 import { join, relative } from 'node:path';
 import ts from 'typescript';
@@ -82,7 +80,7 @@ function declaredTypeNode(declaration) {
   return null;
 }
 
-/** Split members into options and events (`on*` callbacks), PPDS §8.4. */
+/** Split members into options and events (`on*` callbacks). */
 function tableFrom(members, { withDefaults }) {
   const options = {};
   const events = {};
@@ -279,14 +277,13 @@ for (const [label, key] of [
   const seen = new Map();
   for (const name of names) {
     const k = key(name);
-    if (seen.has(k)) throw new Error(`[ppds] ${seen.get(k)} and ${name} collide as ${label} "${k}" — rename one export`);
+    if (seen.has(k)) throw new Error(`[docs] ${seen.get(k)} and ${name} collide as ${label} "${k}" — rename one export`);
     seen.set(k, name);
   }
 }
 
 for (const [symbol] of usedByFiles) if (!names.has(symbol)) warnings.push(`frontmatter declares ${symbol}, which the package does not export`);
 
-const checksums = {};
 for (const { schema, strings } of described) {
   schema.usedBy = (usedByFiles.get(schema.name) ?? []).map((file) => pathnameOf.get(file)).filter(Boolean).sort();
   if (schema.usedBy.length === 0) warnings.push(`${schema.name}: no page declares it (usedBy empty)`);
@@ -315,15 +312,13 @@ for (const { schema, strings } of described) {
   };
   const schemaText = stable(ordered);
   writeIfChanged(join(OUT, `${schema.name}.schema.json`), schemaText);
-  checksums[`${schema.name}.schema.json`] = createHash('sha256').update(schemaText).digest('hex');
 
   const stringsPath = join(OUT, `${schema.name}.strings.json`);
   writeIfChanged(stringsPath, stable(mergeStrings(stringsPath, strings, schema.name)));
 }
 
-writeIfChanged(join(OUT, 'checksums.json'), stable(checksums));
 
-// Schema files for symbols the package no longer exports are stale; strings stay (P6 never deletes prose).
+// Schema files for symbols the package no longer exports are stale; their strings stay, so no prose is lost.
 if (existsSync(OUT)) {
   for (const file of readdirSync(OUT).filter((f) => f.endsWith('.schema.json'))) {
     if (!names.has(file.replace('.schema.json', ''))) {
@@ -372,9 +367,9 @@ if (existsSync(README)) {
   const tables = readmeTables();
   let readme = readFileSync(README, 'utf8');
   for (const [name, table] of Object.entries(tables)) {
-    const pattern = new RegExp(`(<!-- ppds:reference:${name}:start[^>]*-->)[\\s\\S]*?(<!-- ppds:reference:${name}:end -->)`);
+    const pattern = new RegExp(`(<!-- docs:reference:${name}:start[^>]*-->)[\\s\\S]*?(<!-- docs:reference:${name}:end -->)`);
     if (!pattern.test(readme)) {
-      warnings.push(`README has no ppds:reference:${name} markers`);
+      warnings.push(`README has no docs:reference:${name} markers`);
       continue;
     }
     readme = readme.replace(pattern, `$1\n${table}\n$2`);

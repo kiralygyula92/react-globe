@@ -1,10 +1,10 @@
 /**
- * PPDS docs site for react-globe.
+ * Docs site for react-globe.
  *
- * Static output with directory URLs and a trailing slash (R4). Redirects come from
- * docs/migration/url-map.csv, never from this file: Astro emits a meta-refresh page
- * for each (so a plain static host still lands the reader) and the build hook
- * writes `_redirects` so a host that reads it answers with a real 301 (R6).
+ * Static output with directory URLs and a trailing slash. Redirects come from
+ * content/react-globe/redirects.json: Astro emits a meta-refresh page for each (so a
+ * plain static host still lands the reader) and the build hook writes `_redirects`
+ * so a host that reads it answers with a real 301.
  *
  * Live demos are demo-*.tsx files colocated with their pages under content/; the
  * React integration compiles them and `resolve.dedupe` makes their bare imports
@@ -16,21 +16,21 @@ import { fileURLToPath } from 'node:url';
 import react from '@astrojs/react';
 import { defineConfig } from 'astro/config';
 import remarkDirective from 'remark-directive';
-import { CONTENT_DIR, ROOT, siteRedirects } from '../../scripts/ppds/model.mjs';
-import { remarkPpds } from './src/lib/remark-ppds.mjs';
+import { CONTENT_DIR, ROOT, siteRedirects } from '../../scripts/docs/model.mjs';
+import { remarkDocs } from './src/lib/remark-docs.mjs';
 
-/** Production origin is not decided yet (GAPS G-02); override with DOCS_SITE_URL. */
+/** Set DOCS_SITE_URL to the production origin when building for release. */
 const SITE = process.env.DOCS_SITE_URL ?? 'http://localhost:4321';
 
 /**
- * url-map rows, plus the site root: there is no marketing surface yet (EXCEPTIONS E-02),
- * so `/` sends readers to the docs root until there is one — temporarily, hence 302.
+ * Moved URLs, plus the site root: `/` sends readers to the docs root until the site has a
+ * home page of its own — temporarily, hence 302.
  */
 const redirects = [...siteRedirects(), { from: '/', to: '/react-globe/', status: 302 }];
 
 function hostRedirects() {
   return {
-    name: 'ppds-host-redirects',
+    name: 'host-redirects',
     hooks: {
       'astro:build:done': ({ dir }) => {
         const lines = redirects.map((r) => `${r.from} ${r.to} ${r.status}`);
@@ -48,7 +48,7 @@ export default defineConfig({
   redirects: Object.fromEntries(redirects.map((r) => [r.from, { destination: r.to, status: r.status }])),
   integrations: [react({ include: ['**/*.tsx'] }), hostRedirects()],
   markdown: {
-    remarkPlugins: [remarkDirective, [remarkPpds, { contentDir: CONTENT_DIR }]],
+    remarkPlugins: [remarkDirective, [remarkDocs, { contentDir: CONTENT_DIR }]],
     shikiConfig: { themes: { light: 'github-light-high-contrast', dark: 'github-dark-high-contrast' } },
   },
   vite: {

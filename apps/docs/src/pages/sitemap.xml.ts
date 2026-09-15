@@ -1,6 +1,5 @@
 /**
- * PPDS §7.7 sitemap. Covers the docs surface; the marketing surface does not exist
- * yet (EXCEPTIONS E-02) and joins this file when it does.
+ * Sitemap of every docs page.
  */
 
 import type { APIRoute } from 'astro';

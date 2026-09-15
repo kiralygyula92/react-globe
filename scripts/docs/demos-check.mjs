@@ -1,9 +1,9 @@
 /**
  * Opens every docs page that has live demos, scrolls each demo into view in a real
  * browser with software WebGL, and fails when a demo does not mount a canvas or the
- * page logs an error (PPDS §7.2: demos must run, not just exist).
+ * page logs an error.
  *
- *   node scripts/ppds/demos-check.mjs [--dist apps/docs/dist] [--report docs/qa/demos.md]
+ *   node scripts/docs/demos-check.mjs [--dist apps/docs/dist] [--report demos.md]
  *
  * Needs Playwright's Chromium (`npx playwright install chromium`).
  */

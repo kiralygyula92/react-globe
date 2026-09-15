@@ -81,15 +81,6 @@ export type SurfaceTextureSet = {
   cover: DecodedImage | null;
 };
 
-export const EMPTY_TEXTURES: SurfaceTextureSet = {
-  day: null,
-  normal: null,
-  specular: null,
-  clouds: null,
-  elevation: null,
-  cover: null,
-};
-
 export const isFlat = (style: RenderStyle): style is FlatStyle => style !== 'realistic';
 
 type StyleInputs = { style: SurfaceStyle; textures: SurfaceTextureSet; countries: readonly PreparedCountry[] };

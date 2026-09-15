@@ -1,5 +1,5 @@
 /**
- * Mounts the live demos a page contains (PPDS §7.2). Each `figure[data-demo]` names a
+ * Mounts the live demos a page contains. Each `figure[data-demo]` names a
  * demo-*.tsx file colocated with its page; the module, React and the globe load only
  * when a demo is about to scroll into view, and only on pages that have one.
  */

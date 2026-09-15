@@ -656,10 +656,6 @@ main:focus {
   color: var(--accent);
 }
 
-.toc-promo {
-  margin-top: 1.25rem;
-}
-
 /* ---------------------------------------------------------------- article */
 
 .breadcrumb ol {

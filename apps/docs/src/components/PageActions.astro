@@ -1,5 +1,5 @@
 ---
-/** PPDS §7.3 page footer actions: layout, not content. Both work without JavaScript. */
+/** Page footer actions: layout, not content. Both work without JavaScript. */
 import { editUrl, feedbackUrl, type Page } from '../lib/site';
 
 interface Props {
@@ -9,9 +9,9 @@ interface Props {
 const { page } = Astro.props;
 ---
 
-<div class="page-actions" data-block="page-actions">
-  <a href={editUrl(page.file)} data-action="edit">Edit this page</a>
-  <div class="feedback" data-action="feedback">
+<div class="page-actions">
+  <a href={editUrl(page.file)}>Edit this page</a>
+  <div class="feedback">
     <span id="feedback-label">Was this page helpful?</span>
     <a href={feedbackUrl(page, true)} aria-describedby="feedback-label">Yes</a>
     <a href={feedbackUrl(page, false)} aria-describedby="feedback-label">No</a>

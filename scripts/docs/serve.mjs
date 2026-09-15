@@ -3,10 +3,9 @@
  * `_redirects` rules answer with their status and a Location, a directory without
  * its trailing slash 301s to it, `dir/` serves `dir/index.html`, anything else 404s.
  *
- *   node scripts/ppds/serve.mjs [dist] [port]
+ *   node scripts/docs/serve.mjs [dist] [port]
  *
- * Used by the conformance script so redirects are verified over HTTP, not by
- * reading configuration.
+ * `pnpm docs:serve` previews the build with it, redirects included.
  */
 
 import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs';

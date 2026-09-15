@@ -1,8 +1,8 @@
 ---
 /**
- * PPDS §6 archetype E: one generated reference page per public symbol. Everything on
+ * Archetype E: one generated reference page per public symbol. Everything on
  * the page comes from reference/{Symbol}.schema.json (structure) and .strings.json
- * (prose); nothing is typed by hand (P5, P6).
+ * (prose); nothing is typed by hand.
  */
 import PageActions from '../../../components/PageActions.astro';
 import DocsLayout from '../../../layouts/DocsLayout.astro';
@@ -46,14 +46,14 @@ const KIND: Record<string, string> = { component: 'Component', function: 'Functi
   <article class="article reference">
     <header class="page-header">
       <h1>{page.heading}</h1>
-      <p class="page-subtitle" data-block="subtitle">{page.description}</p>
+      <p class="page-subtitle">{page.description}</p>
       <p class="reference-kind">{KIND[schema.kind] ?? schema.kind}</p>
     </header>
 
     <h2 id="used-by">Used by</h2>
     {
       schema.usedBy.length > 0 ? (
-        <ul data-block="used-by">
+        <ul>
           {schema.usedBy.map((path) => (
             <li>
               <a href={path}>{titles[path] ?? path}</a>
@@ -61,12 +61,12 @@ const KIND: Record<string, string> = { component: 'Component', function: 'Functi
           ))}
         </ul>
       ) : (
-        <p data-block="used-by">Not used by any documentation page.</p>
+        <p>Not used by any documentation page.</p>
       )
     }
 
     <h2 id="import">Import</h2>
-    <pre data-block="import"><code>{schema.imports.join('\n')}</code></pre>
+    <pre><code>{schema.imports.join('\n')}</code></pre>
 
     {
       schema.inheritance && (
@@ -95,12 +95,12 @@ const KIND: Record<string, string> = { component: 'Component', function: 'Functi
     <h2 id={slug(structure)}>{structure}</h2>
     {
       structure === 'Definition' ? (
-        <pre data-block="definition">
+        <pre>
           <code>{`${schema.kind === 'type' ? `type ${schema.name} = ` : `const ${schema.name}: `}${schema.definition ?? 'unknown'}`}</code>
         </pre>
       ) : (
         <div class="table-wrap">
-          <table data-block="options">
+          <table>
             <thead>
               <tr>
                 <th scope="col">Name</th>
@@ -146,7 +146,7 @@ const KIND: Record<string, string> = { component: 'Component', function: 'Functi
         <>
           <h2 id="events">Events</h2>
           <div class="table-wrap">
-            <table data-block="events">
+            <table>
               <thead>
                 <tr>
                   <th scope="col">Name</th>
@@ -178,7 +178,7 @@ const KIND: Record<string, string> = { component: 'Component', function: 'Functi
         <>
           <h2 id="tokens">Tokens</h2>
           <div class="table-wrap">
-            <table data-block="tokens">
+            <table>
               <thead>
                 <tr>
                   <th scope="col">Token</th>
@@ -215,7 +215,7 @@ const KIND: Record<string, string> = { component: 'Component', function: 'Functi
     }
 
     <h2 id="source">Source</h2>
-    <p data-block="source">
+    <p>
       <a href={schema.sourceUrl}><code>{schema.filename}</code></a>
     </p>
 

@@ -1,5 +1,5 @@
 /**
- * PPDS §7.7 RSS feed for the changelog. One item per version section of
+ * RSS feed for the changelog. One item per version section of
  * packages/globe/CHANGELOG.md, the same file the Changelog page includes, so the feed and
  * the page can never disagree. A section without a release date has no pubDate.
  */
@@ -7,7 +7,7 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import type { APIRoute } from 'astro';
-import { ROOT } from '../../../../../../../scripts/ppds/model.mjs';
+import { ROOT } from '../../../../../../../scripts/docs/model.mjs';
 import { config, links } from '../../../../lib/site';
 
 const escape = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');

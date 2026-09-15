@@ -1,13 +1,13 @@
 /**
- * Markdown extensions for PPDS pages, on top of remark-directive:
+ * Markdown extensions for docs pages, on top of remark-directive:
  *
  *   ::demo{src="./demo-basics.tsx" title="…" height="380"}
- *     A live demo colocated with the page (§7.2): toolbar (copy, reset), the stage the
+ *     A live demo colocated with the page: toolbar (copy, reset), the stage the
  *     client script mounts the component into, and the highlighted source in a
  *     <details> (show/hide source, readable without JavaScript).
  *
  *   :::info / :::warning … :::
- *     Callouts (§6 B). Anti-patterns go in :::warning with the wrong code marked.
+ *     Callouts. Anti-patterns go in :::warning with the wrong code marked.
  *
  * Any other directive is turned back into the text it was written as, so prose such
  * as "key:value" is never swallowed.
@@ -32,7 +32,7 @@ function directiveAsText(node) {
 }
 
 /** @param {{ contentDir: string }} options */
-export function remarkPpds({ contentDir }) {
+export function remarkDocs({ contentDir }) {
   return (tree, file) => {
     const pagePath = file.path ?? file.history?.[0];
 
@@ -41,10 +41,10 @@ export function remarkPpds({ contentDir }) {
 
       if (node.type === 'leafDirective' && node.name === 'demo') {
         const src = node.attributes?.src;
-        if (!src || !pagePath) throw new Error(`[ppds] ::demo needs src (in ${pagePath})`);
+        if (!src || !pagePath) throw new Error(`[docs] ::demo needs src (in ${pagePath})`);
         const abs = resolve(dirname(pagePath), src);
-        if (!existsSync(abs)) throw new Error(`[ppds] demo not found: ${src} (in ${pagePath})`);
-        if (!/[\\/]demo-[\w-]+\.tsx$/.test(abs)) throw new Error(`[ppds] demo files must be named demo-*.tsx next to the page: ${src}`);
+        if (!existsSync(abs)) throw new Error(`[docs] demo not found: ${src} (in ${pagePath})`);
+        if (!/[\\/]demo-[\w-]+\.tsx$/.test(abs)) throw new Error(`[docs] demo files must be named demo-*.tsx next to the page: ${src}`);
         const id = relative(contentDir, abs).replace(/\\/g, '/');
         const title = node.attributes.title ?? 'Live demo';
         const height = Number(node.attributes.height ?? 380);
@@ -76,7 +76,7 @@ export function remarkPpds({ contentDir }) {
         // its remaining headings already sit under the page's own H1.
         const src = node.attributes?.src;
         const abs = src && pagePath ? resolve(dirname(pagePath), src) : null;
-        if (!abs || !existsSync(abs)) throw new Error(`[ppds] ::include not found: ${src} (in ${pagePath})`);
+        if (!abs || !existsSync(abs)) throw new Error(`[docs] ::include not found: ${src} (in ${pagePath})`);
         const included = fromMarkdown(readFileSync(abs, 'utf8'));
         const children = included.children.filter((c) => !(c.type === 'heading' && c.depth === 1));
         parent.children.splice(index, 1, ...children);
@@ -112,7 +112,7 @@ export function includesAsMarkdown(markdown, pageFile, contentDir) {
   });
 }
 
-/** For Markdown twins: every ::demo replaced by its source as a fenced block (§7.2 fallback). */
+/** For Markdown twins: every ::demo replaced by its source as a fenced block. */
 export function demosAsCode(markdown, pageFile, contentDir) {
   return markdown.replace(/^::demo\{([^}]*)\}\s*$/gm, (line, attrs) => {
     const src = /src="([^"]+)"/.exec(attrs)?.[1];

@@ -1,5 +1,5 @@
 ---
-/** PPDS §7.5 version selector: every documented version, plus the Versions page. */
+/** Version selector: every documented version, plus the Versions page. */
 import { config, currentVersion } from '../lib/site';
 
 const current = currentVersion();
@@ -8,7 +8,7 @@ const versionsPage = `/${config.id}/getting-started/versions/`;
 
 <div class="version-select">
   <label class="sr-only" for="docs-version">Documentation version</label>
-  <select id="docs-version" data-block="version-selector">
+  <select id="docs-version">
     {
       (config.versions ?? []).map((v) => (
         <option value={v.href} selected={v.label === current.label}>

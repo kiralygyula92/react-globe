@@ -1,12 +1,12 @@
 /**
- * PPDS §7.7 Markdown twin of every docs page: the heading, the one-line description,
+ * Markdown twin of every docs page: the heading, the one-line description,
  * the authored Markdown, the data-driven blocks the HTML page renders (feature
  * groups, API links), and the generated reference for the page's symbols.
  */
 
 import type { APIRoute, GetStaticPaths } from 'astro';
-import { CONTENT_DIR } from '../../../../../scripts/ppds/model.mjs';
-import { demosAsCode, includesAsMarkdown } from '../../lib/remark-ppds.mjs';
+import { CONTENT_DIR } from '../../../../../scripts/docs/model.mjs';
+import { demosAsCode, includesAsMarkdown } from '../../lib/remark-docs.mjs';
 import { config, featureGroups, getPages, referenceFor, referenceHref, referenceMarkdown, symbolPath, type Page } from '../../lib/site';
 
 export const getStaticPaths: GetStaticPaths = async () => {

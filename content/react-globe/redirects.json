@@ -1,0 +1,4 @@
+[
+  { "from": "/react-globe/getting-started/", "to": "/react-globe/" },
+  { "from": "/react-globe/resources/bundled-data/", "to": "/react-globe/customization/bundled-data/" }
+]

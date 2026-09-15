@@ -19,11 +19,11 @@ const contains = (item: SidebarItem): boolean =>
   item.kind === 'link' ? item.href === current : item.items.some(contains);
 ---
 
-<ul class={`nav-list depth-${depth}`} data-nav-depth={depth}>
+<ul class={`nav-list depth-${depth}`}>
   {
     items.map((item) =>
       item.kind === 'section' ? (
-        <li class="nav-section" data-nav-section={item.id}>
+        <li class="nav-section">
           {item.items.length > 0 ? (
             <details open={contains(item)}>
               <summary class="section-title">{item.title}</summary>
@@ -34,7 +34,7 @@ const contains = (item: SidebarItem): boolean =>
           )}
         </li>
       ) : item.kind === 'group' ? (
-        <li class="nav-group" data-nav-group={item.title}>
+        <li class="nav-group">
           <p class="group-title">{item.title}</p>
           <Astro.self items={item.items} current={current} depth={depth + 1} />
         </li>
@@ -45,11 +45,11 @@ const contains = (item: SidebarItem): boolean =>
             href={item.href}
             title={item.description ?? undefined}
             aria-current={item.href === current ? 'page' : undefined}
-            data-nav-link={item.href}
+           
           >
             {item.code ? <code class="symbol">{item.title}</code> : <span>{item.title}</span>}
             {item.badges.map((badge) => (
-              <Badge badge={badge} href={item.href} />
+              <Badge badge={badge} />
             ))}
           </a>
         </li>

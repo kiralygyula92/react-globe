@@ -9,12 +9,11 @@ and the full API.
 ## Layout
 
 ```
-packages/globe/     the library, published to npm as `react-globe`
-apps/docs/          the documentation site (Astro), built to the PPDS v1.0 standard
-content/react-globe/  docs content and nav data: plugin.config.json, nav.json, titles.json, Markdown
-docs/               PPDS audit, migration map, GAPS.md and EXCEPTIONS.md
-e2e/                Playwright suite driving the docs playground (Demos › Playground)
-scripts/            globe-assets.mjs (bundled assets) and ppds/ (docs scaffold, validation, conformance)
+packages/globe/       the library, published to npm as `react-globe`
+apps/docs/            the documentation site (Astro)
+content/react-globe/  docs content and data: plugin.config.json, nav.json, titles.json, redirects.json, Markdown
+e2e/                  Playwright suite driving the docs playground (Demos › Playground)
+scripts/              globe-assets.mjs (bundled assets) and docs/ (content model, reference generator, demo check)
 ```
 
 The docs site and its live demos consume the library's **built** output (`packages/globe/dist`),
@@ -39,20 +38,17 @@ pnpm assets         # re-download and regenerate packages/globe/src/assets/*
 ```bash
 pnpm docs:dev        # docs site at http://localhost:4321/react-globe/ (after pnpm build; no search in dev)
 pnpm docs:reference  # regenerate the API reference and the README tables from packages/globe/src
-pnpm docs:build      # validate the model, check pages and reference, build apps/docs/dist + search index
-pnpm docs:check      # PPDS §11 conformance report (--gate phase6 fails on any problem)
-pnpm docs:demos      # run every live demo in Chromium and fail on errors
-pnpm docs:qa         # user-flow walkthroughs, axe accessibility, metadata sample, redirect check
-pnpm docs:scaffold   # create stub pages for new nav.json entries; never overwrites
+pnpm docs:build      # check the reference is current, build apps/docs/dist + search index
 pnpm docs:serve      # serve the build like a static host, honouring _redirects
+pnpm docs:demos      # run every live demo of the build in Chromium and fail on errors
 ```
 
-Pages and their order are data: add a page to `content/react-globe/nav.json` and `titles.json`, run
-`pnpm docs:scaffold`, then write the stub. Live demos are `demo-*.tsx` files next to their page, used as
-`::demo{src="./demo-basics.tsx"}`. Reference pages are generated — edit JSDoc in the library, or prose in
-`content/react-globe/reference/*.strings.json`, never the `.schema.json` files. Read
-`docs/ppds/02-plugin-docs-standard.md` before changing pages, templates or nav data, and set
-`DOCS_SITE_URL` to the production origin when building for release. QA reports live in `docs/qa/`.
+Pages and their order are data: add a page to `content/react-globe/nav.json` and `titles.json`, then
+create its Markdown file (the build names the file it expects if one is missing). Live demos are
+`demo-*.tsx` files next to their page, used as `::demo{src="./demo-basics.tsx"}`. Reference pages are
+generated — edit JSDoc in the library, or prose in `content/react-globe/reference/*.strings.json`, never
+the `.schema.json` files. A moved page keeps its old URL through `redirects.json`. Set `DOCS_SITE_URL` to
+the production origin when building for release.
 
 The first Playwright run may ask for its browser: `npx playwright install chromium`. The suite serves
 the playground page on port 4400; if that is taken, set `E2E_PORT` (for example `E2E_PORT=4499 pnpm e2e`):

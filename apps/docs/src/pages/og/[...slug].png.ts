@@ -1,5 +1,5 @@
 /**
- * PPDS §7.6 generated social image for every docs page, built from the page's title
+ * Generated social image for every docs page, built from the page's title
  * and description — never hand-made. An SVG template rasterised with sharp.
  */
 

@@ -1,9 +1,9 @@
 /**
- * The PPDS v1.0 content model for one plugin, as plain functions over its data files.
+ * The docs content model, as plain functions over the data files in content/react-globe/.
  *
- * Shared by the scaffold generator, the docs site and the conformance script, so
- * all three agree on where a page's file lives, which archetype it is, and which
- * blocks that archetype requires. Nothing here reads Markdown bodies.
+ * Shared by the docs site and the reference generator, so both agree on where a page's
+ * file lives and which page template (archetype) renders it. Nothing here reads
+ * Markdown bodies.
  */
 
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
@@ -28,7 +28,7 @@ function findRoot() {
       dir = parent;
     }
   }
-  throw new Error(`[ppds] no ${marker} above ${process.cwd()}`);
+  throw new Error(`[docs] no ${marker} above ${process.cwd()}`);
 }
 
 export const ROOT = findRoot();
@@ -43,83 +43,24 @@ export function loadModel() {
   return { config, nav, titles };
 }
 
-/* ----------------------------------------------------------------- vocabulary */
-
-/** PPDS §5, in canonical order, with the nav group each section's top-level node uses. */
+/** Sidebar sections, in order, with the nav group each section's top-level node uses. */
 export const SECTIONS = [
-  { id: 'getting-started', group: 'getting-started-group', name: 'Getting started', mandatory: true },
-  { id: 'features', group: 'features-group', name: 'Features', mandatory: true },
-  { id: 'demos', group: 'demos-group', name: 'Demos', mandatory: false },
-  { id: 'reference', group: 'api-group', name: 'Reference', mandatory: true },
-  { id: 'customization', group: 'customization-group', name: 'Customization', mandatory: true },
-  { id: 'guides', group: 'guides-group', name: 'Guides', mandatory: true },
-  { id: 'integrations', group: 'integrations-group', name: 'Integrations', mandatory: true },
-  { id: 'resources', group: 'resources-group', name: 'Resources', mandatory: false },
-  { id: 'migration', group: 'migration-group', name: 'Migration', mandatory: true },
-  { id: 'discover-more', group: 'discover-more-group', name: 'Discover more', mandatory: true },
-  { id: 'design-resources', group: 'design-resources-group', name: 'Design resources', mandatory: false },
+  { id: 'getting-started', group: 'getting-started-group' },
+  { id: 'features', group: 'features-group' },
+  { id: 'demos', group: 'demos-group' },
+  { id: 'reference', group: 'api-group' },
+  { id: 'customization', group: 'customization-group' },
+  { id: 'guides', group: 'guides-group' },
+  { id: 'integrations', group: 'integrations-group' },
+  { id: 'migration', group: 'migration-group' },
+  { id: 'discover-more', group: 'discover-more-group' },
 ];
 
-/** PPDS §5 feature-group vocabulary. */
-export const TAXONOMY = [
-  'Core features',
-  'Advanced features',
-  'Content & data',
-  'Display & layout',
-  'Interaction',
-  'Automation',
-  'Integrations',
-  'Administration',
-  'Developer tools',
-];
-
-/** PPDS §7.1 lifecycle badges (tier badges come from plugin.config.json#/tiers). */
+/** Lifecycle badges (tier badges come from plugin.config.json#/tiers). */
 export const LIFECYCLE_BADGES = { new: 'New', preview: 'Preview', beta: 'Beta', planned: 'Planned', deprecated: 'Deprecated', legacy: 'Legacy' };
 
-/** PPDS §2.3 footer columns. */
+/** Footer columns. */
 export const FOOTER_COLUMNS = ['Products', 'Resources', 'Explore', 'Company'];
-
-/* ------------------------------------------------------------------ archetypes */
-
-/**
- * Required blocks per archetype (PPDS §6), as the conformance script checks them on
- * rendered HTML. `h2` lists required second-level headings in required order;
- * `layout` lists blocks the layout renders from data, identified by data attributes.
- */
-export const ARCHETYPES = {
-  A: {
-    name: 'Docs Overview',
-    h2: ['Introduction', 'Why {name}', 'Start now'],
-    layout: ['subtitle', 'page-actions'],
-  },
-  B: {
-    name: 'Capability page',
-    h2: ['Basics', 'Customization', 'Limitations', 'API'],
-    layout: ['subtitle', 'resource-chips', 'api-links', 'page-actions'],
-  },
-  C: {
-    name: 'Features index',
-    h2: [],
-    layout: ['scope', 'feature-groups', 'page-actions'],
-  },
-  F: {
-    name: 'Getting-started page',
-    h2: ['Prerequisites', 'Installation', 'Minimal working example', 'Verification', 'Next steps'],
-    layout: ['subtitle', 'page-actions'],
-  },
-  I: {
-    name: 'Editorial',
-    h2: [],
-    layout: ['subtitle', 'date', 'page-actions'],
-  },
-  E: {
-    name: 'Reference page',
-    h2: ['Used by', 'Import', 'Source'],
-    /** One of these carries the symbol's structure (§6 E "Options / Props / Settings"; E-09). */
-    h2AnyOf: ['Props', 'Members', 'Parameters', 'Definition'],
-    layout: ['subtitle', 'page-actions'],
-  },
-};
 
 /* ------------------------------------------------------------------------ nav */
 
@@ -145,15 +86,11 @@ export function navPages(nav) {
   return flattenNav(nav).filter((e) => !isGroup(e.node) && !isMachine(e.node));
 }
 
-/** The subheader group a capability node sits under, if any. */
-export const groupOf = (entry) => [...entry.parents].reverse().find((p) => p.subheader)?.subheader ?? null;
-
 /* --------------------------------------------------------------- page mapping */
 
 /**
  * Where a nav page's Markdown lives, relative to content/{plugin-id}/, and which
- * archetype it is. PPDS §8.1 file tree; URL → file is fixed here, so a file never
- * decides its own URL (P2).
+ * archetype it is. URL → file is fixed here, so a file never decides its own URL.
  */
 export function pageSpec(entry, config) {
   const { node, section } = entry;
@@ -180,7 +117,6 @@ export function pageSpec(entry, config) {
       return { file: parts.length === 1 ? 'customization/index.md' : `customization/${parts[1]}.md`, archetype: 'I' };
     case 'guides':
     case 'integrations':
-    case 'resources':
     case 'migration':
     case 'discover-more':
       return { file: `${parts[0]}/${parts[1]}.md`, archetype: 'I' };
@@ -189,7 +125,7 @@ export function pageSpec(entry, config) {
   }
 }
 
-/** URL of a page's Markdown twin (PPDS §7.7): `/{id}/index.md` for the root, else the path + `.md`. */
+/** URL of a page's Markdown twin: `/{id}/index.md` for the root, else the path + `.md`. */
 export function twinPath(pathname, config) {
   const root = `/${config.id}/`;
   return pathname === root ? `${root}index.md` : `${pathname.replace(/\/$/, '')}.md`;
@@ -201,7 +137,7 @@ export function ogImagePath(pathname) {
   return `/og/${clean}.png`;
 }
 
-/** Reference page for an exported symbol (PPDS §3): kebab-case of the export name. */
+/** Reference page for an exported symbol: kebab-case of the export name. */
 export function symbolPath(symbol, config) {
   const kebab = symbol
     .replace(/([a-z0-9])([A-Z])/g, '$1-$2')
@@ -221,9 +157,9 @@ export function headingFor(entry, config, titles) {
 
 /* ------------------------------------------------------------------ reference */
 
-export const REFERENCE_DIR = join(CONTENT_DIR, 'reference');
+const REFERENCE_DIR = join(CONTENT_DIR, 'reference');
 
-/** Generated reference entries, alphabetical (N1 allows it only here). */
+/** Generated reference entries, alphabetical. */
 export function referenceEntries(config) {
   if (!existsSync(REFERENCE_DIR)) return [];
   return readdirSync(REFERENCE_DIR)
@@ -237,8 +173,8 @@ export function referenceEntries(config) {
 }
 
 /**
- * nav.json with the Reference section's children injected from the generated array
- * (N3). Injected nodes carry `symbol`; they exist only at build time.
+ * nav.json with the Reference section's children injected from the generated
+ * reference. Injected nodes carry `symbol`; they exist only at build time.
  */
 export function navWithReference(nav, config) {
   const refs = referenceEntries(config);
@@ -254,7 +190,7 @@ export function titlesWithReference(titles, config) {
   return { ...titles, ...Object.fromEntries(referenceEntries(config).map((r) => [r.pathname, r.symbol])) };
 }
 
-/** Badges for a nav node, derived only from its plan and lifecycle (N4/P7). */
+/** Badges for a nav node, derived only from its plan and lifecycle. */
 export function badgesFor(node, config) {
   const badges = [];
   const tier = node.plan ? config.tiers.find((t) => t.id === node.plan) : null;
@@ -265,53 +201,7 @@ export function badgesFor(node, config) {
 
 /* ------------------------------------------------------------------ redirects */
 
-/** Minimal RFC 4180 CSV → objects keyed by the header row. */
-export function parseCsv(text) {
-  const rows = [];
-  let row = [];
-  let field = '';
-  let quoted = false;
-  for (let i = 0; i < text.length; i++) {
-    const c = text[i];
-    if (quoted) {
-      if (c === '"') {
-        if (text[i + 1] === '"') {
-          field += '"';
-          i++;
-        } else quoted = false;
-      } else field += c;
-    } else if (c === '"') quoted = true;
-    else if (c === ',') {
-      row.push(field);
-      field = '';
-    } else if (c === '\n') {
-      row.push(field);
-      rows.push(row);
-      row = [];
-      field = '';
-    } else if (c !== '\r') field += c;
-  }
-  if (field || row.length) {
-    row.push(field);
-    rows.push(row);
-  }
-  const [head, ...body] = rows;
-  return body.filter((r) => r.length > 1).map((r) => Object.fromEntries(head.map((h, i) => [h, r[i] ?? ''])));
-}
-
-/**
- * The url-map rows this site can serve as HTTP redirects: legacy URLs that are
- * paths on the docs host. Everything else is hosted elsewhere or never had a route
- * (EXCEPTIONS E-03, E-04, E-08).
- */
+/** Moved URLs, from redirects.json. A URL is never deleted, only redirected. */
 export function siteRedirects() {
-  const rows = parseCsv(readFileSync(join(ROOT, 'docs', 'migration', 'url-map.csv'), 'utf8'));
-  return rows
-    .map((row) => ({ row, from: row.legacy_url, to: row.redirect.split(' ')[0] }))
-    .filter(({ from, to }) => from.startsWith('/') && to.startsWith('/'))
-    .map(({ row, from, to }) => ({ from, to, status: 301, row }));
-}
-
-export function legacyRows() {
-  return parseCsv(readFileSync(join(ROOT, 'docs', 'migration', 'url-map.csv'), 'utf8'));
+  return readJson('redirects.json').map(({ from, to }) => ({ from, to, status: 301 }));
 }
