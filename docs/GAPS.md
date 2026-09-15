@@ -8,21 +8,23 @@ while the item is open.
 
 | ID | Severity | Blocks | Status |
 |---|---|---|---|
-| G-01 | Critical | Phase 2, publish | Open |
-| G-02 | High | Phase 2, 5, 6 | Open |
-| G-03 | High | Phase 5 | Open |
+| G-01 | Critical | publish | **Resolved (owner, Phase 2 gate)** — docs `id` and npm name both `react-globe`; npm conflict risk accepted |
+| G-02 | High | Phase 5, 6 | Open — `repo`/`issues` links point at the private repo |
+| G-03 | High | Phase 5 | **Resolved (owner)** — narrow the claim; unsupported layers become a Limitation |
 | G-04 | Medium | Phase 5 | Open |
 | G-05 | Medium | Phase 4 | Open |
-| G-06 | High | Phase 4 | Open |
-| G-07 | High | Phase 5 | Open |
-| G-08 | High | Phase 5 | Open |
-| G-09 | Medium | Phase 2 | Open |
-| G-10 | Medium | Phase 2, 5 | Open |
+| G-06 | High | Phase 4 | **Decided (owner)** — add JSDoc + `@default` to `types.ts` and a typed token manifest before Phase 4 |
+| G-07 | High | Phase 5 | **Decided (owner)** — measure with stated hardware/browser, or reword without numbers |
+| G-08 | High | Phase 5 | **Decided (owner)** — compatibility test matrix or narrowed claims; EXCEPTIONS E-07 |
+| G-09 | Medium | — | **Resolved (owner)** — free for now (EXCEPTIONS E-01) |
+| G-10 | Medium | Phase 5 | Open — EXCEPTIONS E-02 |
 | G-11 | Medium | Phase 5 | Open |
-| G-12 | Low | Phase 1 (item 6) | Open |
-| G-13 | Medium | Phase 2 | Open |
-| G-14 | Medium | Phase 2 (url-map) | Open |
-| G-15 | Low | Phase 3 | Open |
+| G-12 | Low | — | Open (acknowledge) |
+| G-13 | Medium | — | **Assumed in Phase 2** — `currentVersion` 1.0.0 (EXCEPTIONS E-06) |
+| G-14 | Medium | — | **Resolved (owner)** — retired (EXCEPTIONS E-04) |
+| G-15 | Low | Phase 3 | **Assumed in Phase 2** — demo app published as Demos › Playground; `/blank` retired |
+| G-16 | Low | acceptance #5 | **Resolved (owner)** — homes as proposed |
+| G-17 | Medium | Phase 5 | **Decided (owner)** — implement i18n: en, ro, de, es, fr, hu |
 
 ---
 
@@ -157,3 +159,50 @@ as `dist/*.d.ts`). It is **insufficient** for PPDS archetype E:
 - `/blank` has no H1 and reuses the playground's `<title>`; it exists only for the unmount e2e test.
 - **Needs:** decide whether the demo app is part of the published site (Demos/Showcase) or stays a
   test harness; if published, `/blank` needs an archetype or a noindex exception.
+
+---
+
+## Phase 2 additions and assumptions
+
+The Phase 1 gate questions were not answered explicitly; Phase 2 proceeded on these defaults. Owner decisions at the Phase 2 gate (2026-09-15) are recorded in the status table above.
+
+- **G-01:** docs namespace `id` is `react-globe` (the repository name). This is independent of the npm
+  package name, but R3 makes it permanent — confirm before Phase 3.
+- **G-03:** the docs will state what `GlobeAssets` actually supports; the unsupported layers become a
+  `## Limitations` entry on `/react-globe/custom-assets/`. No API change assumed.
+- **G-09:** untiered — every capability `plan: "free"`, no `pricing.json`.
+- **G-13:** `currentVersion` `1.0.0`, one version entry.
+- **G-14:** historical specification rows mapped `retire`.
+- **G-15:** the demo playground becomes `/react-globe/demos/playground/`; hosting target still open
+  (G-11).
+
+## G-16 — Audit capabilities homed outside the Features section
+Acceptance criterion #5 requires every audited capability to have exactly one capability page **or**
+an entry here. These five do not get archetype-B pages, because PPDS gives them a canonical home
+elsewhere:
+
+| Audit ID | Capability | Home | Why not a capability page |
+|---|---|---|---|
+| C-21 | Theming with CSS custom properties | `/react-globe/customization/theming/` | §5 section 5 names Theming/Tokens as a required Customization page |
+| C-22 | Isolated stylesheet | `/react-globe/customization/stylesheet/` | Styling concern, not a runtime capability |
+| C-23 | Render overrides (cross-cutting) | `/react-globe/customization/overriding-components/` | §5 "Overriding structure"; each capability page's `## Customization` links here |
+| C-25 | Accessibility & reduced motion | `/react-globe/guides/accessibility/` | §5 section 6 names Accessibility as a required guide |
+| — | Performance contract (non-capability) | `/react-globe/guides/performance/` | §5 section 6 |
+
+All other audit capabilities map 1:1 to a `capabilityId` in `content/react-globe/nav.json`
+(C-01 `globe`, C-02 `lazy-loading`, C-03 `camera`, C-04 `controls`, C-05 `camera-api`,
+C-06 `auto-rotate`, C-07 `gestures`, C-08 `screen-projection`, C-09 `borders`, C-10 `country-names`,
+C-11 `capitals`, C-12 `country-interaction`, C-13 `graticule`, C-14 `render-styles`, C-15 `background`,
+C-16 `custom-assets`, C-17 `pins`, C-18 `pin-popups`, C-19 `pin-clustering`, C-20 `connections`,
+C-24 `error-handling`).
+- **Needs:** reviewer agreement with the five homes above.
+
+## G-17 — Built-in UI strings cannot be localized
+- **Found:** `components/DefaultControls.tsx` hardcodes English `aria-label`s ("Zoom in", "Zoom out",
+  "Rotate left", "Rotate right", "Reset view"); there is no prop to replace them other than swapping
+  the whole `controlsComponent`. Bundled country and capital names are English only (Natural Earth
+  `NAME`).
+- **Impact:** `/react-globe/guides/localization/` (mandatory, §5 section 6) can only document the
+  workaround (`controlsComponent`, custom `countriesGeoJson` / `capitalsDataset`), which becomes a
+  `## Limitations` entry on `controls`, `country-names` and `capitals`.
+- **Needs:** decide whether to add a labels prop (code change) or document the workaround only.
