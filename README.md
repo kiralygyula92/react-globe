@@ -38,15 +38,22 @@ pnpm assets         # re-download and regenerate packages/globe/src/assets/*
 ### Documentation site
 
 ```bash
-pnpm docs:dev       # docs site at http://localhost:4321/react-globe/
-pnpm docs:build     # validate the model, check every nav page has a file, build apps/docs/dist
-pnpm docs:check     # PPDS §11 conformance report against the build (--gate phase3 to gate)
-pnpm docs:scaffold  # create stub pages for new nav.json entries; never overwrites
+pnpm docs:dev        # docs site at http://localhost:4321/react-globe/ (after pnpm build; no search in dev)
+pnpm docs:reference  # regenerate the API reference and the README tables from packages/globe/src
+pnpm docs:build      # validate the model, check pages and reference, build apps/docs/dist + search index
+pnpm docs:check      # PPDS §11 conformance report (--gate phase6 fails on any problem)
+pnpm docs:demos      # run every live demo in Chromium and fail on errors
+pnpm docs:qa         # user-flow walkthroughs, axe accessibility, metadata sample, redirect check
+pnpm docs:scaffold   # create stub pages for new nav.json entries; never overwrites
+pnpm docs:serve      # serve the build like a static host, honouring _redirects
 ```
 
 Pages and their order are data: add a page to `content/react-globe/nav.json` and `titles.json`, run
-`pnpm docs:scaffold`, then write the stub. Read `docs/ppds/02-plugin-docs-standard.md` before editing
-pages, templates or nav data. Set `DOCS_SITE_URL` to the production origin when building for release.
+`pnpm docs:scaffold`, then write the stub. Live demos are `demo-*.tsx` files next to their page, used as
+`::demo{src="./demo-basics.tsx"}`. Reference pages are generated — edit JSDoc in the library, or prose in
+`content/react-globe/reference/*.strings.json`, never the `.schema.json` files. Read
+`docs/ppds/02-plugin-docs-standard.md` before changing pages, templates or nav data, and set
+`DOCS_SITE_URL` to the production origin when building for release. QA reports live in `docs/qa/`.
 
 The first Playwright run may ask for its browser: `npx playwright install chromium`. If port 5173 is
 taken, set `DEMO_PORT` (for example `DEMO_PORT=5199 pnpm e2e`): Playwright otherwise reuses

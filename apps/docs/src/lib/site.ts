@@ -44,7 +44,7 @@ export type DocEntry = CollectionEntry<'docs'>;
 
 /** Destinations the docs chrome links to; plugin.config.json must declare them. */
 const REQUIRED_LINKS = ['issues', 'support', 'changelog', 'roadmap'] as const;
-const links = Object.fromEntries(
+export const links = Object.fromEntries(
   REQUIRED_LINKS.map((key) => {
     const value = config.links?.[key];
     if (!value) throw new Error(`[ppds] plugin.config.json links.${key} is required by the docs chrome`);

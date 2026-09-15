@@ -1,11 +1,12 @@
 ---
 /**
  * PPDS §2.3 shared footer. Column names are fixed; entries are only destinations
- * that exist. Newsletter capture and RSS are absent until they exist (GAPS G-18).
+ * that exist. Newsletter capture is absent until a mailing list exists (GAPS G-18).
  */
-import { config, footerColumns } from '../lib/site';
+import { config, footerColumns, links } from '../lib/site';
 
 const columns = footerColumns();
+const feed = `${links.changelog}rss.xml`;
 ---
 
 <footer class="site-footer" data-block="site-footer">
@@ -27,6 +28,7 @@ const columns = footerColumns();
   </div>
   <p class="legal">
     © 2026 kiralygyula92 · {config.name} is released under the MIT License ·
-    <a href={config.repo}>Source on GitHub</a>
+    <a href={config.repo}>Source on GitHub</a> ·
+    <a href={feed} data-block="rss">Changelog RSS</a>
   </p>
 </footer>

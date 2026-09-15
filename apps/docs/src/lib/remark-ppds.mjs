@@ -52,12 +52,12 @@ export function remarkPpds({ contentDir }) {
 
         const open =
           `<figure class="demo" data-demo="${escapeAttr(id)}" style="--demo-height:${height}px">` +
-          `<div class="demo-toolbar" role="toolbar" aria-label="${escapeAttr(title)} actions">` +
+          `<div class="demo-toolbar" data-pagefind-ignore role="toolbar" aria-label="${escapeAttr(title)} actions">` +
           `<span class="demo-title">${escapeAttr(title)}</span>` +
           `<button type="button" data-demo-action="copy" disabled>Copy</button>` +
           `<button type="button" data-demo-action="reset" disabled>Reset</button>` +
           `</div>` +
-          `<div class="demo-stage" data-demo-stage role="region" aria-label="${escapeAttr(title)}">` +
+          `<div class="demo-stage" data-demo-stage data-pagefind-ignore role="region" aria-label="${escapeAttr(title)}">` +
           `<p class="demo-fallback">This live demo needs JavaScript and WebGL. Its source is below.</p>` +
           `</div>` +
           `<details class="demo-source"><summary>Show source</summary>`;

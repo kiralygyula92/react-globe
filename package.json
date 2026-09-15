@@ -21,9 +21,11 @@
     "docs:check": "node scripts/ppds/conformance.mjs",
     "docs:serve": "node scripts/ppds/serve.mjs apps/docs/dist 4321",
     "docs:reference": "node scripts/ppds/reference.mjs",
-    "docs:demos": "node scripts/ppds/demos-check.mjs"
+    "docs:demos": "node scripts/ppds/demos-check.mjs",
+    "docs:qa": "node scripts/ppds/qa.mjs"
   },
   "devDependencies": {
+    "@axe-core/playwright": "^4.13.0",
     "@playwright/test": "^1.63.0",
     "ajv": "^8.20.0",
     "ajv-formats": "^3.0.1",

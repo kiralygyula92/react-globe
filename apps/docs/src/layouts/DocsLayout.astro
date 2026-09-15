@@ -8,7 +8,7 @@ import '../styles/docs.css';
 import SidebarItems from '../components/SidebarItems.astro';
 import SiteFooter from '../components/SiteFooter.astro';
 import Toc from '../components/Toc.astro';
-import { THEME_COLOR, config, currentVersion, metadata, sidebar, type Page } from '../lib/site';
+import { THEME_COLOR, config, currentVersion, links, metadata, sidebar, type Page } from '../lib/site';
 
 interface Props {
   page: Page;
@@ -32,7 +32,11 @@ const announcement: string | null = null;
     <link rel="canonical" href={meta.canonical} />
     {meta.meta.map((m) => ('property' in m ? <meta property={m.property} content={m.content} /> : <meta name={m.name} content={m.content} />))}
     <link rel="alternate" type="text/markdown" href={page.twin} />
+    <link rel="alternate" type="application/rss+xml" title={`${config.name} changelog`} href={`${links.changelog}rss.xml`} />
     <link rel="sitemap" href="/sitemap.xml" />
+    {(config.versions ?? []).length > 1 && <meta data-pagefind-filter="version[content]" content={currentVersion().label} />}
+    <link rel="stylesheet" href="/pagefind/pagefind-ui.css" />
+    <script is:inline src="/pagefind/pagefind-ui.js" defer></script>
   </head>
   <body data-archetype={page.archetype} data-pathname={page.pathname}>
     <a class="skip-link" href="#main">Skip to content</a>
@@ -63,6 +67,7 @@ const announcement: string | null = null;
         </ul>
       </details>
       <span class="spacer"></span>
+      <div id="search" class="search" data-block="search" role="search" aria-label="Search the documentation"></div>
       <label class="nav-toggle-label" for="nav-toggle">Menu</label>
       <a href={config.repo} data-block="repo-link">GitHub</a>
     </header>
@@ -73,7 +78,7 @@ const announcement: string | null = null;
         <SidebarItems items={nav} current={page.pathname} depth={1} />
       </nav>
 
-      <main id="main" tabindex="-1">
+      <main id="main" tabindex="-1" data-pagefind-body>
         <slot />
       </main>
 
@@ -81,5 +86,13 @@ const announcement: string | null = null;
     </div>
 
     <SiteFooter />
+    <script is:inline>
+      // Static full-text search (Pagefind), built from the site after `astro build`. Enhancement only:
+      // without JavaScript, or in `astro dev` where no index exists, the header simply has no search box.
+      addEventListener('DOMContentLoaded', () => {
+        if (!window.PagefindUI) return;
+        new window.PagefindUI({ element: '#search', showSubResults: true, showImages: false, resetStyles: false });
+      });
+    </script>
   </body>
 </html>

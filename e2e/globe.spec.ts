@@ -319,8 +319,8 @@ test('every render override replaces its default', async ({ page }) => {
 
   await setToggle(page, 'connectionComponent', true);
   await setCamera(page, { lat: 25, lng: 8, zoom: 2.8, tilt: 0 });
-  await page.waitForTimeout(1000);
-  expect(await page.locator('[data-globe-root] svg g[stroke] path').count()).toBeGreaterThan(0);
+  // Software WebGL under load can take several overlay passes to project the paths; poll, do not sleep.
+  await expect.poll(() => page.locator('[data-globe-root] svg g[stroke] path').count(), { timeout: 20_000 }).toBeGreaterThan(0);
   expect(errors).toEqual([]);
 });
 

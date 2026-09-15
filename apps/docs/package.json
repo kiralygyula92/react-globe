@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build",
+    "build": "astro build && pagefind --site dist",
     "preview": "astro preview",
     "typecheck": "astro check && tsc -p tsconfig.demos.json"
   },
@@ -28,6 +28,7 @@
     "@types/react-dom": "^19.2.7",
     "@types/three": "^0.185.4",
     "mdast-util-from-markdown": "^2.0.3",
+    "pagefind": "^1.5.2",
     "remark-directive": "^4.0.0",
     "typescript": "^5.9.3",
     "unist-util-visit": "^5.1.0"

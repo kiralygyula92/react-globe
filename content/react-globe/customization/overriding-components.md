@@ -8,13 +8,17 @@ date: 2026-09-15
 Five parts of the globe accept a component of your own. Each receives typed props; the globe keeps
 positioning it, so your component only draws.
 
-| Prop | Replaces | Receives |
-|---|---|---|
-| `pinComponent` | The WebGL pin marker | [`PinRenderProps`](/react-globe/api/pin-render-props/) |
-| `pinPopupComponent` | The hover popup | [`PinPopupRenderProps`](/react-globe/api/pin-popup-render-props/) |
-| `clusterComponent` | The cluster marker | [`ClusterRenderProps`](/react-globe/api/cluster-render-props/) |
-| `connectionComponent` | The WebGL connection lines | [`ConnectionRenderProps`](/react-globe/api/connection-render-props/) |
-| `controlsComponent` | The zoom, rotate and reset buttons | [`GlobeControlsRenderProps`](/react-globe/api/globe-controls-render-props/) |
+- The pin marker — see [Pins](/react-globe/pins/) and [`PinRenderProps`](/react-globe/api/pin-render-props/).
+- The hover popup — see [Pin popups](/react-globe/pin-popups/) and
+  [`PinPopupRenderProps`](/react-globe/api/pin-popup-render-props/).
+- The cluster marker — see [Pin clustering](/react-globe/pin-clustering/) and
+  [`ClusterRenderProps`](/react-globe/api/cluster-render-props/).
+- Connections — see [Connections](/react-globe/connections/) and
+  [`ConnectionRenderProps`](/react-globe/api/connection-render-props/).
+- The controls — see [Controls](/react-globe/controls/) and
+  [`GlobeControlsRenderProps`](/react-globe/api/globe-controls-render-props/).
+
+The prop names and their types are in the generated [`Globe` reference](/react-globe/api/globe/).
 
 ## Pointer events
 

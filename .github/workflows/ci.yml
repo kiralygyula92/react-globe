@@ -20,6 +20,7 @@ jobs:
       - run: pnpm typecheck
       - run: pnpm test
       - run: pnpm docs:build
-      - run: pnpm docs:check --gate phase5
+      - run: pnpm docs:check --gate phase6
       - run: pnpm exec playwright install --with-deps chromium
       - run: pnpm docs:demos
+      - run: pnpm docs:qa

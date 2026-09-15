@@ -49,7 +49,7 @@ export default defineConfig({
   integrations: [react({ include: ['**/*.tsx'] }), hostRedirects()],
   markdown: {
     remarkPlugins: [remarkDirective, [remarkPpds, { contentDir: CONTENT_DIR }]],
-    shikiConfig: { themes: { light: 'github-light', dark: 'github-dark' } },
+    shikiConfig: { themes: { light: 'github-light-high-contrast', dark: 'github-dark-high-contrast' } },
   },
   vite: {
     resolve: { dedupe: ['react', 'react-dom', 'three', 'react-globe'] },

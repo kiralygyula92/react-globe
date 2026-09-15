@@ -16,7 +16,7 @@ Opened in Phase 2 (Model), 2026-09-15.
 | E-07 | §5 section 7 Integrations "one page per named target" | Pending GAPS G-08 |
 | E-08 | R6, §10, check 22 — local dev-server URLs | Accepted (owner delegated) |
 | E-09 | §6, §7.7, N2 — Phase 3 interpretations | Accepted (owner delegated) |
-| E-10 | §2.2 search, §2.3 newsletter/RSS | Accepted (owner delegated); until Phase 6 (GAPS G-18) |
+| E-10 | §2.3 newsletter capture | Accepted (owner delegated); search and RSS delivered in Phase 6 |
 | E-11 | §6 E, §8.3–§8.5 — reference generation | Accepted (owner delegated) |
 | E-12 | §7.2 sandbox action, §6 F tabs | Accepted (owner delegated); sandbox until GAPS G-01 |
 
@@ -115,14 +115,14 @@ Recorded so the conformance script and the reviewer apply the same reading of PP
   update it when the page is written.
 - **Site root.** With no marketing surface (E-02), `/` answers 302 → `/react-globe/`.
 
-## E-10 — Docs chrome without search, RSS or newsletter capture
-- **Rules:** §2.2 docs header "search"; §2.3 footer "newsletter capture … RSS"; §7.7 RSS for the
-  changelog.
-- **Deviation:** the header has no search control and the footer has no newsletter form or RSS link.
-- **Reason:** nothing real exists to wire them to (GAPS G-18). A search box that does not search or a
-  subscribe form that goes nowhere would be fabricated UI (brief operating rule 4). RSS is a Phase 6
-  deliverable (brief §6.2).
-- **Removed by:** Phase 6 (static search index and changelog feed); newsletter when a list exists.
+## E-10 — Footer without newsletter capture
+- **Rules:** §2.3 footer "newsletter capture".
+- **Deviation:** the footer has no subscribe form.
+- **Reason:** no mailing list exists (GAPS G-18); a form that goes nowhere would be fabricated UI (brief
+  operating rule 4).
+- **Delivered in Phase 6:** header search (Pagefind static index, built after `astro build`) and the
+  changelog RSS feed, linked from every page's head and from the footer.
+- **Removed by:** a mailing list.
 
 ## E-11 — Phase 4 reference-generation interpretations
 - **Prose source.** JSDoc in `packages/globe/src` is where reference prose is written, because it also

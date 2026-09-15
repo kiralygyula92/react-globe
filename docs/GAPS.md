@@ -25,7 +25,7 @@ while the item is open.
 | G-15 | Low | Phase 3 | **Assumed in Phase 2** — demo app published as Demos › Playground; `/blank` retired |
 | G-16 | Low | acceptance #5 | **Resolved (owner)** — homes as proposed |
 | G-17 | Medium | — | **Resolved** — i18n implemented (en, ro, de, es, fr, hu); capability C-26 `localization` |
-| G-18 | Medium | Phase 6 | Open — production origin/host, search, RSS, newsletter |
+| G-18 | Medium | release | **Partly resolved (Phase 6)** — search and RSS delivered; production origin/host and newsletter open |
 | G-19 | Medium | — | Open — library behaviours surfaced while authoring; documented as Limitations, candidates for code fixes |
 
 ---
@@ -219,8 +219,8 @@ C-24 `error-handling`, C-26 `localization`).
   from `DOCS_SITE_URL` (default `http://localhost:4321`). The host must honour `_redirects` (Netlify,
   Cloudflare Pages) or be given the same rules, or legacy URLs get the meta-refresh fallback instead of a
   301. Depends on G-02.
-- **Search.** No search provider. Candidate: a static index built at deploy time (e.g. Pagefind); Phase 6.
-- **RSS** for the changelog: Phase 6 (brief §6.2).
+- **Search.** Resolved in Phase 6: Pagefind static index, no external service.
+- **RSS** for the changelog: resolved in Phase 6 (`/react-globe/discover-more/changelog/rss.xml`).
 - **Newsletter capture** (§2.3): no mailing list exists.
 - **Announcement bar**: slot exists, nothing to announce; optional by §2.1.
 - **Page feedback** posts to GitHub issues with a `docs-feedback` label; the label must exist and the
