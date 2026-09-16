@@ -1,0 +1,35 @@
+---
+/** Served by the host for any unknown path. Standalone: no nav data, so it cannot fail. */
+import '@fontsource-variable/inter';
+import '../styles/docs.css';
+import { config } from '../lib/site';
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <script is:inline>
+      try {
+        const theme = localStorage.getItem('react-globe-docs-theme');
+        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+      } catch {
+        /* storage unavailable: follow the system preference */
+      }
+    </script>
+    <title>Page not found — {config.name}</title>
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <main id="main" class="not-found">
+      <p class="not-found-code">404</p>
+      <h1>Page not found</h1>
+      <p>That page does not exist, or it has moved.</p>
+      <p>
+        <a href={`/${config.id}/`}>Go to the documentation</a> · <a href={`/${config.id}/all-features/`}>Browse the features</a>
+      </p>
+    </main>
+  </body>
+</html>

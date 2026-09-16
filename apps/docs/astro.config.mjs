@@ -4,7 +4,8 @@
  * Static output with directory URLs and a trailing slash. Redirects come from
  * content/react-globe/redirects.json: Astro emits a meta-refresh page for each (so a
  * plain static host still lands the reader) and the build hook writes `_redirects`
- * so a host that reads it answers with a real 301.
+ * so a host that reads it answers with a real 301. Vercel reads the same list from
+ * vercel.json, which scripts/docs/vercel-config.mjs generates.
  *
  * Live demos are demo-*.tsx files colocated with their pages under content/; the
  * React integration compiles them and `resolve.dedupe` makes their bare imports
@@ -19,8 +20,12 @@ import remarkDirective from 'remark-directive';
 import { CONTENT_DIR, ROOT, siteRedirects } from '../../scripts/docs/model.mjs';
 import { remarkDocs } from './src/lib/remark-docs.mjs';
 
-/** Set DOCS_SITE_URL to the production origin when building for release. */
-const SITE = process.env.DOCS_SITE_URL ?? 'http://localhost:4321';
+/**
+ * Canonical origin. DOCS_SITE_URL wins; on Vercel the project's production domain is used
+ * (so previews still declare the canonical production URL), and locally it is the dev server.
+ */
+const host = process.env.VERCEL_PROJECT_PRODUCTION_URL ?? process.env.VERCEL_URL;
+const SITE = process.env.DOCS_SITE_URL ?? (host ? `https://${host}` : 'http://localhost:4321');
 
 /**
  * Moved URLs, plus the site root: `/` sends readers to the docs root until the site has a

@@ -54,6 +54,21 @@ The first Playwright run may ask for its browser: `npx playwright install chromi
 the playground page on port 4400; if that is taken, set `E2E_PORT` (for example `E2E_PORT=4499 pnpm e2e`):
 Playwright otherwise reuses whatever server is already listening there.
 
+## Deploying the docs
+
+The site is a static build, hosted on Vercel from `vercel.json` at the repository root:
+
+- **Project root directory:** the repository root (not `apps/docs` — the docs consume the library's
+  built output, so the build runs `pnpm build` first).
+- **Build:** `pnpm build && pnpm docs:build`, output `apps/docs/dist`. Framework preset: Other.
+- **URLs:** `trailingSlash` is on, `/` redirects to `/react-globe/`, and every moved URL 301s from
+  `content/react-globe/redirects.json`.
+- **Canonical origin:** taken from the project's production domain, so previews still declare the
+  production URL. Set `DOCS_SITE_URL` to override it (a custom domain, say).
+
+`vercel.json` is generated: run `pnpm docs:vercel` after changing `redirects.json`. `pnpm docs:build`
+fails if it is out of date, so the host and the build cannot disagree.
+
 ## Releasing
 
 1. Bump `version` in `packages/globe/package.json` and add an entry to

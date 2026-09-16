@@ -16,9 +16,10 @@
     "assets": "node scripts/globe-assets.mjs",
     "docs:dev": "pnpm --filter docs dev",
     "docs:reference": "node scripts/docs/reference.mjs",
-    "docs:build": "node scripts/docs/reference.mjs --check && pnpm --filter docs build",
+    "docs:build": "node scripts/docs/reference.mjs --check && node scripts/docs/vercel-config.mjs --check && pnpm --filter docs build",
     "docs:serve": "node scripts/docs/serve.mjs apps/docs/dist 4321",
-    "docs:demos": "node scripts/docs/demos-check.mjs"
+    "docs:demos": "node scripts/docs/demos-check.mjs",
+    "docs:vercel": "node scripts/docs/vercel-config.mjs"
   },
   "devDependencies": {
     "@playwright/test": "^1.63.0",
