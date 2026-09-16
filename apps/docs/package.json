@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "dev": "astro dev",
-    "build": "astro build && pagefind --site dist",
+    "build": "pnpm --filter react-globe build && astro build && pagefind --site dist",
     "typecheck": "astro check && tsc -p tsconfig.demos.json"
   },
   "dependencies": {

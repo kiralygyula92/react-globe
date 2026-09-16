@@ -1,26 +1,24 @@
 /**
- * Writes vercel.json from the same data the site builds from, so the host and the
- * build can never disagree about redirects.
+ * Writes the vercel.json files from the same data the site builds from, so the host and
+ * the build can never disagree about redirects.
  *
  *   node scripts/docs/vercel-config.mjs          regenerate
- *   node scripts/docs/vercel-config.mjs --check  exit 1 if it is out of date
+ *   node scripts/docs/vercel-config.mjs --check  exit 1 if either is out of date
  *
- * Vercel reads vercel.json before the build runs, so it has to be committed: a file
- * written during the build would arrive too late to take effect.
+ * Two files, because Vercel reads the one inside the project's Root Directory and either
+ * choice must produce the same site: the repository root (recommended) or apps/docs.
+ * Vercel reads it before the build runs, so both are committed — a file written during
+ * the build would arrive too late to take effect.
  */
 
 import { readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { ROOT, siteRedirects } from './model.mjs';
 
-const OUT = join(ROOT, 'vercel.json');
-
-const config = {
+/** Everything that does not depend on where the project root sits. */
+const shared = {
   $schema: 'https://openapi.vercel.sh/vercel.json',
-  // The docs consume the library's built output, so the library is built first.
-  buildCommand: 'pnpm build && pnpm docs:build',
   installCommand: 'pnpm install --frozen-lockfile',
-  outputDirectory: 'apps/docs/dist',
   framework: null,
   // Astro writes directory URLs; this makes the host agree instead of redirecting to the file.
   trailingSlash: true,
@@ -51,24 +49,37 @@ const config = {
   ],
 };
 
-const text = `${JSON.stringify(config, null, 2)}\n`;
-const current = (() => {
-  try {
-    return readFileSync(OUT, 'utf8');
-  } catch {
-    return null;
-  }
-})();
+/** Paths and commands are relative to the Root Directory the project is configured with. */
+const files = {
+  // Root Directory: the repository root.
+  'vercel.json': { buildCommand: 'pnpm docs:build', outputDirectory: 'apps/docs/dist' },
+  // Root Directory: apps/docs. Its own build script builds the library first.
+  'apps/docs/vercel.json': { buildCommand: 'pnpm build', outputDirectory: 'dist' },
+};
 
-if (process.argv.includes('--check')) {
-  if (current !== text) {
-    console.error('vercel.json is out of date — run `pnpm docs:vercel`.');
-    process.exit(1);
+const checking = process.argv.includes('--check');
+let stale = 0;
+
+for (const [file, { buildCommand, outputDirectory }] of Object.entries(files)) {
+  const out = join(ROOT, file);
+  const { $schema, ...rest } = shared;
+  const text = `${JSON.stringify({ $schema, buildCommand, installCommand: rest.installCommand, outputDirectory, ...rest }, null, 2)}\n`;
+  const current = (() => {
+    try {
+      return readFileSync(out, 'utf8');
+    } catch {
+      return null;
+    }
+  })();
+  if (current === text) continue;
+  if (checking) {
+    console.error(`${file} is out of date — run \`pnpm docs:vercel\`.`);
+    stale++;
+  } else {
+    writeFileSync(out, text);
+    console.log(`wrote ${file}`);
   }
-  console.log('vercel.json is current');
-} else if (current === text) {
-  console.log('vercel.json unchanged');
-} else {
-  writeFileSync(OUT, text);
-  console.log(`wrote ${OUT}`);
 }
+
+if (stale) process.exit(1);
+if (checking) console.log('vercel.json files are current');

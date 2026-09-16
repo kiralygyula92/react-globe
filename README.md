@@ -56,18 +56,20 @@ Playwright otherwise reuses whatever server is already listening there.
 
 ## Deploying the docs
 
-The site is a static build, hosted on Vercel from `vercel.json` at the repository root:
+The site is a static build, hosted on Vercel. Import the repository and leave the rest to
+`vercel.json`; no environment variable is required.
 
-- **Project root directory:** the repository root (not `apps/docs` — the docs consume the library's
-  built output, so the build runs `pnpm build` first).
-- **Build:** `pnpm build && pnpm docs:build`, output `apps/docs/dist`. Framework preset: Other.
+- **Root directory:** the repository root is the tidiest choice, but `apps/docs` works too — each
+  carries its own `vercel.json`, and Vercel reads the one inside the root directory it is given.
+- **Build:** `pnpm docs:build` (or `pnpm build` inside `apps/docs`). Either way the library is built
+  first, because the docs import its built output.
 - **URLs:** `trailingSlash` is on, `/` redirects to `/react-globe/`, and every moved URL 301s from
   `content/react-globe/redirects.json`.
 - **Canonical origin:** taken from the project's production domain, so previews still declare the
   production URL. Set `DOCS_SITE_URL` to override it (a custom domain, say).
 
-`vercel.json` is generated: run `pnpm docs:vercel` after changing `redirects.json`. `pnpm docs:build`
-fails if it is out of date, so the host and the build cannot disagree.
+Both `vercel.json` files are generated: run `pnpm docs:vercel` after changing `redirects.json`.
+`pnpm docs:build` fails if either is out of date, so the host and the build cannot disagree.
 
 ## Releasing
 
