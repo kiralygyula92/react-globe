@@ -1,5 +1,6 @@
 node_modules/
 dist/
+dist-ssr/
 *.tgz
 .vite/
 test-results/
@@ -11,5 +12,4 @@ blob-report/
 .idea/
 .vscode/
 coverage/
-.astro/
 .vercel/

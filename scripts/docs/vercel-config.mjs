@@ -20,7 +20,7 @@ const shared = {
   $schema: 'https://openapi.vercel.sh/vercel.json',
   installCommand: 'pnpm install --frozen-lockfile',
   framework: null,
-  // Astro writes directory URLs; this makes the host agree instead of redirecting to the file.
+  // The site is built as directory URLs; this makes the host agree instead of redirecting to the file.
   trailingSlash: true,
   redirects: [
     ...siteRedirects().map((r) => ({ source: r.from, destination: r.to, permanent: true })),
@@ -38,7 +38,7 @@ const shared = {
     },
     {
       // Hashed file names: safe to keep forever.
-      source: '/_astro/(.*)',
+      source: '/assets/(.*)',
       headers: [{ key: 'Cache-Control', value: 'public, max-age=31536000, immutable' }],
     },
     {

@@ -10,28 +10,6 @@ type DemoModule = { default: import('react').ComponentType };
 
 const modules = import.meta.glob<DemoModule>('../../../../content/react-globe/**/demo-*.tsx');
 
-type RefreshWindow = Window & { $RefreshReg$?: () => void; $RefreshSig$?: () => (type: unknown) => unknown };
-
-let preamble: Promise<void> | null = null;
-
-/**
- * `astro dev` compiles demos with React Fast Refresh, whose code refuses to run until the
- * refresh runtime's preamble is installed. Astro installs it only for its own React islands;
- * these demos are mounted by this script, so install it here, once, before any demo loads.
- * Production builds have no refresh code, and this block is removed from them.
- */
-function installRefreshPreamble(): Promise<void> {
-  if (!import.meta.env.DEV) return Promise.resolve();
-  preamble ??= (async () => {
-    const runtime = '/@react-refresh';
-    const { injectIntoGlobalHook } = (await import(/* @vite-ignore */ runtime)) as { injectIntoGlobalHook: (w: Window) => void };
-    injectIntoGlobalHook(window);
-    const w = window as RefreshWindow;
-    w.$RefreshReg$ ??= () => {};
-    w.$RefreshSig$ ??= () => (type) => type;
-  })();
-  return preamble;
-}
 const byId = new Map(Object.entries(modules).map(([path, load]) => [path.replace(/^.*content\/react-globe\//, ''), load]));
 
 async function mount(figure: HTMLElement): Promise<void> {
@@ -43,7 +21,6 @@ async function mount(figure: HTMLElement): Promise<void> {
     return;
   }
 
-  await installRefreshPreamble();
   const [{ StrictMode, createElement }, { createRoot }, demo] = await Promise.all([import('react'), import('react-dom/client'), load()]);
   let root = createRoot(stage);
   const render = () => root.render(createElement(StrictMode, null, createElement(demo.default)));

@@ -10,7 +10,7 @@ and the full API.
 
 ```
 packages/globe/       the library, published to npm as `react-globe`
-apps/docs/            the documentation site (Astro)
+apps/docs/            the documentation site (React, rendered to static files)
 content/react-globe/  docs content and data: plugin.config.json, nav.json, titles.json, redirects.json, Markdown
 e2e/                  Playwright suite driving the docs playground (Demos › Playground)
 scripts/              globe-assets.mjs (bundled assets) and docs/ (content model, reference generator, demo check)
@@ -42,6 +42,11 @@ pnpm docs:build      # check the reference is current, build apps/docs/dist + se
 pnpm docs:serve      # serve the build like a static host, honouring _redirects
 pnpm docs:demos      # run every live demo of the build in Chromium and fail on errors
 ```
+
+The site is React, rendered to static files: `vite build` bundles what the browser runs, a second
+pass bundles the same components for Node, and `apps/docs/build.mjs` renders every page to HTML and
+writes the Markdown twins, llms.txt, the sitemap, the feed and the social images. In the browser React
+takes over the header and the right rail, and mounts the live demos; the rest is already painted.
 
 Pages and their order are data: add a page to `content/react-globe/nav.json` and `titles.json`, then
 create its Markdown file (the build names the file it expects if one is missing). Live demos are

@@ -5,7 +5,7 @@
  * everywhere.
  */
 
-import { getCollection, type CollectionEntry } from 'astro:content';
+import { getCollection, type DocEntry } from './content';
 import {
   FOOTER_COLUMNS,
   SECTIONS,
@@ -13,7 +13,6 @@ import {
   flattenNav,
   headingFor,
   isGroup,
-  isMachine,
   loadModel,
   navPages,
   navWithReference,
@@ -39,7 +38,7 @@ export const titles: Record<string, string> = titlesWithReference(model.titles, 
 export const references: ReferenceEntry[] = referenceEntries(config);
 
 export type { Archetype, Badge, NavNode, ReferenceEntry };
-export type DocEntry = CollectionEntry<'docs'>;
+export type { DocEntry };
 
 /** Destinations the docs chrome links to; plugin.config.json must declare them. */
 const REQUIRED_LINKS = ['issues', 'support', 'changelog', 'roadmap'] as const;
@@ -79,9 +78,9 @@ const plain = (text: string): string => text.replace(/`([^`]+)`/g, '$1');
 let pagesCache: Page[] | null = null;
 
 /** Every nav page, authored and generated. A nav page without a source fails the build. */
-export async function getPages(): Promise<Page[]> {
+export function getPages(): Page[] {
   if (pagesCache) return pagesCache;
-  const entries = await getCollection('docs');
+  const entries = getCollection();
   const byId = new Map(entries.map((e) => [e.id, e]));
   const bySymbol = new Map(references.map((r) => [r.symbol, r]));
   const pages = navPages(nav).map((navEntry: NavEntry): Page => {
@@ -110,8 +109,8 @@ export async function getPages(): Promise<Page[]> {
   return pages;
 }
 
-export async function pageByPath(pathname: string): Promise<Page | undefined> {
-  return (await getPages()).find((p) => p.pathname === pathname);
+export function pageByPath(pathname: string): Page | undefined {
+  return getPages().find((p) => p.pathname === pathname);
 }
 
 /* ---------------------------------------------------------------- sidebar */
@@ -122,8 +121,8 @@ export type SidebarItem =
   | { kind: 'link'; href: string; title: string; description: string | null; badges: Badge[]; code: boolean };
 
 /** The sidebar, straight from the nav data: order, grouping and badges are the data's. */
-export async function sidebar(): Promise<SidebarItem[]> {
-  const pages = new Map((await getPages()).map((p) => [p.pathname, p]));
+export function sidebar(): SidebarItem[] {
+  const pages = new Map(getPages().map((p) => [p.pathname, p]));
   const toItem = (node: NavNode, depth: number): SidebarItem => {
     const children = (node.children ?? []).map((c) => toItem(c, depth + 1));
     if (depth === 1) {
@@ -144,8 +143,8 @@ export async function sidebar(): Promise<SidebarItem[]> {
 }
 
 /** Capability pages grouped by subheader, in sidebar order. */
-export async function featureGroups(): Promise<{ group: string; pages: Page[] }[]> {
-  const pages = new Map((await getPages()).map((p) => [p.pathname, p]));
+export function featureGroups(): { group: string; pages: Page[] }[] {
+  const pages = new Map(getPages().map((p) => [p.pathname, p]));
   const features = nav.find((n) => n.pathname.endsWith('/features-group'));
   return (features?.children ?? [])
     .filter((n) => n.subheader)
