@@ -10,7 +10,7 @@
 
 import { useEffect, useMemo, useRef, useState, type RefObject } from 'react';
 import type { Texture } from 'three';
-import type { FeatureCollection } from 'geojson';
+import type { FeatureCollection } from '../geojson';
 import type { CapitalRecord } from '../types';
 import type { PreparedCountry } from '../utils/geo';
 import {

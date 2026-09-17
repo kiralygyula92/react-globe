@@ -119,14 +119,13 @@ importers:
         version: 2.9.1
 
   packages/globe:
-    dependencies:
-      '@types/geojson':
-        specifier: ^7946.0.16
-        version: 7946.0.16
     devDependencies:
       '@tailwindcss/cli':
         specifier: ^4.3.3
         version: 4.3.3
+      '@types/geojson':
+        specifier: ^7946.0.16
+        version: 7946.0.16
       '@types/react':
         specifier: ^19.2.18
         version: 19.2.18

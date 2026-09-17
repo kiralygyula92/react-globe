@@ -18,3 +18,7 @@ All notable changes to this package are documented here. The format follows
   French and Hungarian UI strings and bundled country and capital names; `DEFAULT_GLOBE_MESSAGES`,
   `GLOBE_LOCALES` and `localizedName` exports.
 - Bundled public-domain textures (NASA) and vector data (Natural Earth).
+- No dependencies: `three`, `react` and `react-dom` are peers, and the GeoJSON types the
+  package reads are declared in the package itself.
+- A lost WebGL context is waited out and picked back up when the browser restores it;
+  only a loss that does not come back is reported through `onError`.

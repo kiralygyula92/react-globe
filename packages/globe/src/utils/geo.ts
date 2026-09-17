@@ -6,7 +6,7 @@
  */
 
 import { ShapeUtils, Vector2, Vector3 } from 'three';
-import type { Feature, FeatureCollection, Geometry, MultiPolygon, Polygon, Position } from 'geojson';
+import type { Feature, FeatureCollection, Geometry, MultiPolygon, Polygon, Position } from '../geojson';
 import type { CountryFeature, CountryProperties, LatLng } from '../types';
 import { latLngToVector3 } from './coordinates';
 

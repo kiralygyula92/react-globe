@@ -566,7 +566,17 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
     engine.setCamera(controlled ? mergePose(homeRef.current, controlled) : homeRef.current, { animate: false });
     setEngineReady(true);
 
+    // A web font arriving changes how wide every label is, and the collision layout
+    // was measured with the fallback face.
+    let alive = true;
+    void document.fonts?.ready.then(() => {
+      if (!alive) return;
+      positioner.markDirty();
+      engineRef.current?.invalidate();
+    });
+
     return () => {
+      alive = false;
       engineRef.current = null;
       setEngineReady(false);
       if (trailingRef.current) clearTimeout(trailingRef.current);

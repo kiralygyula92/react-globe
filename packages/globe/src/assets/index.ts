@@ -13,7 +13,7 @@
  */
 
 import { Texture } from 'three';
-import type { FeatureCollection } from 'geojson';
+import type { FeatureCollection } from '../geojson';
 import type { CapitalRecord, GlobeAssets } from '../types';
 import { prepareCountries, type PreparedCountry } from '../utils/geo';
 

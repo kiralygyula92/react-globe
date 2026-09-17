@@ -2,7 +2,7 @@
 
 import { describe, expect, it } from 'vitest';
 import { ShapeUtils, Vector2, Vector3 } from 'three';
-import type { FeatureCollection, Position } from 'geojson';
+import type { FeatureCollection, Position } from '../geojson';
 import {
   MAX_EDGE_DEG,
   findCountryAt,

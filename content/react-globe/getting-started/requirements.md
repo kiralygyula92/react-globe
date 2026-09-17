@@ -15,6 +15,9 @@ description: The React, three.js, bundler and browser versions React Globe decla
 | Browser | WebGL | Chromium, through the Playwright end-to-end suite |
 | TypeScript | Declarations included | 5.9 |
 
+The package itself has no dependencies: installing it adds the globe and nothing else, and the
+peers above are the only packages it needs at runtime.
+
 "Tested with" means the repository's builds and tests run against that version. Versions inside the
 declared range that are not listed have not been tested; please report problems.
 

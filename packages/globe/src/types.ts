@@ -7,7 +7,7 @@
  */
 
 import type { ComponentType, MouseEvent as ReactMouseEvent } from 'react';
-import type { Feature, FeatureCollection, MultiPolygon, Polygon } from 'geojson';
+import type { Feature, FeatureCollection, MultiPolygon, Polygon } from './geojson';
 import type { GlobeMessages } from './i18n';
 
 /* ------------------------------------------------------------------ geometry */

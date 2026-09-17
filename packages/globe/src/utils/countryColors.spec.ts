@@ -1,7 +1,7 @@
 /** Graph colouring: touching countries never share a slot. */
 
 import { describe, expect, it } from 'vitest';
-import type { Feature, FeatureCollection } from 'geojson';
+import type { Feature, FeatureCollection } from '../geojson';
 import { assignCountryColors, countryAdjacency } from './countryColors';
 import { prepareCountries } from './geo';
 

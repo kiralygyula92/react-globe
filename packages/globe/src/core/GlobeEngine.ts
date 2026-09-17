@@ -52,6 +52,12 @@ const FAR = 100;
 /** Slightly inside the surface, so grazing points stay visible. */
 const OCCLUSION_RADIUS = 0.9985;
 const ROTATE_FLIGHT_MS = 320;
+/**
+ * How long to wait for a lost context before giving up on it. A GPU reset, a driver
+ * update or a tab the system pushed out of memory usually restores within a moment,
+ * and a globe that comes back on its own beats one that turns into an error message.
+ */
+const CONTEXT_RESTORE_GRACE_MS = 3000;
 
 export type EngineCallbacks = {
   onCameraChange(pose: Required<CameraPose>): void;
@@ -109,6 +115,8 @@ export class GlobeEngine {
   private lastTime = 0;
   private onScreen = true;
   private pageVisible = true;
+  private contextLost = false;
+  private contextTimer = 0;
   private disposed = false;
   private width = 1;
   private height = 1;
@@ -169,6 +177,7 @@ export class GlobeEngine {
     this.canvas.addEventListener('pointerdown', this.onPointerDown);
     this.canvas.addEventListener('pointerup', this.onPointerUp);
     this.canvas.addEventListener('webglcontextlost', this.onContextLost);
+    this.canvas.addEventListener('webglcontextrestored', this.onContextRestored);
     document.addEventListener('visibilitychange', this.onVisibilityChange);
     this.pageVisible = document.visibilityState !== 'hidden';
 
@@ -328,6 +337,8 @@ export class GlobeEngine {
     this.canvas.removeEventListener('pointerdown', this.onPointerDown);
     this.canvas.removeEventListener('pointerup', this.onPointerUp);
     this.canvas.removeEventListener('webglcontextlost', this.onContextLost);
+    this.canvas.removeEventListener('webglcontextrestored', this.onContextRestored);
+    clearTimeout(this.contextTimer);
     document.removeEventListener('visibilitychange', this.onVisibilityChange);
     this.controls.dispose();
     this.resizeObserver?.disconnect();
@@ -471,7 +482,7 @@ export class GlobeEngine {
   };
 
   private syncRunning(): void {
-    const shouldRun = !this.disposed && this.onScreen && this.pageVisible;
+    const shouldRun = !this.disposed && !this.contextLost && this.onScreen && this.pageVisible;
     if (shouldRun && !this.running) {
       this.running = true;
       this.lastTime = 0;
@@ -559,11 +570,25 @@ export class GlobeEngine {
     this.callbacks.onPointerUp(this.local(event), event);
   };
 
+  /** Asking for the context back, and pausing until it arrives. */
   private readonly onContextLost = (event: Event): void => {
     event.preventDefault();
-    this.running = false;
-    cancelAnimationFrame(this.rafId);
-    this.callbacks.onError(new Error('[globe] the WebGL context was lost'));
+    this.contextLost = true;
+    this.syncRunning();
+    clearTimeout(this.contextTimer);
+    this.contextTimer = setTimeout(() => {
+      this.contextTimer = 0;
+      if (this.contextLost && !this.disposed) this.callbacks.onError(new Error('[globe] the WebGL context was lost'));
+    }, CONTEXT_RESTORE_GRACE_MS) as unknown as number;
+  };
+
+  /** three re-uploads what the GPU dropped on its own; the loop just has to start again. */
+  private readonly onContextRestored = (): void => {
+    clearTimeout(this.contextTimer);
+    this.contextTimer = 0;
+    this.contextLost = false;
+    this.needsRender = true;
+    this.syncRunning();
   };
 
   private readonly onVisibilityChange = (): void => {

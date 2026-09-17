@@ -20,6 +20,9 @@ export type OverlayAnchor = {
   priority: number;
   /** Rotates the element so its axis follows the surface normal on screen. */
   alignToNormal: boolean;
+  /** Last measured size, for the collision test. Written by the positioner only. */
+  width?: number;
+  height?: number;
 };
 
 export interface Projector {
@@ -40,6 +43,8 @@ export class OverlayPositioner {
   private readonly normal: ProjectedPoint = { x: 0, y: 0, visible: false };
   private sorted: OverlayAnchor[] = [];
   private dirty = false;
+  /** Set when the label sizes on file may be stale. */
+  private measure = false;
 
   register(key: string, anchor: OverlayAnchor): void {
     this.anchors.set(key, anchor);
@@ -63,6 +68,7 @@ export class OverlayPositioner {
     this.anchors.clear();
     this.sorted = [];
     this.claimed.length = 0;
+    this.measure = false;
   }
 
   update(projector: Projector): void {
@@ -73,6 +79,22 @@ export class OverlayPositioner {
       // before a minor one can overlap it.
       this.sorted = [...this.anchors.values()].sort((a, b) => sortKey(a) - sortKey(b));
       this.dirty = false;
+      this.measure = true;
+    }
+
+    /**
+     * Every measurement first, before a single style is written: a read after a write
+     * forces the browser to lay the page out again, and a few hundred labels doing that
+     * once each costs more than the frame they were being placed in. Label sizes only
+     * change when the set or its text does, which is what `markDirty` says.
+     */
+    if (this.measure) {
+      this.measure = false;
+      for (const anchor of this.sorted) {
+        if (!anchor.collides) continue;
+        anchor.width = anchor.element.offsetWidth;
+        anchor.height = anchor.element.offsetHeight;
+      }
     }
 
     const p = this.projected;
@@ -85,9 +107,10 @@ export class OverlayPositioner {
       }
 
       if (anchor.collides) {
-        const w = anchor.element.offsetWidth;
-        const h = anchor.element.offsetHeight;
-        // A zero-sized element (not yet laid out) never claims space and is never rejected.
+        const w = anchor.width ?? 0;
+        const h = anchor.height ?? 0;
+        // A zero-sized element has not been laid out yet: it never claims space and is
+        // never rejected, and it is measured again on the next frame.
         if (w > 0 && h > 0) {
           const box = { x0: p.x - w / 2, y0: p.y - h / 2, x1: p.x + w / 2, y1: p.y + h / 2 };
           if (this.overlaps(box)) {
@@ -95,6 +118,8 @@ export class OverlayPositioner {
             continue;
           }
           this.claimed.push(box);
+        } else {
+          this.measure = true;
         }
       }
 
