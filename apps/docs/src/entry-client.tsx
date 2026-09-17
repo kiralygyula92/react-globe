@@ -26,3 +26,6 @@ if (data) {
 }
 
 if (document.querySelector('figure[data-demo]')) void import('./scripts/demos');
+
+// Page views and Core Web Vitals, from the deployed site only.
+if (import.meta.env.VITE_INSIGHTS) void import('./client/insights');

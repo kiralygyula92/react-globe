@@ -14,7 +14,17 @@ import { ROOT } from '../../scripts/docs/model.mjs';
 
 const APP = fileURLToPath(new URL('.', import.meta.url));
 
+/**
+ * Analytics ship only from a Vercel build: the endpoints they report to are served by
+ * Vercel alongside the site, and asking for them anywhere else is a 404 in the console.
+ * False here removes the code from the bundle entirely.
+ */
+const INSIGHTS = Boolean(process.env.VERCEL);
+
 export default defineConfig({
+  // Read through import.meta.env, which is an object in development: there the key is
+  // simply absent, which is the answer we want anyway.
+  define: { 'import.meta.env.VITE_INSIGHTS': JSON.stringify(INSIGHTS) },
   // The HTML is rendered by build.mjs, not served from an index.html.
   appType: 'custom',
   build: {

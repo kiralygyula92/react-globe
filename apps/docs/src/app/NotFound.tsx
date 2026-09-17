@@ -24,6 +24,11 @@ export function NotFound({ assets }: { assets: Assets }) {
         {assets.css.map((href) => (
           <link rel="stylesheet" href={href} key={href} />
         ))}
+        {/* The same bundle every page loads: nothing to hydrate here, but a reader who lands
+            on a dead link should still show up in the analytics. */}
+        {assets.js.map((src) => (
+          <script type="module" src={src} key={src}></script>
+        ))}
       </head>
       <body>
         <main id="main" className="not-found">

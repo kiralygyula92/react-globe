@@ -72,6 +72,10 @@ The site is a static build, hosted on Vercel. Import the repository and leave th
   `content/react-globe/redirects.json`.
 - **Canonical origin:** taken from the project's production domain, so previews still declare the
   production URL. Set `DOCS_SITE_URL` to override it (a custom domain, say).
+- **Insights:** turn on Web Analytics and Speed Insights in the Vercel project. The site reports
+  page views and each reader's Core Web Vitals to the first-party `/_vercel/…` paths Vercel serves
+  next to it, so there is no third-party request. The code ships only from a Vercel build — a local
+  build leaves it out, because those paths exist nowhere else.
 
 Both `vercel.json` files are generated: run `pnpm docs:vercel` after changing `redirects.json`.
 `pnpm docs:build` fails if either is out of date, so the host and the build cannot disagree.

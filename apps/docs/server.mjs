@@ -17,35 +17,50 @@ const arg = (name, fallback) => {
 const port = Number(arg('port', 4321));
 const site = siteUrl();
 
-const vite = await createServer({
-  server: { port, strictPort: true },
-  appType: 'custom',
-});
+/** In development the browser loads the client entry from source, styles included. */
+const ASSETS = { css: [], js: ['/src/entry-client.tsx'] };
 
-vite.middlewares.use(async (req, res, next) => {
+const renderPage = (server) => async (req, res, next) => {
   const url = new URL(req.originalUrl ?? req.url ?? '/', site);
   // Anything with an extension is an asset request: Vite's own middleware answers it.
   if (/\.[a-z0-9]+$/i.test(url.pathname)) return next();
 
   try {
-    const server = await vite.ssrLoadModule('/src/entry-server.tsx');
+    const entry = await server.ssrLoadModule('/src/entry-server.tsx');
     const route = url.pathname.endsWith('/') ? url.pathname : `${url.pathname}/`;
-    // In development the browser loads the client entry straight from source; the styles
-    // come with it, so the head needs no stylesheet of its own.
-    const html = await server.renderRoute(route, { site, assets: { css: [], js: ['/src/entry-client.tsx'] } });
-    if (html === null) {
-      const notFound = await server.renderRoute('/404', { site, assets: { css: [], js: ['/src/entry-client.tsx'] } });
-      res.statusCode = 404;
-      res.setHeader('Content-Type', 'text/html');
-      res.end(await vite.transformIndexHtml(url.pathname, notFound));
-      return;
-    }
+    const page = await entry.renderRoute(route, { site, assets: ASSETS });
+    const html = page ?? (await entry.renderRoute('/404', { site, assets: ASSETS }));
+    res.statusCode = page ? 200 : 404;
     res.setHeader('Content-Type', 'text/html');
-    res.end(await vite.transformIndexHtml(url.pathname, html));
+    res.end(await server.transformIndexHtml(url.pathname, html));
   } catch (error) {
-    vite.ssrFixStacktrace(error);
+    server.ssrFixStacktrace(error);
     next(error);
   }
+};
+
+/**
+ * Registered as a plugin rather than on the server object, because Vite restarts itself
+ * when the config changes: a plugin's `configureServer` runs again on the new server,
+ * while middleware added to the old one would be gone and every request would 404.
+ *
+ * The hook returns its work instead of doing it, which installs this after Vite's own
+ * middlewares — they own the module graph and paths like `/@vite/client`, which carry no
+ * file extension and would otherwise be taken for pages.
+ */
+const docsPages = {
+  name: 'docs-render-pages',
+  configureServer(server) {
+    return () => {
+      server.middlewares.use(renderPage(server));
+    };
+  },
+};
+
+const vite = await createServer({
+  server: { port, strictPort: true },
+  appType: 'custom',
+  plugins: [docsPages],
 });
 
 await vite.listen();
