@@ -19,7 +19,10 @@ import { ROOT, siteRedirects } from './model.mjs';
 const shared = {
   $schema: 'https://openapi.vercel.sh/vercel.json',
   installCommand: 'pnpm install --frozen-lockfile',
-  framework: null,
+  // The site is built with Vite. Saying so is what makes Vercel hand the build its
+  // VITE_-prefixed system variables, among them where the analytics endpoints live;
+  // the build, install and output settings here override the preset's own.
+  framework: 'vite',
   // The site is built as directory URLs; this makes the host agree instead of redirecting to the file.
   trailingSlash: true,
   redirects: [

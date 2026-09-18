@@ -3,7 +3,7 @@
   "buildCommand": "pnpm docs:build",
   "installCommand": "pnpm install --frozen-lockfile",
   "outputDirectory": "apps/docs/dist",
-  "framework": null,
+  "framework": "vite",
   "trailingSlash": true,
   "redirects": [
     {

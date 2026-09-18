@@ -21,10 +21,32 @@ const APP = fileURLToPath(new URL('.', import.meta.url));
  */
 const INSIGHTS = Boolean(process.env.VERCEL);
 
+/**
+ * Where Vercel serves this project's analytics endpoints, and the client settings it hands
+ * the SDK. Vercel sets both at build time, and a project with Web Analytics on is served
+ * from its own path rather than the old fixed /_vercel/insights — which is why the SDKs
+ * have to be told. The VITE_ spelling appears when Vercel knows the app is Vite; the plain
+ * one is the system variable it comes from, so either is accepted.
+ */
+const OBSERVABILITY = {
+  basePath: process.env.VITE_VERCEL_OBSERVABILITY_BASEPATH ?? process.env.VERCEL_OBSERVABILITY_BASEPATH ?? '',
+  clientConfig: process.env.VITE_VERCEL_OBSERVABILITY_CLIENT_CONFIG ?? process.env.VERCEL_OBSERVABILITY_CLIENT_CONFIG ?? '',
+};
+if (INSIGHTS) {
+  // Shows in the Vercel build log: the first thing to read when analytics stay empty.
+  console.log(
+    `[docs] insights: base path ${OBSERVABILITY.basePath || '(none from Vercel; using /_vercel)'}, client config ${OBSERVABILITY.clientConfig ? 'present' : 'absent'}`,
+  );
+}
+
 export default defineConfig({
   // Read through import.meta.env, which is an object in development: there the key is
   // simply absent, which is the answer we want anyway.
-  define: { 'import.meta.env.VITE_INSIGHTS': JSON.stringify(INSIGHTS) },
+  define: {
+    'import.meta.env.VITE_INSIGHTS': JSON.stringify(INSIGHTS),
+    'import.meta.env.VITE_VERCEL_OBSERVABILITY_BASEPATH': JSON.stringify(OBSERVABILITY.basePath),
+    'import.meta.env.VITE_VERCEL_OBSERVABILITY_CLIENT_CONFIG': JSON.stringify(OBSERVABILITY.clientConfig),
+  },
   // The HTML is rendered by build.mjs, not served from an index.html.
   appType: 'custom',
   build: {
