@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: AI context
 description: One Markdown file with every page and every example, so a coding agent works from the documentation instead of from memory.
 ---
 

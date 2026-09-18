@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: graticule
-title: Graticule
 description: Draw meridians and parallels every 15 degrees, with optional degree labels.
-group: Display & layout
-plan: free
 symbols:
   - Globe
 links:

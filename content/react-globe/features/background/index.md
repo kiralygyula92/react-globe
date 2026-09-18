@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: background
-title: Background
 description: Paint the space behind the globe with any CSS colour or a design token, or leave it transparent.
-group: Display & layout
-plan: free
 symbols:
   - Globe
 links:

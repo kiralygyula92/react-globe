@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: custom-assets
-title: Custom assets
 description: Replace the bundled imagery, countries and capitals with your own files or data.
-group: Content & data
-plan: free
 symbols:
   - Globe
   - GlobeAssets

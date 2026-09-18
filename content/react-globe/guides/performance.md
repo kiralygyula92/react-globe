@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Performance
 description: How React Globe keeps rendering and loading costs down, and what you can do to help.
 date: 2026-09-15
 ---

@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: FAQ
 description: Answers to the questions that come up most when adding React Globe to an application.
 date: 2026-09-15
 ---

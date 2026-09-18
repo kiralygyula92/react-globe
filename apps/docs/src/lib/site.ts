@@ -22,7 +22,7 @@ import {
   symbolPath,
   titlesWithReference,
   twinPath,
-  type Archetype,
+  type PageKind,
   type Badge,
   type NavEntry,
   type NavNode,
@@ -37,7 +37,7 @@ export const nav: NavNode[] = navWithReference(model.nav, config);
 export const titles: Record<string, string> = titlesWithReference(model.titles, config);
 export const references: ReferenceEntry[] = referenceEntries(config);
 
-export type { Archetype, Badge, NavNode, ReferenceEntry };
+export type { Badge, NavNode, PageKind, ReferenceEntry };
 export type { DocEntry };
 
 /** Destinations the docs chrome links to; plugin.config.json must declare them. */
@@ -54,11 +54,11 @@ export type Page = {
   pathname: string;
   /** Title from titles.json, or the symbol name for a reference page. */
   title: string;
-  /** The H1: fixed by archetype A (Overview) and E (reference). */
+  /** The H1: fixed for the overview and for reference pages. */
   heading: string;
   /** The one description: meta, H1 subtitle and llms.txt. Plain text. */
   description: string;
-  archetype: Archetype;
+  kind: PageKind;
   /** Source file relative to content/{id}/ — the file "Edit this page" opens. */
   file: string;
   section: string | null;
@@ -89,7 +89,7 @@ export function getPages(): Page[] {
       pathname: navEntry.node.pathname,
       title: titles[navEntry.node.pathname],
       heading: headingFor(navEntry, config, titles),
-      archetype: spec.archetype,
+      kind: spec.kind,
       file: spec.file,
       section: navEntry.section,
       node: navEntry.node,
@@ -116,7 +116,7 @@ export function pageByPath(pathname: string): Page | undefined {
 /* ---------------------------------------------------------------- sidebar */
 
 export type SidebarItem =
-  | { kind: 'section'; id: string; title: string; icon: string | null; items: SidebarItem[] }
+  | { kind: 'section'; id: string; title: string; items: SidebarItem[] }
   | { kind: 'group'; title: string; items: SidebarItem[] }
   | { kind: 'link'; href: string; title: string; description: string | null; badges: Badge[]; code: boolean };
 
@@ -127,7 +127,7 @@ export function sidebar(): SidebarItem[] {
     const children = (node.children ?? []).map((c) => toItem(c, depth + 1));
     if (depth === 1) {
       const section = SECTIONS.find((s) => node.pathname.endsWith(`/${s.group}`));
-      return { kind: 'section', id: section?.id ?? node.pathname, title: titles[node.pathname], icon: node.icon ?? null, items: children };
+      return { kind: 'section', id: section?.id ?? node.pathname, title: titles[node.pathname], items: children };
     }
     if (isGroup(node)) return { kind: 'group', title: node.subheader ?? titles[node.pathname], items: children };
     return {
@@ -229,7 +229,7 @@ export function feedbackUrl(page: Page, helpful: boolean): string {
   return `${links.issues}/new?labels=docs-feedback&title=${encodeURIComponent(title)}&body=${encodeURIComponent(body)}`;
 }
 
-/** Resource chip row (archetype B) from frontmatter `links`, never hand-written. */
+/** Resource chip row of a feature page, from frontmatter `links`, never hand-written. */
 export function resourceChips(entry: DocEntry): { key: string; label: string; href: string }[] {
   const chipLinks = entry.data.links ?? {};
   const LABELS: Record<string, string> = { issues: 'Feedback', source: 'Source', spec: 'Standard', design: 'Design asset', size: 'Size' };
@@ -242,8 +242,8 @@ export function resourceChips(entry: DocEntry): { key: string; label: string; hr
 
 /* --------------------------------------------------------------- metadata */
 
-/** Site-wide design constant, not plugin branding. */
-export const THEME_COLOR = config.branding?.accentColor ?? '#1f4e79';
+/** The browser chrome colour, and the accent of the social images. */
+export const THEME_COLOR = '#1f4e79';
 
 export const currentVersion = (): { label: string; href: string } =>
   (config.versions ?? []).find((v) => v.current) ?? { label: config.currentVersion, href: `/${config.id}/` };
@@ -252,7 +252,7 @@ export const currentVersion = (): { label: string; href: string } =>
 export function metadata(page: Page, site: URL) {
   const url = new URL(page.pathname, site).href;
   const image = new URL(page.ogImage, site).href;
-  const documentTitle = page.archetype === 'A' ? page.heading : `${page.heading} — ${config.name}`;
+  const documentTitle = page.kind === 'overview' ? page.heading : `${page.heading} — ${config.name}`;
   return {
     documentTitle,
     canonical: url,
@@ -262,7 +262,7 @@ export function metadata(page: Page, site: URL) {
       { property: 'og:title', content: documentTitle },
       { property: 'og:description', content: page.description },
       { property: 'og:image', content: image },
-      { property: 'og:type', content: page.archetype === 'A' ? 'website' : 'article' },
+      { property: 'og:type', content: page.kind === 'overview' ? 'website' : 'article' },
       { property: 'og:url', content: url },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: documentTitle },

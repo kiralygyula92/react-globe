@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Overriding components
 description: Replace the pin marker, popup, cluster marker, connections or controls with your own React components.
 date: 2026-09-15
 ---

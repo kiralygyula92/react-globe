@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: pins
-title: Pins
 description: Place markers at coordinates, react to hover and click, and draw them as WebGL instances or as your own components.
-group: Content & data
-plan: free
 symbols:
   - Globe
   - Pin

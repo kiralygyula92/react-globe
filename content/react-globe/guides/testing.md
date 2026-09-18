@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Testing
 description: How to test screens that contain a globe, from unit tests without WebGL to browser tests with it.
 date: 2026-09-15
 ---

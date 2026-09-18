@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Localization
 description: Plan a translated globe, add a language that is not built in, and keep your own components in step.
 date: 2026-09-15
 ---

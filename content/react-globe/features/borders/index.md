@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: borders
-title: Borders & shorelines
 description: Draw coastlines and land borders from Natural Earth 1:50m data, each on or off.
-group: Display & layout
-plan: free
 symbols:
   - Globe
 links:

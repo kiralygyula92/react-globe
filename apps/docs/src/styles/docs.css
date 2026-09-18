@@ -1,5 +1,5 @@
 /*
- * Docs surface styles. Tokens first: a light palette on :root, a dark one applied by the
+ * Docs site styles. Tokens first: a light palette on :root, a dark one applied by the
  * theme switch ([data-theme='dark']) or, when the reader has not chosen, by the system
  * preference. Contrast of every text/background pair is at least WCAG AA.
  */

@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: connections
-title: Connections
 description: Link pins with great-circle arches or surface lines, styled per link and optionally animated.
-group: Content & data
-plan: free
 symbols:
   - Globe
   - DefaultConnection

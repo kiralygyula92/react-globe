@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: gestures
-title: Gestures
 description: Orbit, tilt and zoom the globe with mouse, wheel and touch, each gesture switchable and bounded.
-group: Interaction
-plan: free
 symbols:
   - Globe
 links:

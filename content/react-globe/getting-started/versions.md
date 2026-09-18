@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Versions
 description: Which versions of React Globe exist, how they are numbered and which receive fixes.
 date: 2026-09-15
 ---

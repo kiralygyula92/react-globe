@@ -4,7 +4,7 @@
  * Entry ids are the file paths relative to that directory, exactly as
  * scripts/docs/model.mjs#pageSpec names them, so a nav node finds its file
  * without any file deciding its own URL. Frontmatter is checked against the
- * contract below: every key is known, and the required ones are present.
+ * contract below: every key is known, and the required one is present.
  */
 
 import { readFileSync, readdirSync } from 'node:fs';
@@ -12,16 +12,18 @@ import { join, relative } from 'node:path';
 import { parse as parseYaml } from 'yaml';
 import { CONTENT_DIR } from '../../../../scripts/docs/model.mjs';
 
+/**
+ * What a page says about itself. Its title and its place in the sidebar are nav data
+ * (titles.json, nav.json), so a page cannot disagree with the navigation about either.
+ */
 export type Frontmatter = {
-  pluginId: string;
-  title: string;
+  /** The one description: meta, the line under the H1, and llms.txt. */
   description: string;
-  capabilityId?: string;
-  group?: string;
-  plan?: string;
-  lifecycle?: 'new' | 'preview' | 'beta' | 'planned' | 'deprecated' | 'legacy';
+  /** Exported names the page documents; its API list and the reference's "Used by". */
   symbols?: string[];
+  /** A feature page's resource chips: issues, source, spec, design, size. */
   links?: Record<string, string>;
+  /** Shown on articles. */
   date?: Date;
 };
 
@@ -34,9 +36,8 @@ export type DocEntry = {
   body: string;
 };
 
-const LIFECYCLES = ['new', 'preview', 'beta', 'planned', 'deprecated', 'legacy'] as const;
-const REQUIRED = ['pluginId', 'title', 'description'] as const;
-const OPTIONAL = ['capabilityId', 'group', 'plan', 'lifecycle', 'symbols', 'links', 'date'] as const;
+const REQUIRED = ['description'] as const;
+const OPTIONAL = ['symbols', 'links', 'date'] as const;
 
 const isStringArray = (value: unknown): value is string[] => Array.isArray(value) && value.every((v) => typeof v === 'string');
 const isStringRecord = (value: unknown): value is Record<string, string> =>
@@ -50,10 +51,6 @@ function validate(raw: Record<string, unknown>, id: string): Frontmatter {
     if (!(REQUIRED as readonly string[]).includes(key) && !(OPTIONAL as readonly string[]).includes(key)) fail(`unknown frontmatter key "${key}"`);
   }
   for (const key of REQUIRED) if (typeof raw[key] !== 'string') fail(`frontmatter ${key} must be a string`);
-  for (const key of ['capabilityId', 'group', 'plan'] as const) {
-    if (raw[key] !== undefined && typeof raw[key] !== 'string') fail(`frontmatter ${key} must be a string`);
-  }
-  if (raw.lifecycle !== undefined && !(LIFECYCLES as readonly unknown[]).includes(raw.lifecycle)) fail(`frontmatter lifecycle "${String(raw.lifecycle)}" is not one of ${LIFECYCLES.join(', ')}`);
   if (raw.symbols !== undefined && !isStringArray(raw.symbols)) fail('frontmatter symbols must be a list of strings');
   if (raw.links !== undefined && !isStringRecord(raw.links)) fail('frontmatter links must be a map of strings');
 

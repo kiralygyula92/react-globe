@@ -1,4 +1,4 @@
-/** One badge, rendered only from a nav node's plan or lifecycle. */
+/** One badge, rendered only from a nav node's lifecycle. */
 import type { Badge as BadgeData } from '../lib/props';
 
 export function Badge({ badge }: { badge: BadgeData }) {

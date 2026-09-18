@@ -1,7 +1,6 @@
 [
   {
     "pathname": "/react-globe/getting-started-group",
-    "icon": "getting-started",
     "children": [
       {
         "pathname": "/react-globe/"
@@ -31,7 +30,6 @@
   },
   {
     "pathname": "/react-globe/features-group",
-    "icon": "features",
     "children": [
       {
         "pathname": "/react-globe/all-features/"
@@ -42,18 +40,15 @@
         "children": [
           {
             "pathname": "/react-globe/globe/",
-            "capabilityId": "globe",
-            "plan": "free"
+            "capabilityId": "globe"
           },
           {
             "pathname": "/react-globe/camera/",
-            "capabilityId": "camera",
-            "plan": "free"
+            "capabilityId": "camera"
           },
           {
             "pathname": "/react-globe/render-styles/",
-            "capabilityId": "render-styles",
-            "plan": "free"
+            "capabilityId": "render-styles"
           }
         ]
       },
@@ -63,28 +58,23 @@
         "children": [
           {
             "pathname": "/react-globe/pins/",
-            "capabilityId": "pins",
-            "plan": "free"
+            "capabilityId": "pins"
           },
           {
             "pathname": "/react-globe/pin-popups/",
-            "capabilityId": "pin-popups",
-            "plan": "free"
+            "capabilityId": "pin-popups"
           },
           {
             "pathname": "/react-globe/pin-clustering/",
-            "capabilityId": "pin-clustering",
-            "plan": "free"
+            "capabilityId": "pin-clustering"
           },
           {
             "pathname": "/react-globe/connections/",
-            "capabilityId": "connections",
-            "plan": "free"
+            "capabilityId": "connections"
           },
           {
             "pathname": "/react-globe/custom-assets/",
-            "capabilityId": "custom-assets",
-            "plan": "free"
+            "capabilityId": "custom-assets"
           }
         ]
       },
@@ -94,33 +84,27 @@
         "children": [
           {
             "pathname": "/react-globe/borders/",
-            "capabilityId": "borders",
-            "plan": "free"
+            "capabilityId": "borders"
           },
           {
             "pathname": "/react-globe/country-names/",
-            "capabilityId": "country-names",
-            "plan": "free"
+            "capabilityId": "country-names"
           },
           {
             "pathname": "/react-globe/capitals/",
-            "capabilityId": "capitals",
-            "plan": "free"
+            "capabilityId": "capitals"
           },
           {
             "pathname": "/react-globe/localization/",
-            "capabilityId": "localization",
-            "plan": "free"
+            "capabilityId": "localization"
           },
           {
             "pathname": "/react-globe/graticule/",
-            "capabilityId": "graticule",
-            "plan": "free"
+            "capabilityId": "graticule"
           },
           {
             "pathname": "/react-globe/background/",
-            "capabilityId": "background",
-            "plan": "free"
+            "capabilityId": "background"
           }
         ]
       },
@@ -130,33 +114,27 @@
         "children": [
           {
             "pathname": "/react-globe/gestures/",
-            "capabilityId": "gestures",
-            "plan": "free"
+            "capabilityId": "gestures"
           },
           {
             "pathname": "/react-globe/controls/",
-            "capabilityId": "controls",
-            "plan": "free"
+            "capabilityId": "controls"
           },
           {
             "pathname": "/react-globe/country-interaction/",
-            "capabilityId": "country-interaction",
-            "plan": "free"
+            "capabilityId": "country-interaction"
           },
           {
             "pathname": "/react-globe/camera-api/",
-            "capabilityId": "camera-api",
-            "plan": "free"
+            "capabilityId": "camera-api"
           },
           {
             "pathname": "/react-globe/auto-rotate/",
-            "capabilityId": "auto-rotate",
-            "plan": "free"
+            "capabilityId": "auto-rotate"
           },
           {
             "pathname": "/react-globe/screen-projection/",
-            "capabilityId": "screen-projection",
-            "plan": "free"
+            "capabilityId": "screen-projection"
           }
         ]
       },
@@ -166,13 +144,11 @@
         "children": [
           {
             "pathname": "/react-globe/lazy-loading/",
-            "capabilityId": "lazy-loading",
-            "plan": "free"
+            "capabilityId": "lazy-loading"
           },
           {
             "pathname": "/react-globe/error-handling/",
-            "capabilityId": "error-handling",
-            "plan": "free"
+            "capabilityId": "error-handling"
           }
         ]
       }
@@ -180,7 +156,6 @@
   },
   {
     "pathname": "/react-globe/demos-group",
-    "icon": "demos",
     "children": [
       {
         "pathname": "/react-globe/demos/playground/"
@@ -189,12 +164,10 @@
   },
   {
     "pathname": "/react-globe/api-group",
-    "icon": "reference",
     "children": []
   },
   {
     "pathname": "/react-globe/customization-group",
-    "icon": "customization",
     "children": [
       {
         "pathname": "/react-globe/customization/"
@@ -218,7 +191,6 @@
   },
   {
     "pathname": "/react-globe/guides-group",
-    "icon": "guides",
     "children": [
       {
         "pathname": "/react-globe/guides/best-practices/"
@@ -242,7 +214,6 @@
   },
   {
     "pathname": "/react-globe/integrations-group",
-    "icon": "integrations",
     "children": [
       {
         "pathname": "/react-globe/integrations/vite/"
@@ -251,12 +222,10 @@
   },
   {
     "pathname": "/react-globe/migration-group",
-    "icon": "migration",
     "children": []
   },
   {
     "pathname": "/react-globe/discover-more-group",
-    "icon": "discover-more",
     "children": [
       {
         "pathname": "/react-globe/discover-more/showcase/"

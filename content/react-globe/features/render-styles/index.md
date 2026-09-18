@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: render-styles
-title: Render styles
 description: Draw the Earth as a physical map, satellite imagery, a printed atlas or a neon globe, in colour or grayscale.
-group: Core features
-plan: free
 symbols:
   - Globe
   - RenderStyle

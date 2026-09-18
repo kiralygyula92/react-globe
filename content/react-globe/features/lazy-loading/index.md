@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: lazy-loading
-title: Lazy loading
 description: Load the globe and three.js only when it renders, with a placeholder in the meantime.
-group: Developer tools
-plan: free
 symbols:
   - GlobeLazy
 links:

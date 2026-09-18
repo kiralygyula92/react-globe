@@ -57,14 +57,14 @@ export function twinMarkdown(page: Page, site: URL, { inlineReferences = true }:
 
   parts.push(withSite(includesAsMarkdown(demosAsCode(stripComments(page.entry?.body ?? ''), page.file, CONTENT_DIR), page.file, CONTENT_DIR), site));
 
-  if (page.archetype === 'C') {
+  if (page.kind === 'all-features') {
     for (const group of featureGroups()) {
       parts.push(`## ${group.group}`, group.pages.map((p) => `- [${p.title}](${new URL(p.twin, site).href}): ${p.description}`).join('\n'));
     }
   }
 
   const symbols = page.entry?.data.symbols ?? [];
-  if (page.archetype === 'B') {
+  if (page.kind === 'feature') {
     parts.push(
       '## API',
       symbols

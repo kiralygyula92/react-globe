@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Vite
 description: Use React Globe in a Vite application, including the dev-server setting that avoids reloads.
 date: 2026-09-15
 ---

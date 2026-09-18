@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: All features
 description: Every capability of React Globe, grouped by what it does, each with a live demo and its limitations.
 ---
 

@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: country-names
-title: Country names
 description: Label countries with crisp DOM text that avoids collisions and follows the camera.
-group: Display & layout
-plan: free
 symbols:
   - Globe
 links:

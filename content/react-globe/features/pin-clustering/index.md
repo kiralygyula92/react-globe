@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: pin-clustering
-title: Pin clustering
 description: Merge pins that crowd together on screen into counted markers that open up as the camera comes closer.
-group: Content & data
-plan: free
 symbols:
   - Globe
   - ClusterRenderProps

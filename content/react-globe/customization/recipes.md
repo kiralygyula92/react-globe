@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Recipes
 description: Complete customization examples for common screens, each combining props, tokens and overrides.
 date: 2026-09-15
 ---

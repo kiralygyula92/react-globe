@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Stylesheet
 description: How the package stylesheet is built, why it cannot clash with your CSS, and where to import it.
 date: 2026-09-15
 ---

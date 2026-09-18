@@ -13,13 +13,6 @@
       "supported": true
     }
   ],
-  "tiers": [
-    {
-      "id": "free",
-      "name": "Free",
-      "badge": null
-    }
-  ],
   "links": {
     "issues": "https://github.com/kiralygyula92/react-globe/issues",
     "support": "/react-globe/getting-started/support/",

@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Bundled data
 description: The textures and datasets that ship with React Globe, where each comes from, and how they are rebuilt.
 date: 2026-09-15
 ---

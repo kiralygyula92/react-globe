@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: How to customize
 description: The ways to change how the globe looks, from a single prop to replacing components, in order of effort.
 date: 2026-09-15
 ---

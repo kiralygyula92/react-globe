@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Usage
 description: Build a first globe with your own pins, popups, controls and a click handler.
 ---
 

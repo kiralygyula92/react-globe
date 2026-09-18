@@ -1,5 +1,5 @@
 /**
- * Every authored docs page. The route list is nav.json's pages; the archetype decides which
+ * Every authored docs page. The route list is nav.json's pages; the kind of page decides which
  * data-driven blocks surround the authored Markdown.
  */
 import { Badge } from '../components/Badge';
@@ -12,10 +12,10 @@ const slug = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 
 /** The headings the right rail lists: the authored ones plus the blocks the template adds. */
 export function docHeadings(page: Page, authored: Heading[]): Heading[] {
-  const groups = page.archetype === 'C' ? featureGroups() : [];
+  const groups = page.kind === 'all-features' ? featureGroups() : [];
   return [
     ...authored,
-    ...(page.archetype === 'B' ? [{ depth: 2, slug: 'api', text: 'API' }] : []),
+    ...(page.kind === 'feature' ? [{ depth: 2, slug: 'api', text: 'API' }] : []),
     ...groups.map((g) => ({ depth: 2, slug: slug(g.group), text: g.group })),
   ];
 }
@@ -23,7 +23,7 @@ export function docHeadings(page: Page, authored: Heading[]): Heading[] {
 export function DocPage({ page, html, headings, site, assets }: { page: Page; html: string; headings: Heading[]; site: URL; assets: Assets }) {
   const entry = page.entry!;
   const symbols = entry.data.symbols ?? [];
-  const groups = page.archetype === 'C' ? featureGroups() : [];
+  const groups = page.kind === 'all-features' ? featureGroups() : [];
   const date = entry.data.date;
 
   return (
@@ -40,7 +40,7 @@ export function DocPage({ page, html, headings, site, assets }: { page: Page; ht
               </span>
             )}
           </h1>
-          {page.archetype === 'I' && date && (
+          {page.kind === 'article' && date && (
             <time className="page-date" dateTime={date.toISOString().slice(0, 10)}>
               {date.toISOString().slice(0, 10)}
             </time>
@@ -48,7 +48,7 @@ export function DocPage({ page, html, headings, site, assets }: { page: Page; ht
           <p className="page-subtitle">{page.description}</p>
         </header>
 
-        {page.archetype === 'B' && (
+        {page.kind === 'feature' && (
           <ul className="resource-chips" aria-label="Resources">
             {resourceChips(entry).map((chip) => (
               <li key={chip.key}>
@@ -60,7 +60,7 @@ export function DocPage({ page, html, headings, site, assets }: { page: Page; ht
 
         <div dangerouslySetInnerHTML={{ __html: html }} />
 
-        {page.archetype === 'C' && (
+        {page.kind === 'all-features' && (
           <div>
             {groups.map((g) => (
               <section key={g.group}>
@@ -83,7 +83,7 @@ export function DocPage({ page, html, headings, site, assets }: { page: Page; ht
           </div>
         )}
 
-        {page.archetype === 'B' && (
+        {page.kind === 'feature' && (
           <section className="api-links">
             <h2 id="api">API</h2>
             <ul>

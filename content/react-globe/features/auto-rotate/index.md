@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: auto-rotate
-title: Auto-rotate
 description: Spin the globe continuously at a chosen speed, paused automatically for readers who prefer reduced motion.
-group: Interaction
-plan: free
 symbols:
   - GlobeHandle
 links:

@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Accessibility
 description: What React Globe does for accessibility out of the box, and what your application needs to add.
 date: 2026-09-15
 ---

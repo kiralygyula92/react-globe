@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Installation
 description: Add React Globe and three.js to a React project and import the stylesheet.
 ---
 

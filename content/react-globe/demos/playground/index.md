@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Playground
 description: One globe with a live control for every prop, every render override and the imperative handle.
 date: 2026-09-15
 ---

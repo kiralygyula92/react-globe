@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Support
 description: Where to report bugs, ask questions and suggest improvements for React Globe.
 date: 2026-09-15
 ---

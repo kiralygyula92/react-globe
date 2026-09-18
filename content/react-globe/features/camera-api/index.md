@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: camera-api
-title: Camera API
 description: Fly, zoom, reset and read the camera from your own code through the globe's imperative handle.
-group: Interaction
-plan: free
 symbols:
   - GlobeHandle
   - CameraPose

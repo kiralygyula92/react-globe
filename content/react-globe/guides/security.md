@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Security
 description: What React Globe loads, what it renders from your data, and how to run it under a Content Security Policy.
 date: 2026-09-15
 ---

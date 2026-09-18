@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: globe
-title: Globe
 description: One component that renders an interactive 3D Earth with sensible defaults, sized by its container.
-group: Core features
-plan: free
 symbols:
   - Globe
   - GlobeProps

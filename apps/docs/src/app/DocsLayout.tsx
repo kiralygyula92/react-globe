@@ -1,5 +1,5 @@
 /**
- * Docs surface: announcement bar → docs header (product name, version selector,
+ * Every docs page: announcement bar → header (product name, version selector,
  * search, repository link, theme switch) → sidebar · content · right rail → shared footer.
  * Metadata comes from one title and one description.
  *
@@ -54,7 +54,7 @@ export function DocsLayout({
   const nav = sidebar();
   const crumbs = breadcrumbs(page);
   const data: PageData = { header: headerProps(), headings };
-  /** No announcement is configured; the slot renders only when one is (one campaign max). */
+  /** No announcement is configured; the bar renders only when there is one. */
   const announcement: string | null = null;
 
   return (

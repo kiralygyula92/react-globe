@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Changelog
 description: Every notable change to React Globe, by version, following Semantic Versioning.
 date: 2026-09-15
 ---

@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: capitals
-title: Capitals
 description: Mark national capitals with a dot and a name that appear as the camera comes closer.
-group: Display & layout
-plan: free
 symbols:
   - Globe
   - CapitalRecord

@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: localization
-title: Localization
 description: Translate the built-in UI strings and the bundled country and capital names into six languages, or add your own.
-group: Display & layout
-plan: free
 symbols:
   - Globe
   - GLOBE_LOCALES

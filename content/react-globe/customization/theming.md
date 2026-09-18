@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Theming
 description: Restyle the built-in labels, tooltip, popup, cluster marker and controls with CSS custom properties.
 date: 2026-09-15
 symbols:

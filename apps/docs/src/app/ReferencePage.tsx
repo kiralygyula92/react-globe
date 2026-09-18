@@ -1,5 +1,5 @@
 /**
- * Archetype E: one generated reference page per public symbol. Everything on
+ * One generated reference page per public symbol. Everything on
  * the page comes from reference/{Symbol}.schema.json (structure) and .strings.json
  * (prose); nothing is typed by hand.
  */

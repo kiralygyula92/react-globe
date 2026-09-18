@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: error-handling
-title: Error handling
 description: Catch WebGL, loading and rendering failures in one callback while the globe falls back without breaking your page.
-group: Developer tools
-plan: free
 symbols:
   - Globe
   - GlobeHandle

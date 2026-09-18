@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Best practices
 description: Habits that keep a globe smooth, predictable and accessible in a real application.
 date: 2026-09-15
 ---

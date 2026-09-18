@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: pin-popups
-title: Pin popups
 description: Show a card for the pin under the pointer, from pin data or with your own component.
-group: Content & data
-plan: free
 symbols:
   - Globe
   - PinPopupRenderProps

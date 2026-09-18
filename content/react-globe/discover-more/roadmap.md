@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Roadmap
 description: Work planned for React Globe, with no dates promised.
 date: 2026-09-15
 ---

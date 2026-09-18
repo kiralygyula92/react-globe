@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: country-interaction
-title: Country hover & click
 description: Highlight and name the country under the pointer, and respond to hovers and clicks on countries.
-group: Interaction
-plan: free
 symbols:
   - Globe
   - CountryFeature

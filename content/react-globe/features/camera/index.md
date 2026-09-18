@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: camera
-title: Camera
 description: Choose where the globe opens, limit how close and far it goes, and drive the camera from React state.
-group: Core features
-plan: free
 symbols:
   - Globe
   - CameraPose

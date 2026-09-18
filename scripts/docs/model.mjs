@@ -2,7 +2,7 @@
  * The docs content model, as plain functions over the data files in content/react-globe/.
  *
  * Shared by the docs site and the reference generator, so both agree on where a page's
- * file lives and which page template (archetype) renders it. Nothing here reads
+ * file lives and which kind of page renders it. Nothing here reads
  * Markdown bodies.
  */
 
@@ -56,7 +56,7 @@ export const SECTIONS = [
   { id: 'discover-more', group: 'discover-more-group' },
 ];
 
-/** Lifecycle badges (tier badges come from plugin.config.json#/tiers). */
+/** Lifecycle badges a nav node can carry. */
 export const LIFECYCLE_BADGES = { new: 'New', preview: 'Preview', beta: 'Beta', planned: 'Planned', deprecated: 'Deprecated', legacy: 'Legacy' };
 
 /** Footer columns. */
@@ -90,36 +90,36 @@ export function navPages(nav) {
 
 /**
  * Where a nav page's Markdown lives, relative to content/{plugin-id}/, and which
- * archetype it is. URL → file is fixed here, so a file never decides its own URL.
+ * kind of page it is. URL → file is fixed here, so a file never decides its own URL.
  */
 export function pageSpec(entry, config) {
   const { node, section } = entry;
-  if (node.symbol) return { file: `reference/${node.symbol}.strings.json`, archetype: 'E' };
+  if (node.symbol) return { file: `reference/${node.symbol}.strings.json`, kind: 'reference' };
   const prefix = `/${config.id}/`;
   if (!node.pathname.startsWith(prefix)) throw new Error(`outside namespace: ${node.pathname}`);
   const rest = node.pathname.slice(prefix.length).replace(/\/$/, '');
   const parts = rest === '' ? [] : rest.split('/');
 
   if (node.capabilityId) {
-    return { file: `features/${node.capabilityId}/index.md`, archetype: 'B' };
+    return { file: `features/${node.capabilityId}/index.md`, kind: 'feature' };
   }
-  if (parts.length === 0) return { file: 'overview.md', archetype: 'A' };
-  if (rest === 'all-features') return { file: 'all-features.md', archetype: 'C' };
+  if (parts.length === 0) return { file: 'overview.md', kind: 'overview' };
+  if (rest === 'all-features') return { file: 'all-features.md', kind: 'all-features' };
 
   switch (section) {
     case 'getting-started': {
       const page = parts[1];
-      return { file: `getting-started/${page}.md`, archetype: ['installation', 'usage', 'ai-context', 'requirements'].includes(page) ? 'F' : 'I' };
+      return { file: `getting-started/${page}.md`, kind: ['installation', 'usage', 'ai-context', 'requirements'].includes(page) ? 'getting-started' : 'article' };
     }
     case 'demos':
-      return { file: `demos/${parts[1]}/index.md`, archetype: 'I' };
+      return { file: `demos/${parts[1]}/index.md`, kind: 'article' };
     case 'customization':
-      return { file: parts.length === 1 ? 'customization/index.md' : `customization/${parts[1]}.md`, archetype: 'I' };
+      return { file: parts.length === 1 ? 'customization/index.md' : `customization/${parts[1]}.md`, kind: 'article' };
     case 'guides':
     case 'integrations':
     case 'migration':
     case 'discover-more':
-      return { file: `${parts[0]}/${parts[1]}.md`, archetype: 'I' };
+      return { file: `${parts[0]}/${parts[1]}.md`, kind: 'article' };
     default:
       throw new Error(`no page mapping for ${node.pathname} (section ${section})`);
   }
@@ -147,11 +147,11 @@ export function symbolPath(symbol, config) {
   return `/${config.id}/api/${kebab}/`;
 }
 
-/** H1 text for a page: fixed by archetype A (Overview) and E (reference). */
+/** H1 text for a page: fixed for the overview and for reference pages. */
 export function headingFor(entry, config, titles) {
-  const archetype = pageSpec(entry, config).archetype;
-  if (archetype === 'A') return `${config.name} — Overview`;
-  if (archetype === 'E') return `${entry.node.symbol} reference`;
+  const { kind } = pageSpec(entry, config);
+  if (kind === 'overview') return `${config.name} — Overview`;
+  if (kind === 'reference') return `${entry.node.symbol} reference`;
   return titles[entry.node.pathname];
 }
 
@@ -190,11 +190,9 @@ export function titlesWithReference(titles, config) {
   return { ...titles, ...Object.fromEntries(referenceEntries(config).map((r) => [r.pathname, r.symbol])) };
 }
 
-/** Badges for a nav node, derived only from its plan and lifecycle. */
+/** Badges for a nav node, derived only from its lifecycle. */
 export function badgesFor(node, config) {
   const badges = [];
-  const tier = node.plan ? config.tiers.find((t) => t.id === node.plan) : null;
-  if (tier?.badge) badges.push({ kind: 'plan', value: node.plan, label: tier.badge, href: tier.explainerHref ?? null });
   if (node.lifecycle) badges.push({ kind: 'lifecycle', value: node.lifecycle, label: LIFECYCLE_BADGES[node.lifecycle] });
   return badges;
 }

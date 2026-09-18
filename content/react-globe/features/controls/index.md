@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: controls
-title: Controls
 description: Add keyboard-reachable zoom, rotate and reset buttons, or replace them with your own.
-group: Interaction
-plan: free
 symbols:
   - Globe
   - GlobeControlsRenderProps

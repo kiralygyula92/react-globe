@@ -1,6 +1,4 @@
 ---
-pluginId: react-globe
-title: Showcase
 description: Projects built with React Globe, and how to add yours.
 date: 2026-09-15
 ---

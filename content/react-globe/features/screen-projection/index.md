@@ -1,10 +1,5 @@
 ---
-pluginId: react-globe
-capabilityId: screen-projection
-title: Screen projection
 description: Convert between coordinates on the globe and pixel positions in its container.
-group: Interaction
-plan: free
 symbols:
   - GlobeHandle
   - ScreenPoint
