@@ -9,6 +9,7 @@ import type { Assets } from './app/DocsLayout';
 import { NotFound } from './app/NotFound';
 import { ReferencePage, referenceHeadings } from './app/ReferencePage';
 import { renderMarkdown } from './lib/markdown';
+import { withSite } from './lib/generate';
 import { getPages, type Page } from './lib/site';
 
 export type { Assets };
@@ -36,6 +37,6 @@ export async function renderRoute(route: string, { site, assets }: { site: URL; 
   }
 
   const entry = page.entry!;
-  const { html: body, headings } = await renderMarkdown(entry.body, entry.filePath);
+  const { html: body, headings } = await renderMarkdown(withSite(entry.body, site), entry.filePath);
   return html(<DocPage page={page} html={body} headings={docHeadings(page, headings)} site={site} assets={assets} />);
 }

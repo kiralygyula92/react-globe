@@ -29,6 +29,14 @@ export type GeneratedFile = { path: string; body: string };
 
 const escapeXml = (s: string) => s.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
+/* ----------------------------------------------------------------- origin */
+
+/**
+ * Pages can name the site's own address — in a download command, say — as `{{site}}`,
+ * which becomes the origin the site is built for. Written once, correct on every host.
+ */
+export const withSite = (markdown: string, site: URL): string => markdown.replaceAll('{{site}}', site.origin);
+
 /* ------------------------------------------------------------------ twins */
 
 /** Authoring comments (TODOs, porting hints) are for editors, not readers. */
@@ -39,7 +47,7 @@ const stripComments = (markdown: string): string => markdown.replace(/<!--[\s\S]
  * Markdown, the data-driven blocks the HTML page renders (feature groups, API links),
  * and the generated reference for the page's symbols.
  */
-export function twinMarkdown(page: Page, site: URL): string {
+export function twinMarkdown(page: Page, site: URL, { inlineReferences = true }: { inlineReferences?: boolean } = {}): string {
   const parts = [`# ${page.heading}`, page.description];
 
   if (page.reference) {
@@ -47,7 +55,7 @@ export function twinMarkdown(page: Page, site: URL): string {
     return `${parts.filter(Boolean).join('\n\n')}\n`;
   }
 
-  parts.push(includesAsMarkdown(demosAsCode(stripComments(page.entry?.body ?? ''), page.file, CONTENT_DIR), page.file, CONTENT_DIR));
+  parts.push(withSite(includesAsMarkdown(demosAsCode(stripComments(page.entry?.body ?? ''), page.file, CONTENT_DIR), page.file, CONTENT_DIR), site));
 
   if (page.archetype === 'C') {
     for (const group of featureGroups()) {
@@ -64,14 +72,37 @@ export function twinMarkdown(page: Page, site: URL): string {
         .join('\n'),
     );
   }
-  for (const symbol of symbols) {
-    const ref = referenceFor(symbol);
-    if (ref) parts.push(`## ${symbol} reference`, referenceMarkdown(ref, site, 3));
+  // A lone page carries the reference it points at; the full file has every reference page already.
+  if (inlineReferences) {
+    for (const symbol of symbols) {
+      const ref = referenceFor(symbol);
+      if (ref) parts.push(`## ${symbol} reference`, referenceMarkdown(ref, site, 3));
+    }
   }
   return `${parts.filter(Boolean).join('\n\n')}\n`;
 }
 
 export const twins = (site: URL): GeneratedFile[] => getPages().map((page) => ({ path: page.twin.replace(/^\//, ''), body: twinMarkdown(page, site) }));
+
+/**
+ * The whole documentation as one Markdown file, for an AI coding agent: every page in the
+ * sidebar's reading order, each with its address, the source of every live demo where the
+ * page shows it, and the generated API reference once, in its own section.
+ */
+export function llmsFull(site: URL): string {
+  const head = [
+    `# ${config.name} — documentation`,
+    `> ${config.tagline}`,
+    config.description,
+    `Every page of the documentation at ${new URL(`/${config.id}/`, site).href}, in reading order. Generated from the same Markdown as the site, in the same build.`,
+  ].join('\n\n');
+  const pages = getPages().map((page) => {
+    const [title, ...rest] = twinMarkdown(page, site, { inlineReferences: false }).split('\n');
+    // Its address under the title, so an agent can say which page an answer came from.
+    return [title, '', `Source: ${new URL(page.pathname, site).href}`, ...rest].join('\n').trimEnd();
+  });
+  return `${[head, ...pages].join('\n\n---\n\n')}\n`;
+}
 
 /* ----------------------------------------------------------- machine files */
 
@@ -81,7 +112,14 @@ export const twins = (site: URL): GeneratedFile[] => getPages().map((page) => ({
  * same field as each page's meta description and H1 subtitle.
  */
 export function llmsTxt(site: URL): string {
-  const lines = [`# ${config.name}`, '', `> ${config.tagline}`, `> ${config.description}`];
+  const lines = [
+    `# ${config.name}`,
+    '',
+    `> ${config.tagline}`,
+    `> ${config.description}`,
+    '',
+    `The whole documentation in one file: ${new URL(`/${config.id}/llms-full.md`, site).href}`,
+  ];
   let section: string | null = null;
   for (const page of getPages()) {
     if (page.section !== section) {
@@ -233,6 +271,9 @@ export const redirectsFile = (): string => `${redirects().map((r) => `${r.from} 
 export function machineFiles(site: URL): GeneratedFile[] {
   return [
     { path: `${config.id}/llms.txt`, body: llmsTxt(site) },
+    // Under both names tools look for.
+    { path: `${config.id}/llms-full.md`, body: llmsFull(site) },
+    { path: `${config.id}/llms-full.txt`, body: llmsFull(site) },
     { path: 'sitemap.xml', body: sitemapXml(site) },
     { path: 'robots.txt', body: robotsTxt(site) },
     { path: `${links.changelog.replace(/^\//, '')}rss.xml`, body: rssXml(site) },

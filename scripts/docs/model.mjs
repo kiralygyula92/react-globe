@@ -109,7 +109,7 @@ export function pageSpec(entry, config) {
   switch (section) {
     case 'getting-started': {
       const page = parts[1];
-      return { file: `getting-started/${page}.md`, archetype: ['installation', 'usage', 'requirements'].includes(page) ? 'F' : 'I' };
+      return { file: `getting-started/${page}.md`, archetype: ['installation', 'usage', 'ai-context', 'requirements'].includes(page) ? 'F' : 'I' };
     }
     case 'demos':
       return { file: `demos/${parts[1]}/index.md`, archetype: 'I' };
