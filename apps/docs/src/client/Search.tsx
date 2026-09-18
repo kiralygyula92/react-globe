@@ -11,6 +11,12 @@ type Pagefind = { search: (term: string) => Promise<{ results: PagefindResult[] 
 type Hit = { url: string; title: string; excerpt: string };
 
 const MAX_RESULTS = 8;
+
+/**
+ * Pagefind escapes the indexed text and marks the matches with <mark>. Only those marks
+ * survive here, so an excerpt can never carry other markup into the page.
+ */
+const onlyMarks = (excerpt: string): string => excerpt.replace(/<(?!\/?mark>)[^>]*>/gi, '');
 const NO_INDEX = 'Search is available in the built site: run pnpm docs:build, then pnpm docs:serve.';
 
 let pagefind: Promise<Pagefind | null> | null = null;
@@ -76,7 +82,7 @@ export function Search() {
       return;
     }
     setMessage(null);
-    setHits(items.map((item) => ({ url: item.url, title: item.meta.title ?? item.url, excerpt: item.excerpt })));
+    setHits(items.map((item) => ({ url: item.url, title: item.meta.title ?? item.url, excerpt: onlyMarks(item.excerpt) })));
   };
 
   // Debounced, so a fast typist runs one search instead of one per keystroke.
@@ -181,7 +187,7 @@ export function Search() {
                   <li key={hit.url}>
                     <a className="search-result" href={hit.url}>
                       <span className="search-result-title">{hit.title}</span>
-                      {/* Pagefind escapes the indexed text; the excerpt's only markup is its <mark> highlights. */}
+                      {/* Only Pagefind's <mark> highlights are left in it; see onlyMarks. */}
                       <span className="search-result-excerpt" dangerouslySetInnerHTML={{ __html: hit.excerpt }} />
                     </a>
                   </li>

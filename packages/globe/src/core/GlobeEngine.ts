@@ -58,6 +58,9 @@ const ROTATE_FLIGHT_MS = 320;
  * and a globe that comes back on its own beats one that turns into an error message.
  */
 const CONTEXT_RESTORE_GRACE_MS = 3000;
+/** Past 2 device pixels per CSS pixel the extra sharpness is not worth the fill rate. */
+const MAX_PIXEL_RATIO = 2;
+const pixelRatio = (): number => Math.min(window.devicePixelRatio || 1, MAX_PIXEL_RATIO);
 
 export type EngineCallbacks = {
   onCameraChange(pose: Required<CameraPose>): void;
@@ -123,6 +126,8 @@ export class GlobeEngine {
   private sized = false;
 
   private readonly resizeObserver: ResizeObserver | null = null;
+  /** Matches the current device pixel ratio; fires when page zoom or a new monitor changes it. */
+  private pixelRatioQuery: MediaQueryList | null = null;
   private readonly intersectionObserver: IntersectionObserver | null = null;
 
   private readonly scratchA = new Vector3();
@@ -143,7 +148,7 @@ export class GlobeEngine {
     this.renderer.outputColorSpace = SRGBColorSpace;
     this.renderer.toneMapping = ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = 1.05;
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+    this.renderer.setPixelRatio(pixelRatio());
     this.renderer.setClearColor(0x000000, 0);
 
     this.canvas = this.renderer.domElement;
@@ -199,6 +204,7 @@ export class GlobeEngine {
     }
 
     this.resize();
+    this.watchPixelRatio();
     this.applyPoseToCamera();
     this.syncRunning();
   }
@@ -343,6 +349,8 @@ export class GlobeEngine {
     this.controls.dispose();
     this.resizeObserver?.disconnect();
     this.intersectionObserver?.disconnect();
+    this.pixelRatioQuery?.removeEventListener('change', this.onPixelRatioChange);
+    this.pixelRatioQuery = null;
 
     this.surface.dispose();
     this.graticule.dispose();
@@ -479,6 +487,31 @@ export class GlobeEngine {
     this.graticule.setResolution(width * ratio, height * ratio);
     this.connections.setResolution(width * ratio, height * ratio);
     this.needsRender = true;
+  };
+
+  /**
+   * Page zoom and moving the window to another monitor both change the device pixel ratio,
+   * and a canvas sized for the old one draws blurry (or needlessly large) on the new. A
+   * resolution query matches only the ratio it was made for, so it is remade on each change.
+   */
+  private watchPixelRatio(): void {
+    this.pixelRatioQuery?.removeEventListener('change', this.onPixelRatioChange);
+    this.pixelRatioQuery = null;
+    if (this.disposed || typeof window.matchMedia !== 'function') return;
+    this.pixelRatioQuery = window.matchMedia(`(resolution: ${window.devicePixelRatio || 1}dppx)`);
+    this.pixelRatioQuery.addEventListener('change', this.onPixelRatioChange);
+  }
+
+  private readonly onPixelRatioChange = (): void => {
+    if (this.disposed) return;
+    const ratio = pixelRatio();
+    if (ratio !== this.renderer.getPixelRatio()) {
+      this.renderer.setPixelRatio(ratio);
+      // Same CSS size, new device pixels: the resize must not be skipped as a no-op.
+      this.sized = false;
+      this.resize();
+    }
+    this.watchPixelRatio();
   };
 
   private syncRunning(): void {

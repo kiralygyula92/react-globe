@@ -47,7 +47,7 @@ import {
   resolveGlobeProps,
 } from './defaults';
 import { devWarn } from './env';
-import { resolveAssets } from './assets';
+import { resolveAssets, retainAssets } from './assets';
 import { GlobeEngine, type EngineCallbacks, type ProjectedPoint } from './core/GlobeEngine';
 import { OverlayPositioner } from './core/OverlayPositioner';
 import { graticuleLabels } from './core/layers/GraticuleLayer';
@@ -539,6 +539,9 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
   }, []);
 
   /* -------------------------------------------------------------- lifecycle */
+
+  // Keeps the shared asset caches alive while this globe is on the page.
+  useEffect(() => retainAssets(), []);
 
   useEffect(() => {
     const container = containerRef.current;

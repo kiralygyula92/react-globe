@@ -37,6 +37,9 @@ const shared = {
       headers: [
         { key: 'X-Content-Type-Options', value: 'nosniff' },
         { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        // No other site may frame these pages, so they cannot be dressed up for clickjacking.
+        { key: 'Content-Security-Policy', value: "frame-ancestors 'self'" },
+        { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
       ],
     },
     {

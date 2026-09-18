@@ -6,10 +6,12 @@
  * build rewrites them to `./assets/<file>` next to `dist/index.js` and copies the
  * files there under stable names.
  *
- * Decoded images and parsed datasets are cached per URL for the life of the page.
- * `THREE.Texture` objects are deliberately not: each engine builds its own from
- * the shared image and disposes it on unmount, which frees the GPU handle without
- * throwing away the decode.
+ * Decoded images and parsed datasets are cached per URL and shared by every globe on
+ * the page. They are kept while any globe is mounted and for a minute after the last
+ * one unmounts, so a second globe or a quick remount loads nothing again, and leaving
+ * the globe behind gives back the memory — the decoded day map alone is well over
+ * 100 MB. `THREE.Texture` objects are deliberately not cached: each engine builds its
+ * own from the shared image and disposes it on unmount.
  */
 
 import { Texture } from 'three';
@@ -48,12 +50,55 @@ export const resolveAssets = (assets: GlobeAssets | undefined): ResolvedAssets =
 
 /* ---------------------------------------------------------------------- caches */
 
+/** How long the caches outlive the last globe on the page. */
+export const RETAIN_MS = 60_000;
+
 export type DecodedImage = HTMLImageElement | ImageBitmap;
 
 const imageCache = new Map<string, Promise<DecodedImage>>();
 const jsonCache = new Map<string, Promise<unknown>>();
 const countriesByUrl = new Map<string, Promise<PreparedCountry[]>>();
 const countriesByObject = new WeakMap<object, PreparedCountry[]>();
+
+let mountedGlobes = 0;
+let evictTimer: ReturnType<typeof setTimeout> | null = null;
+
+/** Empties every cache, closing decoded bitmaps so their memory goes back at once. */
+function evict(): void {
+  evictTimer = null;
+  if (mountedGlobes > 0) return;
+  for (const pending of imageCache.values()) {
+    pending.then(
+      (image) => {
+        if (isImageBitmap(image)) image.close();
+      },
+      () => undefined,
+    );
+  }
+  imageCache.clear();
+  jsonCache.clear();
+  countriesByUrl.clear();
+}
+
+/**
+ * Called by every globe when it mounts; the returned function when it unmounts. While
+ * any globe holds the caches they are never emptied; after the last lets go they are
+ * emptied once `RETAIN_MS` passes with no new globe.
+ */
+export function retainAssets(): () => void {
+  mountedGlobes++;
+  if (evictTimer !== null) {
+    clearTimeout(evictTimer);
+    evictTimer = null;
+  }
+  let released = false;
+  return () => {
+    if (released) return;
+    released = true;
+    mountedGlobes--;
+    if (mountedGlobes === 0) evictTimer = setTimeout(evict, RETAIN_MS);
+  };
+}
 
 /** A rejected promise removes itself, so a retry is possible. */
 function cached<T>(cache: Map<string, Promise<T>>, key: string, make: () => Promise<T>): Promise<T> {

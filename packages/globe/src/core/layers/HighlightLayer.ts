@@ -20,8 +20,9 @@ export class HighlightLayer {
   // Whole geometries per country, swapped on the mesh. Replacing a single
   // attribute instead leaves its GPU buffer allocated until the geometry is
   // disposed, so hovering across a map would strand one buffer per country.
-  private readonly cache = new Map<string, BufferGeometry>();
-  private current: string | null = null;
+  // Each remembers the country it was built from: a new dataset reuses the ids.
+  private readonly cache = new Map<string, { country: PreparedCountry; geometry: BufferGeometry }>();
+  private current: PreparedCountry | null = null;
 
   constructor() {
     const material = new MeshBasicMaterial({
@@ -42,24 +43,29 @@ export class HighlightLayer {
   }
 
   show(country: PreparedCountry | null): void {
-    const id = country?.id ?? null;
-    if (id === this.current) return;
-    this.current = id;
+    if (country === this.current) return;
+    this.current = country;
     if (!country) {
       this.mesh.visible = false;
       this.mesh.geometry = this.empty;
       return;
     }
-    let geometry = this.cache.get(country.id);
-    if (!geometry) {
+    let cached = this.cache.get(country.id);
+    if (cached && cached.country !== country) {
+      // Same id, different dataset: the old outline would be highlighted otherwise.
+      cached.geometry.dispose();
+      cached = undefined;
+    }
+    if (!cached) {
       const { positions, uvs, index } = triangulateCountry(country, HIGHLIGHT_RADIUS);
-      geometry = new BufferGeometry();
+      const geometry = new BufferGeometry();
       geometry.setAttribute('position', new BufferAttribute(positions, 3));
       geometry.setAttribute('uv', new BufferAttribute(uvs, 2));
       geometry.setIndex(new BufferAttribute(index, 1));
-      this.cache.set(country.id, geometry);
+      cached = { country, geometry };
+      this.cache.set(country.id, cached);
     }
-    this.mesh.geometry = geometry;
+    this.mesh.geometry = cached.geometry;
     this.mesh.visible = true;
   }
 
@@ -71,7 +77,7 @@ export class HighlightLayer {
   }
 
   dispose(): void {
-    for (const geometry of this.cache.values()) geometry.dispose();
+    for (const { geometry } of this.cache.values()) geometry.dispose();
     this.cache.clear();
     this.empty.dispose();
     this.mesh.material.dispose();

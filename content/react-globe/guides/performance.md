@@ -25,9 +25,10 @@ date: 2026-09-15
 - **Progressive imagery.** The `realistic` style shows a smaller day texture while the full-resolution
   one loads.
 - **Off the main thread.** Images are decoded with `createImageBitmap` where the browser supports it.
-- **Shared.** Decoded images and parsed datasets are cached per URL for the life of the page, so a second
-  globe or a remount does not load them again. The flat styles' land mesh is built once, during idle
-  time, and shared.
+- **Shared.** Decoded images and parsed datasets are cached per URL while any globe is on the page, so a
+  second globe or a remount does not load them again. A minute after the last globe unmounts they are
+  released — the decoded day map alone is well over 100 MB — and a later globe loads them afresh, mostly
+  from the browser's HTTP cache. The flat styles' land mesh is built once, during idle time, and shared.
 
 ## Cleanup
 

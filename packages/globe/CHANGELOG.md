@@ -22,3 +22,11 @@ All notable changes to this package are documented here. The format follows
   package reads are declared in the package itself.
 - A lost WebGL context is waited out and picked back up when the browser restores it;
   only a loss that does not come back is reported through `onError`.
+- A drag whose release never arrives — the window losing focus mid-drag, or the button let go
+  outside it — ends, instead of leaving the globe turning with the next plain mouse movement.
+- Wheels and trackpads that report scrolling in whole pages zoom by a matching amount.
+- The canvas follows changes to the device pixel ratio, so page zoom or a move to another monitor
+  keeps it sharp.
+- The hover highlight follows a replaced country dataset instead of outlining the previous one.
+- Loaded images and datasets are shared while any globe is mounted and released a minute after the
+  last one unmounts, instead of staying in memory for the life of the page.

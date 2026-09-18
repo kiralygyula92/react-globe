@@ -10,7 +10,7 @@
 
 import { createReadStream, existsSync, readFileSync, statSync } from 'node:fs';
 import { createServer } from 'node:http';
-import { extname, join, normalize, resolve } from 'node:path';
+import { extname, join, normalize, resolve, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const TYPES = {
@@ -60,8 +60,9 @@ export function startServer(dist, port = 0) {
       return;
     }
 
+    // With the separator: a bare prefix test lets /..%2fdist-ssr/ reach a sibling folder.
     const target = normalize(join(root, pathname));
-    if (!target.startsWith(root)) {
+    if (target !== root && !target.startsWith(root + sep)) {
       res.writeHead(403).end();
       return;
     }

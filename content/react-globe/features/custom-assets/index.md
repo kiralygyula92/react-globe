@@ -61,7 +61,8 @@ for what ships by default.
 - **Not every layer is replaceable.** Coastlines, borders, elevation and the land-cover raster the
   `standard`, `cartoon` and `modern` styles read always come from the bundled files. Turn
   `showShorelines` and `showCountryBorders` off when they do not match your own countries.
-- **Cached for the page's life.** Loaded images and datasets are cached per URL, so replacing a file on
-  the server behind an unchanged URL is not picked up until the page reloads. Version the URL instead.
+- **Cached while in use.** Loaded images and datasets are cached per URL while a globe is on the page
+  (and for a minute after), so replacing a file on the server behind an unchanged URL is not picked up
+  by a globe that is showing it. Version the URL instead.
 - **Your data, your licence.** The bundled files are public domain; files you supply carry their own
   terms.

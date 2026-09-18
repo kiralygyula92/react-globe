@@ -18,6 +18,9 @@ const INERTIA_CUTOFF = 0.6;
 const ZOOM_DAMPING = 0.00001;
 /** One notch (100 px) moves the camera ~12 %. */
 const WHEEL_SCALE = 0.0012;
+/** Pixels in a wheel "line" and a wheel "page", for devices that report in those units. */
+const LINE_PX = 16;
+const PAGE_PX = 800;
 /** Degrees of tilt per pixel of right-drag. */
 const TILT_PER_PIXEL = 0.22;
 /** How far the centre may travel over one tilt drag. */
@@ -166,12 +169,25 @@ export class PointerControls {
       window.addEventListener('pointermove', this.onPointerMove);
       window.addEventListener('pointerup', this.onPointerUp);
       window.addEventListener('pointercancel', this.onPointerUp);
+      window.addEventListener('blur', this.onWindowBlur);
     } else {
       window.removeEventListener('pointermove', this.onPointerMove);
       window.removeEventListener('pointerup', this.onPointerUp);
       window.removeEventListener('pointercancel', this.onPointerUp);
+      window.removeEventListener('blur', this.onWindowBlur);
     }
   }
+
+  /**
+   * The window losing focus mid-gesture (alt-tab, a system dialog) can swallow the
+   * release, which would leave the globe turning with the next plain mouse movement.
+   */
+  private readonly onWindowBlur = (): void => {
+    this.endDrag();
+    if (this.mode === 'pinch') this.mode = 'none';
+    this.touches.clear();
+    this.listenWindow(false);
+  };
 
   /** Suppressed on the canvas only, and only while tilting is on. */
   private readonly onContextMenu = (event: MouseEvent): void => {
@@ -182,8 +198,8 @@ export class PointerControls {
     // Only ever claimed when zooming is on.
     event.preventDefault();
     this.host.onInteractionStart();
-    // Line mode reports lines; turn them into pixels.
-    const step = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaY;
+    // Some devices report lines or whole pages; turn both into pixels.
+    const step = event.deltaY * (event.deltaMode === 1 ? LINE_PX : event.deltaMode === 2 ? PAGE_PX : 1);
     this.host.setZoomTarget(this.host.getZoomTarget() * Math.exp(step * WHEEL_SCALE));
   };
 
@@ -253,6 +269,12 @@ export class PointerControls {
     }
 
     if (event.pointerId !== this.dragPointer) return;
+    // No button held any more: the release happened somewhere this never heard about.
+    if (event.pointerType !== 'touch' && event.buttons === 0) {
+      this.endDrag();
+      if (this.touches.size === 0) this.listenWindow(false);
+      return;
+    }
     const dx = (event.clientX - this.lastX) * this.pixelScale;
     const dy = (event.clientY - this.lastY) * this.pixelScale;
     this.lastX = event.clientX;
