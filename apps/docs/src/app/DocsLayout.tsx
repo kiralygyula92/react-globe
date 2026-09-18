@@ -96,9 +96,10 @@ export function DocsLayout({
           </div>
         </header>
 
-        <input type="checkbox" id="nav-toggle" className="nav-toggle" aria-hidden="true" tabIndex={-1} />
+        {/* Not restored by the browser on Back: the menu should come back closed. */}
+        <input type="checkbox" id="nav-toggle" className="nav-toggle" aria-hidden="true" tabIndex={-1} autoComplete="off" />
         <div className="docs-shell">
-          <nav className="sidebar" aria-label="Documentation">
+          <nav className="sidebar" id="docs-sidebar" aria-label="Documentation">
             <SidebarItems items={nav} current={page.pathname} depth={1} />
           </nav>
 

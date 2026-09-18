@@ -1,21 +1,85 @@
 /**
  * Everything inside the docs header. Rendered with the page and taken over by the browser
  * so the version selector, search and theme switch work.
+ *
+ * On narrow screens the menu button opens the sidebar over the page. It is a label for the
+ * checkbox the sidebar's CSS reads, so it works before the page is taken over; after, it is
+ * also reachable from the keyboard, reports whether the menu is open, and Escape closes it.
  */
+import { useEffect, useRef, useState } from 'react';
 import type { HeaderProps } from '../lib/props';
 import { Search } from './Search';
 import { ThemeToggle } from './ThemeToggle';
 import { VersionSelect } from './VersionSelect';
 
+const navToggle = (): HTMLInputElement | null => document.getElementById('nav-toggle') as HTMLInputElement | null;
+
 export function Header({ name, repo, versions, currentVersion, versionsHref }: HeaderProps) {
+  const menuButton = useRef<HTMLLabelElement>(null);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    const toggle = navToggle();
+    if (!toggle) return;
+    toggle.checked = !toggle.checked;
+    setMenuOpen(toggle.checked);
+  };
+
+  useEffect(() => {
+    const toggle = navToggle();
+    if (!toggle) return;
+    const sync = () => setMenuOpen(toggle.checked);
+    const close = () => {
+      toggle.checked = false;
+      sync();
+    };
+    // A page restored from the back/forward cache comes back as it was left: with the menu open.
+    const onPageShow = (event: PageTransitionEvent) => {
+      if (event.persisted) close();
+    };
+    const onKeyDown = (event: KeyboardEvent) => {
+      // With the search dialog open, Escape is the dialog's.
+      if (event.key !== 'Escape' || !toggle.checked || document.querySelector('dialog[open]')) return;
+      close();
+      menuButton.current?.focus();
+    };
+    sync();
+    toggle.addEventListener('change', sync);
+    window.addEventListener('pageshow', onPageShow);
+    document.addEventListener('keydown', onKeyDown);
+    return () => {
+      toggle.removeEventListener('change', sync);
+      window.removeEventListener('pageshow', onPageShow);
+      document.removeEventListener('keydown', onKeyDown);
+    };
+  }, []);
+
   return (
     <>
-      <label className="icon-button nav-toggle-label" htmlFor="nav-toggle" aria-label="Open navigation">
-        <svg viewBox="0 0 20 20" width="20" height="20" aria-hidden="true">
-          <path
-            fill="currentColor"
-            d="M3 5.75A.75.75 0 0 1 3.75 5h12.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 5.75Zm0 4.25a.75.75 0 0 1 .75-.75h12.5a.75.75 0 0 1 0 1.5H3.75A.75.75 0 0 1 3 10Zm.75 3.5a.75.75 0 0 0 0 1.5h12.5a.75.75 0 0 0 0-1.5H3.75Z"
-          ></path>
+      <label
+        className="icon-button nav-toggle-label"
+        htmlFor="nav-toggle"
+        role="button"
+        tabIndex={0}
+        aria-label="Navigation menu"
+        aria-controls="docs-sidebar"
+        aria-expanded={menuOpen}
+        ref={menuButton}
+        // Toggled here rather than by the label's own behaviour, which would move focus to the
+        // hidden checkbox.
+        onClick={(event) => {
+          event.preventDefault();
+          toggleMenu();
+        }}
+        onKeyDown={(event) => {
+          if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            toggleMenu();
+          }
+        }}
+      >
+        <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
+          <path fill="currentColor" d="M3 18h18v-2H3v2Zm0-5h18v-2H3v2Zm0-7v2h18V6H3Z"></path>
         </svg>
       </label>
       <a className="brand" href="/">

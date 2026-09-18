@@ -23,11 +23,8 @@ export function VersionSelect({ versions, currentVersion, versionsHref }: Pick<H
         ))}
         <option value={versionsHref}>All versions</option>
       </select>
-      <svg className="chevron" viewBox="0 0 20 20" width="16" height="16" aria-hidden="true">
-        <path
-          fill="currentColor"
-          d="M5.3 7.3a1 1 0 0 1 1.4 0L10 10.6l3.3-3.3a1 1 0 1 1 1.4 1.4l-4 4a1 1 0 0 1-1.4 0l-4-4a1 1 0 0 1 0-1.4Z"
-        ></path>
+      <svg className="caret" viewBox="0 0 24 24" width="24" height="24" aria-hidden="true">
+        <path fill="currentColor" d="M7 10l5 5 5-5Z"></path>
       </svg>
     </div>
   );
