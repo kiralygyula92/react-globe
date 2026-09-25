@@ -8,10 +8,10 @@
     "node": ">=22.12"
   },
   "scripts": {
-    "build": "pnpm --filter react-globe build",
-    "dev": "pnpm build && pnpm --parallel --filter react-globe --filter docs dev",
-    "test": "pnpm --filter react-globe test",
-    "typecheck": "pnpm --filter react-globe --filter docs typecheck",
+    "build": "pnpm --filter @kiralygyula92/react-globe build",
+    "dev": "pnpm build && pnpm --parallel --filter @kiralygyula92/react-globe --filter docs dev",
+    "test": "pnpm --filter @kiralygyula92/react-globe test",
+    "typecheck": "pnpm --filter @kiralygyula92/react-globe --filter docs typecheck",
     "e2e": "playwright test",
     "assets": "node scripts/globe-assets.mjs",
     "docs:dev": "pnpm --filter docs dev",

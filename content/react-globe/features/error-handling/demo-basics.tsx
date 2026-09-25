@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Globe } from 'react-globe';
+import { Globe } from '@kiralygyula92/react-globe';
 
 /** A countries URL that does not exist: the globe reports the failure through onError. */
 export default function ErrorHandlingBasics() {

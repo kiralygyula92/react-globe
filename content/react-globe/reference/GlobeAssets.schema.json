@@ -2,7 +2,7 @@
   "name": "GlobeAssets",
   "kind": "type",
   "imports": [
-    "import type { GlobeAssets } from 'react-globe';"
+    "import type { GlobeAssets } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "dayTexture": {

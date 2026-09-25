@@ -1,4 +1,4 @@
-# react-globe
+# React Globe
 
 An interactive, detailed 3D Earth for React, drawn with plain three.js.
 
@@ -29,14 +29,16 @@ Nothing else is required at runtime.
 ## Install
 
 ```bash
-npm install react-globe three
-npm install -D @types/three
+npm install @kiralygyula92/react-globe three
 ```
+
+The package's own TypeScript declarations are included; add `@types/three` only if your own code
+imports three.js types.
 
 Import the stylesheet once, at your app entry:
 
 ```tsx
-import 'react-globe/globe.css';
+import '@kiralygyula92/react-globe/globe.css';
 ```
 
 The stylesheet is compiled Tailwind with no preflight (your base styles are untouched) and every
@@ -47,8 +49,8 @@ utility prefixed `rg:`, so it cannot collide with your own Tailwind.
 The component fills its container, **so the container must have a size**:
 
 ```tsx
-import { Globe } from 'react-globe';
-import 'react-globe/globe.css';
+import { Globe } from '@kiralygyula92/react-globe';
+import '@kiralygyula92/react-globe/globe.css';
 
 export function Example() {
   return (
@@ -152,10 +154,10 @@ Every prop is optional. `TData` is whatever you hang off `Pin.data`; it is passe
 | `onError` | `(error: Error) => void` | — | Fires when WebGL is unavailable, the context is lost, a dataset fails to load, or rendering throws. The globe shows a wordless fallback. |
 <!-- docs:reference:props:end -->
 
-`zoom` is a **distance from the globe's centre**, so smaller is closer. The field of view is 50°,
-which puts the whole planet in frame from about 2.4 radii outward. **Home** — the pose the globe opens
-on and `reset()` returns to — is `defaultCamera` over `defaultCenter` over
-`{ lat: 20, lng: 0, zoom: 3.2, tilt: 0 }`.
+`zoom` is a **distance from the globe's centre**, so smaller is closer. The field of view is 50°
+across the container's shorter side, which puts the whole planet in frame from about 2.4 radii
+outward. **Home** — the pose the globe opens on and `reset()` returns to — is `defaultCamera` over
+`defaultCenter` over `{ lat: 20, lng: 0, zoom: 3.2, tilt: 0 }`.
 
 **The default pin marker is WebGL; an override is DOM.** With no `pinComponent`, every pin is one
 instance in an instanced mesh, one draw call however many pins. Passing `pinComponent` switches to one
@@ -262,7 +264,7 @@ dataset that carries that language: a raw Natural Earth file works through its `
 supply a `names: { it: '…' }` object per country or capital. Missing names fall back to English.
 
 ```tsx
-import { Globe, DEFAULT_GLOBE_MESSAGES } from 'react-globe';
+import { Globe, DEFAULT_GLOBE_MESSAGES } from '@kiralygyula92/react-globe';
 
 <Globe
   locale="it"
@@ -314,8 +316,9 @@ components. The same list is exported as `GLOBE_THEME_TOKENS`.
 
 Every texture and dataset ships in `dist/assets/` (about 7 MB) and resolves relative to the module
 with `new URL('./assets/…', import.meta.url)`. Bundlers that implement that pattern copy the files for
-you; the package is tested with Vite. Otherwise copy `node_modules/react-globe/dist/assets` somewhere
-you serve and point the `assets` prop at the files:
+you; the package is tested with Vite. Otherwise copy
+`node_modules/@kiralygyula92/react-globe/dist/assets` somewhere you serve and point the `assets` prop
+at the files:
 
 ```tsx
 <Globe assets={{ dayTexture: '/my/earth.jpg', countriesGeoJson: myFeatureCollection }} />
@@ -352,8 +355,9 @@ Crediting NASA, Natural Earth and Wikidata is appreciated but not required.
 - Unmount disposes every geometry, material and texture, drops every listener, cancels the loop and
   releases the WebGL context. The end-to-end suite mounts and unmounts twenty times and checks that no
   context is leaked.
-- Decoded images and parsed datasets are cached per URL for the life of the page, and datasets load
-  on demand: a layer that is switched off is never fetched.
+- Decoded images and parsed datasets are cached per URL while any globe is on the page, and released a
+  minute after the last one unmounts. Datasets load on demand: a layer that is switched off is never
+  fetched.
 - Clustering is a uniform screen-space grid, O(n) in the number of pins.
 - The default pin is one instanced mesh: one draw call regardless of count.
 - The flat styles' land mesh is triangulated once on an idle callback and shared by every globe on the

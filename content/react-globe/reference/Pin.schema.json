@@ -2,7 +2,7 @@
   "name": "Pin",
   "kind": "type",
   "imports": [
-    "import type { Pin } from 'react-globe';"
+    "import type { Pin } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "lat": {

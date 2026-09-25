@@ -2,7 +2,7 @@
   "name": "GlobeProps",
   "kind": "type",
   "imports": [
-    "import type { GlobeProps } from 'react-globe';"
+    "import type { GlobeProps } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "width": {

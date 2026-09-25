@@ -6,7 +6,7 @@ date: 2026-09-15
 ## Import it once
 
 ```tsx
-import 'react-globe/globe.css';
+import '@kiralygyula92/react-globe/globe.css';
 ```
 
 Import it at your application entry, alongside your own global styles. Without it, the built-in

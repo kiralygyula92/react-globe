@@ -10,7 +10,7 @@ description: The React, three.js, bundler and browser versions React Globe decla
 | `three` | `>= 0.170` (peer) | 0.186 |
 | Module format | ES modules only | — |
 | Bundler | Must copy `new URL('./file', import.meta.url)` assets | Vite 8 |
-| Browser | WebGL | Chromium, through the Playwright end-to-end suite |
+| Browser | WebGL 2 | Chromium, through the Playwright end-to-end suite |
 | TypeScript | Declarations included | 5.9 |
 
 The package itself has no dependencies: installing it adds the globe and nothing else, and the
@@ -24,7 +24,7 @@ declared range that are not listed have not been tested; please report problems.
 The peer dependencies are installed alongside the package:
 
 ```bash
-npm install react-globe three react react-dom
+npm install @kiralygyula92/react-globe three react react-dom
 ```
 
 ## Minimal working example
@@ -32,7 +32,7 @@ npm install react-globe three react react-dom
 Check the versions your project resolved:
 
 ```bash
-npm ls react react-dom three react-globe
+npm ls react react-dom three @kiralygyula92/react-globe
 ```
 
 ## Verification

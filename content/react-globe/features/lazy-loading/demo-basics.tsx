@@ -1,4 +1,4 @@
-import { GlobeLazy } from 'react-globe';
+import { GlobeLazy } from '@kiralygyula92/react-globe';
 
 export default function LazyLoadingBasics() {
   return (

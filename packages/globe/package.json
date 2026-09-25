@@ -1,5 +1,5 @@
 {
-  "name": "react-globe",
+  "name": "@kiralygyula92/react-globe",
   "version": "1.0.0",
   "description": "An interactive, detailed 3D Earth for React, drawn with plain three.js.",
   "keywords": [
@@ -57,7 +57,7 @@
     "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",
     "build:js": "vite build",
     "build:css": "tailwindcss -i ./src/styles.css -o ./dist/globe.css --minify",
-    "build:types": "tsc -p tsconfig.build.json",
+    "build:types": "tsc -p tsconfig.build.json && node scripts/dts-extensions.mjs",
     "build": "pnpm clean && pnpm build:js && pnpm build:css && pnpm build:types",
     "dev": "pnpm run \"/^watch:/\"",
     "watch:js": "vite build --watch",

@@ -44,8 +44,9 @@ the `realistic` style.
 ### Serving the bundled files yourself
 
 The bundled files resolve with `new URL('./assets/…', import.meta.url)`, which bundlers such as Vite
-copy into your build. If yours does not, copy `node_modules/react-globe/dist/assets` to a folder you
-serve and point `assets` at the files. They are also exported as `react-globe/assets/*`.
+copy into your build. If yours does not, copy `node_modules/@kiralygyula92/react-globe/dist/assets`
+to a folder you serve and point `assets` at the files. They are also exported as
+`@kiralygyula92/react-globe/assets/*`.
 
 ## Customization
 

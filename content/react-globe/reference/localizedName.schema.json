@@ -2,7 +2,7 @@
   "name": "localizedName",
   "kind": "function",
   "imports": [
-    "import { localizedName } from 'react-globe';"
+    "import { localizedName } from '@kiralygyula92/react-globe';"
   ],
   "signature": "localizedName(place: { name: string; names?: Readonly<Record<string, string>> | null }, language: string): string",
   "options": {

@@ -1,4 +1,4 @@
-import { DefaultConnection, Globe, type ConnectionRenderProps, type Pin, type PinConnection } from 'react-globe';
+import { DefaultConnection, Globe, type ConnectionRenderProps, type Pin, type PinConnection } from '@kiralygyula92/react-globe';
 
 const pins: Pin[] = [
   { id: 'oslo', lat: 59.9139, lng: 10.7522 },

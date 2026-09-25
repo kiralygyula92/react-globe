@@ -2,7 +2,7 @@
   "name": "GLOBE_LOCALES",
   "kind": "setting-group",
   "imports": [
-    "import { GLOBE_LOCALES } from 'react-globe';"
+    "import { GLOBE_LOCALES } from '@kiralygyula92/react-globe';"
   ],
   "definition": "readonly [\"en\", \"ro\", \"de\", \"es\", \"fr\", \"hu\"]",
   "inheritance": null,

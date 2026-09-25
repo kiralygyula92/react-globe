@@ -2,7 +2,7 @@
   "name": "RenderStyle",
   "kind": "type",
   "imports": [
-    "import type { RenderStyle } from 'react-globe';"
+    "import type { RenderStyle } from '@kiralygyula92/react-globe';"
   ],
   "definition": "'standard' | 'realistic' | 'cartoon' | 'modern'",
   "inheritance": null,

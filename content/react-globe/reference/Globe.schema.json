@@ -2,8 +2,8 @@
   "name": "Globe",
   "kind": "component",
   "imports": [
-    "import { Globe } from 'react-globe';",
-    "import 'react-globe/globe.css';"
+    "import { Globe } from '@kiralygyula92/react-globe';",
+    "import '@kiralygyula92/react-globe/globe.css';"
   ],
   "propsType": "GlobeProps",
   "options": {
@@ -401,5 +401,5 @@
     "/react-globe/render-styles/"
   ],
   "filename": "/packages/globe/src/Globe.tsx",
-  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/Globe.tsx#L1116"
+  "sourceUrl": "https://github.com/kiralygyula92/react-globe/blob/main/packages/globe/src/Globe.tsx#L1119"
 }

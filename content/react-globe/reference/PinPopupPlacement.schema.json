@@ -2,7 +2,7 @@
   "name": "PinPopupPlacement",
   "kind": "type",
   "imports": [
-    "import type { PinPopupPlacement } from 'react-globe';"
+    "import type { PinPopupPlacement } from '@kiralygyula92/react-globe';"
   ],
   "definition": "'top' | 'bottom' | 'left' | 'right'",
   "inheritance": null,

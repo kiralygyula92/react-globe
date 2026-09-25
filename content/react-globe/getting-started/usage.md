@@ -17,8 +17,8 @@ reports which office was clicked.
 
 ```tsx
 import { useState } from 'react';
-import { Globe, type Pin } from 'react-globe';
-import 'react-globe/globe.css';
+import { Globe, type Pin } from '@kiralygyula92/react-globe';
+import '@kiralygyula92/react-globe/globe.css';
 
 type Office = { title: string; subtitle: string };
 

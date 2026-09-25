@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Globe, type CameraPose } from 'react-globe';
+import { Globe, type CameraPose } from '@kiralygyula92/react-globe';
 
 const PLACES: Record<string, CameraPose> = {
   Andes: { lat: -20, lng: -68, zoom: 1.8, tilt: 45 },

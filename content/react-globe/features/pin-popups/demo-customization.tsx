@@ -1,4 +1,4 @@
-import { Globe, type Pin, type PinPopupRenderProps } from 'react-globe';
+import { Globe, type Pin, type PinPopupRenderProps } from '@kiralygyula92/react-globe';
 
 type Station = { name: string; country: string };
 

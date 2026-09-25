@@ -2,7 +2,7 @@
   "name": "ConnectionPathPoint",
   "kind": "type",
   "imports": [
-    "import type { ConnectionPathPoint } from 'react-globe';"
+    "import type { ConnectionPathPoint } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "x": {

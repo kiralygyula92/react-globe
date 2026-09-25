@@ -1,4 +1,4 @@
-import { Globe, type Pin } from 'react-globe';
+import { Globe, type Pin } from '@kiralygyula92/react-globe';
 
 type City = { title: string; subtitle: string };
 

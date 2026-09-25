@@ -2,7 +2,7 @@
   "name": "GLOBE_THEME_TOKENS",
   "kind": "setting-group",
   "imports": [
-    "import { GLOBE_THEME_TOKENS } from 'react-globe';"
+    "import { GLOBE_THEME_TOKENS } from '@kiralygyula92/react-globe';"
   ],
   "definition": "readonly GlobeThemeToken[]",
   "tokens": [

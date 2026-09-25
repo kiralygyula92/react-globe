@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Globe } from 'react-globe';
+import { Globe } from '@kiralygyula92/react-globe';
 
 /** Replace the globe with your own message, in your own words, when it cannot run. */
 export default function ErrorHandlingCustomization() {

@@ -2,7 +2,7 @@
   "name": "GlobeMessages",
   "kind": "type",
   "imports": [
-    "import type { GlobeMessages } from 'react-globe';"
+    "import type { GlobeMessages } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "zoomIn": {

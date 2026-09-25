@@ -2,7 +2,7 @@
   "name": "PinPopupRenderProps",
   "kind": "type",
   "imports": [
-    "import type { PinPopupRenderProps } from 'react-globe';"
+    "import type { PinPopupRenderProps } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "pin": {

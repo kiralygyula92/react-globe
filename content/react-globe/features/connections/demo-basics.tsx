@@ -1,4 +1,4 @@
-import { Globe, type Pin, type PinConnection } from 'react-globe';
+import { Globe, type Pin, type PinConnection } from '@kiralygyula92/react-globe';
 
 const pins: Pin[] = [
   { id: 'dublin', lat: 53.3498, lng: -6.2603 },

@@ -2,7 +2,7 @@
   "name": "GlobeLocale",
   "kind": "type",
   "imports": [
-    "import type { GlobeLocale } from 'react-globe';"
+    "import type { GlobeLocale } from '@kiralygyula92/react-globe';"
   ],
   "definition": "(typeof GLOBE_LOCALES)[number]",
   "inheritance": null,

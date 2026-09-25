@@ -1,5 +1,5 @@
 import { useMemo } from 'react';
-import { Globe, type Pin } from 'react-globe';
+import { Globe, type Pin } from '@kiralygyula92/react-globe';
 
 /** 400 points on a deterministic spiral, so the clusters look the same on every load. */
 function spiral(count: number): Pin[] {

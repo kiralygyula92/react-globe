@@ -9,7 +9,7 @@ and the full API.
 ## Layout
 
 ```
-packages/globe/       the library, published to npm as `react-globe`
+packages/globe/       the library, published to npm as `@kiralygyula92/react-globe`
 apps/docs/            the documentation site (React, rendered to static files)
 content/react-globe/  docs content and data: plugin.config.json, nav.json, titles.json, redirects.json, Markdown
 e2e/                  Playwright suite driving the docs playground (Demos › Playground)
@@ -82,16 +82,24 @@ Both `vercel.json` files are generated: run `pnpm docs:vercel` after changing `r
 
 ## Releasing
 
-1. Bump `version` in `packages/globe/package.json` and add an entry to
+The package is published as `@kiralygyula92/react-globe`, so it needs an npm account (or an npm
+organization) named `kiralygyula92`.
+
+1. Bump `version` in `packages/globe/package.json` and add a dated entry to
    `packages/globe/CHANGELOG.md`.
 2. Commit, tag `vX.Y.Z` and push the tag.
-3. Publish a GitHub release for the tag. The `publish` workflow runs typecheck, tests and the build,
-   then publishes with provenance. It needs an `NPM_TOKEN` repository secret.
+3. Publish a GitHub release for the tag. The `publish` workflow checks that the tag matches the
+   package version, runs the typecheck, the tests and the build, then publishes with provenance.
 
-To publish by hand instead: `pnpm --filter react-globe publish` (`prepublishOnly` runs the
+The workflow authenticates with npm trusted publishing: on npmjs.com, make this repository's
+`publish.yml` the package's trusted publisher and no secret is needed. npm only offers that for a
+package that already exists, so publish the first version by hand, or add an `NPM_TOKEN` repository
+secret until trusted publishing is set up.
+
+To publish by hand: `pnpm --filter @kiralygyula92/react-globe publish` (`prepublishOnly` runs the
 checks and the build).
 
-To preview exactly what would ship: `pnpm --filter react-globe pack` after `pnpm build`.
+To preview exactly what would ship: `pnpm --filter @kiralygyula92/react-globe pack` after `pnpm build`.
 
 ## Data sources
 

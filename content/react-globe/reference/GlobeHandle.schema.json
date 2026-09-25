@@ -2,7 +2,7 @@
   "name": "GlobeHandle",
   "kind": "type",
   "imports": [
-    "import type { GlobeHandle } from 'react-globe';"
+    "import type { GlobeHandle } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "setCamera": {

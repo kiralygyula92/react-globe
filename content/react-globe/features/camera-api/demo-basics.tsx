@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { Globe, type GlobeHandle } from 'react-globe';
+import { Globe, type GlobeHandle } from '@kiralygyula92/react-globe';
 
 export default function CameraApiBasics() {
   const globe = useRef<GlobeHandle>(null);

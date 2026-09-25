@@ -1,4 +1,4 @@
-import { Globe } from 'react-globe';
+import { Globe } from '@kiralygyula92/react-globe';
 
 export default function BackgroundBasics() {
   return (

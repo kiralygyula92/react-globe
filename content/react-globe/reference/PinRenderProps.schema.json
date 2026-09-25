@@ -2,7 +2,7 @@
   "name": "PinRenderProps",
   "kind": "type",
   "imports": [
-    "import type { PinRenderProps } from 'react-globe';"
+    "import type { PinRenderProps } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "pin": {

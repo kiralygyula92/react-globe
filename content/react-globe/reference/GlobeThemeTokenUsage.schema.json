@@ -2,7 +2,7 @@
   "name": "GlobeThemeTokenUsage",
   "kind": "type",
   "imports": [
-    "import type { GlobeThemeTokenUsage } from 'react-globe';"
+    "import type { GlobeThemeTokenUsage } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "element": {

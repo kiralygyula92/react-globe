@@ -2,7 +2,7 @@
   "name": "CountryProperties",
   "kind": "type",
   "imports": [
-    "import type { CountryProperties } from 'react-globe';"
+    "import type { CountryProperties } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "id": {

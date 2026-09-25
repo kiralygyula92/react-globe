@@ -2,7 +2,7 @@
   "name": "ClusterRenderProps",
   "kind": "type",
   "imports": [
-    "import type { ClusterRenderProps } from 'react-globe';"
+    "import type { ClusterRenderProps } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "pins": {

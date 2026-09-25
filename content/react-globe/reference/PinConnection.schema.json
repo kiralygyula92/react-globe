@@ -2,7 +2,7 @@
   "name": "PinConnection",
   "kind": "type",
   "imports": [
-    "import type { PinConnection } from 'react-globe';"
+    "import type { PinConnection } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "id": {

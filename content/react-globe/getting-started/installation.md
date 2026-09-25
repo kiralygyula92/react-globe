@@ -17,21 +17,21 @@ See [Requirements](/react-globe/getting-started/requirements/) for what is teste
 ### npm
 
 ```bash
-npm install react-globe three
+npm install @kiralygyula92/react-globe three
 npm install --save-dev @types/three
 ```
 
 ### pnpm
 
 ```bash
-pnpm add react-globe three
+pnpm add @kiralygyula92/react-globe three
 pnpm add --save-dev @types/three
 ```
 
 ### yarn
 
 ```bash
-yarn add react-globe three
+yarn add @kiralygyula92/react-globe three
 yarn add --dev @types/three
 ```
 
@@ -46,8 +46,8 @@ Import the stylesheet once, at your app entry, and render the globe inside a con
 // main.tsx
 import { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
-import { Globe } from 'react-globe';
-import 'react-globe/globe.css';
+import { Globe } from '@kiralygyula92/react-globe';
+import '@kiralygyula92/react-globe/globe.css';
 
 function App() {
   return (
@@ -75,8 +75,8 @@ page. Drag it to orbit, right-drag to tilt, and scroll to zoom.
 - **The dev server answers some requests with 504.** Pre-declare three's line modules for Vite; see
   [Vite](/react-globe/integrations/vite/).
 - **Textures or datasets fail to load.** Your bundler did not copy the package's assets; serve
-  `node_modules/react-globe/dist/assets` yourself and point the `assets` prop at them, as described in
-  [Custom assets](/react-globe/custom-assets/).
+  `node_modules/@kiralygyula92/react-globe/dist/assets` yourself and point the `assets` prop at them,
+  as described in [Custom assets](/react-globe/custom-assets/).
 
 ## Next steps
 

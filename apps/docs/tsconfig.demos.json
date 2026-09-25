@@ -14,7 +14,7 @@
     "paths": {
       "react": ["./node_modules/@types/react"],
       "react/*": ["./node_modules/@types/react/*"],
-      "react-globe": ["./node_modules/react-globe"],
+      "@kiralygyula92/react-globe": ["./node_modules/@kiralygyula92/react-globe"],
       "three": ["./node_modules/@types/three"]
     }
   },

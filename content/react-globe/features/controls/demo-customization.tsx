@@ -1,4 +1,4 @@
-import { Globe, type GlobeControlsRenderProps } from 'react-globe';
+import { Globe, type GlobeControlsRenderProps } from '@kiralygyula92/react-globe';
 
 const button = {
   pointerEvents: 'auto',

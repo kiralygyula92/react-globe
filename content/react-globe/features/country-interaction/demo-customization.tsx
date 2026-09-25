@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react';
-import { Globe, localizedName, type CountryFeature } from 'react-globe';
+import { Globe, localizedName, type CountryFeature } from '@kiralygyula92/react-globe';
 
 const theme = { height: '100%', position: 'relative', '--globe-color-tooltip': 'rgb(88 28 135)' } as CSSProperties;
 

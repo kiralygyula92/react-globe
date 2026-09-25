@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Globe, type GlobeHandle, type ScreenPoint } from 'react-globe';
+import { Globe, type GlobeHandle, type ScreenPoint } from '@kiralygyula92/react-globe';
 
 const TARGET = { lat: 48.8584, lng: 2.2945 };
 

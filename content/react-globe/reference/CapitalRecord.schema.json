@@ -2,7 +2,7 @@
   "name": "CapitalRecord",
   "kind": "type",
   "imports": [
-    "import type { CapitalRecord } from 'react-globe';"
+    "import type { CapitalRecord } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "id": {

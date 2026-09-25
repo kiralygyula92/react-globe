@@ -2,7 +2,7 @@
   "name": "ConnectionLineStyle",
   "kind": "type",
   "imports": [
-    "import type { ConnectionLineStyle } from 'react-globe';"
+    "import type { ConnectionLineStyle } from '@kiralygyula92/react-globe';"
   ],
   "definition": "'solid' | 'dashed' | 'dotted'",
   "inheritance": null,

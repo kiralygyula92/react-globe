@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Globe, type GlobeHandle, type LatLng } from 'react-globe';
+import { Globe, type GlobeHandle, type LatLng } from '@kiralygyula92/react-globe';
 
 export default function ScreenProjectionBasics() {
   const [handle, setHandle] = useState<GlobeHandle>();

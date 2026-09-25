@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import { Globe, type ClusterRenderProps, type Pin } from 'react-globe';
+import { Globe, type ClusterRenderProps, type Pin } from '@kiralygyula92/react-globe';
 
 function band(count: number): Pin[] {
   return Array.from({ length: count }, (_, i) => ({ id: `b${i}`, lat: 12 * Math.sin(i), lng: (i * 360) / count - 180 }));

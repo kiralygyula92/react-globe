@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { Globe } from 'react-globe';
+import { Globe } from '@kiralygyula92/react-globe';
 
 const theme = { height: '100%', '--globe-color-label': 'rgb(125 211 252)' } as CSSProperties;
 

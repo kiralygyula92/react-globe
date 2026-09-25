@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Globe } from 'react-globe';
+import { Globe } from '@kiralygyula92/react-globe';
 
 export default function GesturesCustomization() {
   const [zoom, setZoom] = useState(true);

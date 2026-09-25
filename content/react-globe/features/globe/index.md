@@ -33,11 +33,11 @@ The globe fills its container, so the container must have a size. `width` and `h
 
 ### Stylesheet
 
-Import `react-globe/globe.css` once, at your app entry. The built-in controls, labels, clusters and
-popups are styled by it.
+Import `@kiralygyula92/react-globe/globe.css` once, at your app entry. The built-in controls, labels,
+clusters and popups are styled by it.
 
 ```tsx
-import 'react-globe/globe.css';
+import '@kiralygyula92/react-globe/globe.css';
 ```
 
 :::warning

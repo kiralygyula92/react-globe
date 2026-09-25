@@ -2,7 +2,7 @@
   "name": "GlobeControlsRenderProps",
   "kind": "type",
   "imports": [
-    "import type { GlobeControlsRenderProps } from 'react-globe';"
+    "import type { GlobeControlsRenderProps } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "rotateLeft": {

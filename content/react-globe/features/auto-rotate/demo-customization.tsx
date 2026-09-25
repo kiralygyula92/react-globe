@@ -1,5 +1,5 @@
 import { useRef, useState } from 'react';
-import { Globe, type GlobeHandle } from 'react-globe';
+import { Globe, type GlobeHandle } from '@kiralygyula92/react-globe';
 
 /** Spin while nobody is interacting; stop on hover and resume on leave. */
 export default function AutoRotateCustomization() {

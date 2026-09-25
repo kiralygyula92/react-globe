@@ -2,7 +2,7 @@
   "name": "ScreenPoint",
   "kind": "type",
   "imports": [
-    "import type { ScreenPoint } from 'react-globe';"
+    "import type { ScreenPoint } from '@kiralygyula92/react-globe';"
   ],
   "options": {
     "x": {

@@ -45,6 +45,6 @@ Swap the bundled imagery, countries or capitals for your own files or data. See
 
 ## Where the stylesheet fits
 
-`react-globe/globe.css` styles the built-in elements with prefixed utilities and no global reset, so it
-coexists with your own CSS. See [Stylesheet](/react-globe/customization/stylesheet/), and
-[Recipes](/react-globe/customization/recipes/) for complete combinations.
+`@kiralygyula92/react-globe/globe.css` styles the built-in elements with prefixed utilities and no
+global reset, so it coexists with your own CSS. See [Stylesheet](/react-globe/customization/stylesheet/),
+and [Recipes](/react-globe/customization/recipes/) for complete combinations.

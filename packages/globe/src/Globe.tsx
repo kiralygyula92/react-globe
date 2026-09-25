@@ -91,6 +91,9 @@ const HIDDEN: CSSProperties = { visibility: 'hidden' };
 const ANCHOR_CLASS = 'rg:absolute rg:left-0 rg:top-0 rg:will-change-transform';
 const EMPTY_COUNTRIES: readonly PreparedCountry[] = Object.freeze([]);
 
+/** The container's own classes, then the consumer's `className`, with no stray space. */
+const withClassName = (own: string, extra: string | undefined): string => (extra ? `${own} ${extra}` : own);
+
 type AnchorOptions = { collides?: boolean; priority?: number; alignToNormal?: boolean };
 type AnchorSpec = { lat: number; lng: number; radius: number; collides: boolean; priority: number; alignToNormal: boolean };
 
@@ -985,7 +988,7 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
 
   if (failed) {
     return (
-      <div className={`rg:relative ${p.className ?? ''}`} style={{ width: p.width, height: p.height }}>
+      <div className={withClassName('rg:relative', p.className)} style={{ width: p.width, height: p.height }}>
         <GlobeFallback />
       </div>
     );
@@ -996,7 +999,7 @@ function GlobeCore<TData>(props: CoreProps<TData>): ReactElement {
       ref={containerRef}
       data-globe-root="true"
       lang={language}
-      className={`rg:relative rg:isolate rg:overflow-hidden ${p.className ?? ''}`}
+      className={withClassName('rg:relative rg:isolate rg:overflow-hidden', p.className)}
       style={{
         width: p.width,
         height: p.height,

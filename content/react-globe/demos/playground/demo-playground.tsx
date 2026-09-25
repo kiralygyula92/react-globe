@@ -22,7 +22,7 @@ import {
   type PinPopupRenderProps,
   type PinRenderProps,
   type RenderStyle,
-} from 'react-globe';
+} from '@kiralygyula92/react-globe';
 import './playground.css';
 
 declare global {

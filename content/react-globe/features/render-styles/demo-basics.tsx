@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Globe, type RenderStyle } from 'react-globe';
+import { Globe, type RenderStyle } from '@kiralygyula92/react-globe';
 
 const STYLES: RenderStyle[] = ['standard', 'realistic', 'cartoon', 'modern'];
 

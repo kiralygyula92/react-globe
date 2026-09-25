@@ -4,7 +4,7 @@
  * when a demo is about to scroll into view, and only on pages that have one.
  */
 
-import 'react-globe/globe.css';
+import '@kiralygyula92/react-globe/globe.css';
 
 type DemoModule = { default: import('react').ComponentType };
 

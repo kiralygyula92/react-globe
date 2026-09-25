@@ -2,7 +2,7 @@
   "name": "DEFAULT_GLOBE_MESSAGES",
   "kind": "setting-group",
   "imports": [
-    "import { DEFAULT_GLOBE_MESSAGES } from 'react-globe';"
+    "import { DEFAULT_GLOBE_MESSAGES } from '@kiralygyula92/react-globe';"
   ],
   "definition": "Readonly<Record<\"en\" | \"ro\" | \"de\" | \"es\" | \"fr\" | \"hu\", Readonly<GlobeMessages>>>",
   "inheritance": null,

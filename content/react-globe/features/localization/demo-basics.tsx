@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { GLOBE_LOCALES, Globe, type GlobeLocale } from 'react-globe';
+import { GLOBE_LOCALES, Globe, type GlobeLocale } from '@kiralygyula92/react-globe';
 
 export default function LocalizationBasics() {
   const [locale, setLocale] = useState<GlobeLocale>('hu');

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Globe, type GlobeHandle, type Pin } from 'react-globe';
+import { Globe, type GlobeHandle, type Pin } from '@kiralygyula92/react-globe';
 
 const pins: Pin<{ name: string }>[] = [
   { id: 'quito', lat: -0.1807, lng: -78.4678, data: { name: 'Quito' } },

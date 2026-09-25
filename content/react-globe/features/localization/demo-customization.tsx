@@ -1,4 +1,4 @@
-import { DEFAULT_GLOBE_MESSAGES, Globe, type GlobeMessages } from 'react-globe';
+import { DEFAULT_GLOBE_MESSAGES, Globe, type GlobeMessages } from '@kiralygyula92/react-globe';
 
 /** Italian is not built in: supply every string, and place names come from the dataset where it has them. */
 const italian: GlobeMessages = {
