@@ -24,9 +24,8 @@ export function SiteFooter() {
         ))}
       </div>
       <p className="legal">
-        © 2026 kiralygyula92 · {config.name} is released under the MIT License ·
-        <a href={config.repo}>Source on GitHub</a> ·
-        <a href={feed}>Changelog RSS</a>
+        © 2026 kiralygyula92 · {config.name} is released under the{' '}
+        <a href={`${config.repo}/blob/main/LICENSE`}>MIT License</a> · <a href={feed}>Changelog feed (RSS)</a>
       </p>
     </footer>
   );

@@ -49,7 +49,7 @@ export function DocPage({ page, html, headings, site, assets }: { page: Page; ht
         </header>
 
         {page.kind === 'feature' && (
-          <ul className="resource-chips" aria-label="Resources">
+          <ul className="resource-chips" aria-label="Resources" data-pagefind-ignore>
             {resourceChips(entry).map((chip) => (
               <li key={chip.key}>
                 <a href={chip.href}>{chip.label}</a>

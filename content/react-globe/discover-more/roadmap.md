@@ -15,12 +15,6 @@ These items are planned. Order is not a commitment to dates.
 
 - Publish measured frame rates for large pin sets, with the hardware and browser used.
 
-## Documentation site
-
-- Full-text search.
-- A changelog feed.
-- Publish the site at a public address.
-
 ## Suggest something
 
 Open an issue on the [issue tracker](https://github.com/kiralygyula92/react-globe/issues). Each

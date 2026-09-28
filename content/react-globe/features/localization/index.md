@@ -68,7 +68,7 @@ translated.
 ::demo{src="./demo-customization.tsx" title="Italian UI strings"}
 
 See [Overriding components](/react-globe/customization/overriding-components/) and the
-[Localization guide](/react-globe/guides/localization/).
+[Internationalization guide](/react-globe/guides/localization/).
 
 ## Limitations
 

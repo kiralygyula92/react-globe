@@ -12,20 +12,44 @@ import { SiteFooter } from '../components/SiteFooter';
 import { Header } from '../client/Header';
 import { Toc } from '../client/Toc';
 import type { Heading, PageData } from '../lib/props';
-import { breadcrumbs, config, currentVersion, links, metadata, sidebar, type Page } from '../lib/site';
+import { HEADER_COLORS, breadcrumbs, config, currentVersion, links, metadata, sidebar, type Page } from '../lib/site';
 
-/** Applied before first paint, so a reader who chose a theme never sees a flash of the other. */
-const THEME_SCRIPT = `
+/**
+ * Runs before first paint: marks the page as scripted (so live demos show a loading line, not the
+ * no-JavaScript notice) and applies a stored theme, so a reader who chose one never sees the other.
+ */
+export const THEME_SCRIPT = `
+      document.documentElement.classList.add('js');
       // Apply a stored theme before first paint, so a reader who chose one never sees a flash of the other.
       try {
         const theme = localStorage.getItem('react-globe-docs-theme');
-        if (theme === 'light' || theme === 'dark') document.documentElement.dataset.theme = theme;
+        if (theme === 'light' || theme === 'dark') {
+          document.documentElement.dataset.theme = theme;
+          for (const meta of document.querySelectorAll('meta[name="theme-color"]')) meta.content = meta.dataset[theme];
+        }
       } catch {
         /* storage unavailable: follow the system preference */
       }
     `;
 
 export type Assets = { css: string[]; js: string[] };
+
+/**
+ * Icons and the browser chrome colour, the same on every page, the 404 included. Placed before
+ * THEME_SCRIPT, which recolours the chrome for a stored theme.
+ */
+export function SiteHeadLinks() {
+  return (
+    <>
+      {/* Each carries both colours, so a theme picked by hand can set them without a lookup. */}
+      <meta name="theme-color" content={HEADER_COLORS.light} media="(prefers-color-scheme: light)" data-light={HEADER_COLORS.light} data-dark={HEADER_COLORS.dark} />
+      <meta name="theme-color" content={HEADER_COLORS.dark} media="(prefers-color-scheme: dark)" data-light={HEADER_COLORS.light} data-dark={HEADER_COLORS.dark} />
+      <link rel="icon" href="/favicon.ico" sizes="32x32" />
+      <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+      <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    </>
+  );
+}
 
 export function headerProps(): PageData['header'] {
   return {
@@ -62,13 +86,13 @@ export function DocsLayout({
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
+        <SiteHeadLinks />
         <script dangerouslySetInnerHTML={{ __html: THEME_SCRIPT }} />
         <title>{meta.documentTitle}</title>
         <link rel="canonical" href={meta.canonical} />
         {meta.meta.map((m) =>
           'property' in m ? <meta property={m.property} content={m.content} key={m.property} /> : <meta name={m.name} content={m.content} key={m.name} />,
         )}
-        <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
         <link rel="alternate" type="text/markdown" href={page.twin} />
         <link rel="alternate" type="application/rss+xml" title={`${config.name} changelog`} href={`${links.changelog}rss.xml`} />
         <link rel="sitemap" href="/sitemap.xml" />

@@ -53,7 +53,12 @@ export default defineConfig({
     outDir: 'dist',
     assetsDir: 'assets',
     manifest: true,
-    rollupOptions: { input: fileURLToPath(new URL('src/entry-client.tsx', import.meta.url)) },
+    rollupOptions: {
+      input: fileURLToPath(new URL('src/entry-client.tsx', import.meta.url)),
+      // The lazy chunk holding the globe and three.js would be named after the library's dist
+      // folder; only its file name changes here, never how modules are split.
+      output: { chunkFileNames: (chunk) => `assets/${chunk.name === 'dist' ? 'globe' : '[name]'}-[hash].js` },
+    },
     // three.js alone exceeds Vite's 500 kB warning; it loads lazily, only on pages with demos.
     chunkSizeWarningLimit: 900,
   },

@@ -12,12 +12,35 @@ const modules = import.meta.glob<DemoModule>('../../../../content/react-globe/**
 
 const byId = new Map(Object.entries(modules).map(([path, load]) => [path.replace(/^.*content\/react-globe\//, ''), load]));
 
+/** Replaces the stage's contents with one line of explanation; the source stays below it. */
+function showMessage(stage: HTMLElement, text: string): void {
+  const message = document.createElement('p');
+  message.className = 'demo-message';
+  message.textContent = text;
+  stage.replaceChildren(message);
+}
+
+/** Asked once per page: every demo needs the same thing. The probe's context is released at once. */
+let webgl2: boolean | null = null;
+function hasWebGL2(): boolean {
+  if (webgl2 === null) {
+    const gl = document.createElement('canvas').getContext('webgl2');
+    gl?.getExtension('WEBGL_lose_context')?.loseContext();
+    webgl2 = gl !== null;
+  }
+  return webgl2;
+}
+
 async function mount(figure: HTMLElement): Promise<void> {
   const id = figure.dataset.demo!;
   const stage = figure.querySelector<HTMLElement>('[data-demo-stage]')!;
   const load = byId.get(id);
   if (!load) {
-    stage.textContent = `Demo ${id} is missing from the build.`;
+    showMessage(stage, 'This demo is missing from the build. Its source is below.');
+    return;
+  }
+  if (!hasWebGL2()) {
+    showMessage(stage, 'This browser cannot start WebGL 2, which the globe needs, so the live demo cannot run. Its source is below.');
     return;
   }
 
@@ -54,8 +77,11 @@ const figures = [...document.querySelectorAll<HTMLElement>('figure[data-demo]')]
 if (figures.length > 0) {
   const start = (figure: HTMLElement) =>
     mount(figure).catch((error: unknown) => {
+      // Most often a chunk that failed to download, after a deploy or on a flaky connection. The
+      // reader gets a sentence; the details go where a developer would look for them.
+      console.error(`[docs] demo ${figure.dataset.demo} could not load`, error);
       const stage = figure.querySelector<HTMLElement>('[data-demo-stage]');
-      if (stage) stage.textContent = `The demo could not start: ${error instanceof Error ? error.message : String(error)}`;
+      if (stage) showMessage(stage, 'The live demo could not load. Reload the page to try again; its source is below.');
     });
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(

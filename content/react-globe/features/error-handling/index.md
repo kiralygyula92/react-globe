@@ -12,7 +12,7 @@ links:
 
 Pass `onError` to learn when the globe cannot run.
 
-::demo{src="./demo-basics.tsx" title="A missing dataset reported through onError"}
+::demo{src="./demo-basics.tsx" title="A wrong dataset reported through onError"}
 
 ### What is reported
 

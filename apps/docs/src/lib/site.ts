@@ -242,33 +242,72 @@ export function resourceChips(entry: DocEntry): { key: string; label: string; hr
 
 /* --------------------------------------------------------------- metadata */
 
-/** The browser chrome colour, and the accent of the social images. */
+/** The accent of the social images. */
 export const THEME_COLOR = '#1f4e79';
+
+/**
+ * The browser chrome follows the header it sits above: the `--bg` of each theme. The theme switch
+ * updates these when a reader picks a theme other than the system's.
+ */
+export const HEADER_COLORS = { light: '#ffffff', dark: '#0b1120' } as const;
+
+/** Size of the generated social images. */
+export const OG_IMAGE = { width: 1200, height: 630 } as const;
 
 export const currentVersion = (): { label: string; href: string } =>
   (config.versions ?? []).find((v) => v.current) ?? { label: config.currentVersion, href: `/${config.id}/` };
+
+/** What a reference page lists, by kind; the symbol itself is already in the title. */
+const REFERENCE_SCOPE: Record<string, string> = {
+  component: 'API reference: every prop, with its type and default.',
+  type: 'API reference: every member, with its type and default.',
+  function: 'API reference: its parameters and return value.',
+  'setting-group': 'API reference: what it holds and how to use it.',
+};
+
+/**
+ * The page described in one breath, for search results and social cards: a reference page's first
+ * sentence (the rest is detail for the page itself), anything else's whole description.
+ */
+export const shortDescription = (page: Page): string => (page.reference ? page.description.split(/(?<=\.)\s/)[0] : page.description);
+
+/**
+ * What search results show under the title. A reference page's short description is one line
+ * about the symbol, so it is followed by what the page lists.
+ */
+function searchDescription(page: Page): string {
+  if (!page.reference) return page.description;
+  const scope = REFERENCE_SCOPE[page.reference.schema.kind];
+  return scope ? `${shortDescription(page)} ${scope}` : shortDescription(page);
+}
 
 /** Page metadata, all from one title and one description. */
 export function metadata(page: Page, site: URL) {
   const url = new URL(page.pathname, site).href;
   const image = new URL(page.ogImage, site).href;
   const documentTitle = page.kind === 'overview' ? page.heading : `${page.heading} — ${config.name}`;
+  const description = searchDescription(page);
   return {
     documentTitle,
     canonical: url,
-    description: page.description,
+    description,
     meta: [
-      { name: 'description', content: page.description },
+      { name: 'description', content: description },
+      { property: 'og:site_name', content: config.name },
       { property: 'og:title', content: documentTitle },
-      { property: 'og:description', content: page.description },
+      { property: 'og:description', content: description },
       { property: 'og:image', content: image },
+      { property: 'og:image:type', content: 'image/png' },
+      { property: 'og:image:width', content: String(OG_IMAGE.width) },
+      { property: 'og:image:height', content: String(OG_IMAGE.height) },
+      { property: 'og:image:alt', content: documentTitle },
       { property: 'og:type', content: page.kind === 'overview' ? 'website' : 'article' },
       { property: 'og:url', content: url },
       { name: 'twitter:card', content: 'summary_large_image' },
       { name: 'twitter:title', content: documentTitle },
-      { name: 'twitter:description', content: page.description },
+      { name: 'twitter:description', content: description },
       { name: 'twitter:image', content: image },
-      { name: 'theme-color', content: THEME_COLOR },
+      { name: 'twitter:image:alt', content: documentTitle },
     ],
   };
 }
@@ -280,24 +319,25 @@ type FooterLink = { title: string; href: string };
 /** Footer columns, with only destinations that exist. */
 export function footerColumns(): { title: string; links: FooterLink[] }[] {
   const id = config.id;
+  const page = (path: string): FooterLink => ({ title: titles[path], href: path });
   const columns: Record<string, FooterLink[]> = {
-    Products: [{ title: config.name, href: `/${id}/` }],
+    'Get started': [
+      page(`/${id}/`),
+      page(`/${id}/getting-started/installation/`),
+      page(`/${id}/getting-started/usage/`),
+      page(`/${id}/getting-started/ai-context/`),
+    ],
     Resources: [
-      { title: titles[`/${id}/customization/bundled-data/`], href: `/${id}/customization/bundled-data/` },
-      { title: titles[`/${id}/customization/`], href: `/${id}/customization/` },
-      { title: titles[`/${id}/demos/playground/`], href: `/${id}/demos/playground/` },
+      page(`/${id}/all-features/`),
+      page(`/${id}/demos/playground/`),
+      page(`/${id}/customization/`),
+      page(`/${id}/customization/bundled-data/`),
     ],
-    Explore: [
-      { title: 'Documentation', href: `/${id}/` },
-      { title: titles[`/${id}/all-features/`], href: `/${id}/all-features/` },
-      { title: titles[`/${id}/discover-more/showcase/`], href: `/${id}/discover-more/showcase/` },
-      { title: titles[`/${id}/discover-more/roadmap/`], href: links.roadmap },
-      { title: 'Repository', href: config.repo },
-    ],
-    Company: [
-      { title: titles[`/${id}/getting-started/support/`], href: links.support },
-      { title: titles[`/${id}/discover-more/changelog/`], href: links.changelog },
-      { title: 'License (MIT)', href: `${config.repo}/blob/main/LICENSE` },
+    Project: [
+      { title: titles[links.changelog], href: links.changelog },
+      { title: titles[links.roadmap], href: links.roadmap },
+      { title: titles[links.support], href: links.support },
+      { title: 'GitHub', href: config.repo },
     ],
   };
   return FOOTER_COLUMNS.map((title: string) => ({ title, links: columns[title] ?? [] }));

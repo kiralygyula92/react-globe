@@ -12,6 +12,7 @@ import sharp from 'sharp';
 import { CONTENT_DIR, ROOT, siteRedirects } from '../../../../scripts/docs/model.mjs';
 import { demosAsCode, includesAsMarkdown } from './remark-docs.mjs';
 import {
+  OG_IMAGE,
   THEME_COLOR,
   config,
   featureGroups,
@@ -21,6 +22,7 @@ import {
   referenceHref,
   referenceMarkdown,
   sectionTitle,
+  shortDescription,
   symbolPath,
   type Page,
 } from './site';
@@ -211,34 +213,94 @@ function wrap(text: string, width: number, maxLines: number): string[] {
 }
 
 /**
+ * The globe itself, rendered once by the library and kept next to the app: every social image
+ * shows the real thing rising from its bottom-right corner, not an icon of it.
+ */
+const OG_GLOBE = join(ROOT, 'apps', 'docs', 'og-globe.webp');
+const GLOBE = { size: 520, left: 760, top: 250 };
+
+/**
  * Generated social image for every docs page, built from the page's title and
- * description — never hand-made. An SVG template rasterised with sharp.
+ * description — never hand-made. An SVG template rasterised with sharp, the globe laid on top.
+ * Text stays left of the globe: title lines above its shoulder, description lines beside it.
  */
 export function ogSvg(page: Page): string {
-  const title = wrap(page.heading, 28, 2);
-  const description = wrap(page.description, 58, 3);
+  const title = wrap(page.heading, 22, 2);
+  const description = wrap(shortDescription(page), 40, 4);
   const font = 'font-family="Segoe UI, Helvetica, Arial, sans-serif"';
-  return `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  return `<svg xmlns="http://www.w3.org/2000/svg" width="${OG_IMAGE.width}" height="${OG_IMAGE.height}" viewBox="0 0 ${OG_IMAGE.width} ${OG_IMAGE.height}">
   <rect width="1200" height="630" fill="#0f1419"/>
   <rect width="1200" height="12" fill="${THEME_COLOR}"/>
-  <g fill="none" stroke="${THEME_COLOR}" stroke-width="6" transform="translate(1010 150)">
-    <circle r="110"/><ellipse rx="44" ry="110"/><line x1="-110" x2="110"/>
-  </g>
-  <text x="80" y="110" ${font} font-size="34" font-weight="600" fill="#9aa7b4">${escapeSvg(config.name)}</text>
-  ${title.map((l, i) => `<text x="80" y="${220 + i * 78}" ${font} font-size="68" font-weight="700" fill="#e6edf3">${escapeSvg(l)}</text>`).join('\n  ')}
+  <text x="80" y="110" ${font} font-size="32" font-weight="600" fill="#9aa7b4">${escapeSvg(config.name)}</text>
+  ${title.map((l, i) => `<text x="80" y="${210 + i * 76}" ${font} font-size="66" font-weight="700" fill="#e6edf3">${escapeSvg(l)}</text>`).join('\n  ')}
   ${description
-    .map((l, i) => `<text x="80" y="${240 + title.length * 78 + i * 46}" ${font} font-size="34" fill="#c3ced9">${escapeSvg(l)}</text>`)
+    .map((l, i) => `<text x="80" y="${236 + title.length * 76 + i * 44}" ${font} font-size="32" fill="#c3ced9">${escapeSvg(l)}</text>`)
     .join('\n  ')}
 </svg>`;
 }
 
 export async function ogImages(): Promise<{ path: string; png: Buffer }[]> {
+  // Cropped to the part inside the card: sharp composites only what fits.
+  const visible = { width: OG_IMAGE.width - GLOBE.left, height: OG_IMAGE.height - GLOBE.top };
+  const globe = await sharp(OG_GLOBE)
+    .resize(GLOBE.size)
+    .extract({ left: 0, top: 0, width: Math.min(GLOBE.size, visible.width), height: Math.min(GLOBE.size, visible.height) })
+    .toBuffer();
   return Promise.all(
     getPages().map(async (page) => ({
       path: page.ogImage.replace(/^\//, ''),
-      png: await sharp(Buffer.from(ogSvg(page))).png().toBuffer(),
+      png: await sharp(Buffer.from(ogSvg(page)))
+        .composite([{ input: globe, left: GLOBE.left, top: GLOBE.top }])
+        .png()
+        .toBuffer(),
     })),
   );
+}
+
+/* ------------------------------------------------------------------ icons */
+
+const FAVICON = join(ROOT, 'apps', 'docs', 'public', 'favicon.svg');
+/** The favicon's own blue, so the touch icon's square reads as the same mark. */
+const ICON_BACKGROUND = '#1d4ed8';
+
+/** An .ico of PNG images, which every current browser reads. */
+function ico(images: { size: number; png: Buffer }[]): Buffer {
+  const head = Buffer.alloc(6 + images.length * 16);
+  head.writeUInt16LE(1, 2);
+  head.writeUInt16LE(images.length, 4);
+  let offset = head.length;
+  images.forEach(({ size, png }, i) => {
+    const at = 6 + i * 16;
+    head.writeUInt8(size, at);
+    head.writeUInt8(size, at + 1);
+    head.writeUInt16LE(1, at + 4);
+    head.writeUInt16LE(32, at + 6);
+    head.writeUInt32LE(png.length, at + 8);
+    head.writeUInt32LE(offset, at + 12);
+    offset += png.length;
+  });
+  return Buffer.concat([head, ...images.map((image) => image.png)]);
+}
+
+/**
+ * The raster icons, drawn from favicon.svg so there is one icon to change: favicon.ico for
+ * whatever asks for it by name (feed readers, link previews, older browsers), and the icon iOS
+ * puts on the home screen, on a solid square because iOS fills transparency with black.
+ */
+export async function icons(): Promise<{ path: string; body: Buffer }[]> {
+  const svg = readFileSync(FAVICON);
+  const png = (size: number) => sharp(svg, { density: (72 * size) / 32 }).resize(size, size).png().toBuffer();
+  const sizes = [16, 32, 48];
+  const favicon = ico(await Promise.all(sizes.map(async (size) => ({ size, png: await png(size) }))));
+  const touch = await sharp(await png(156))
+    .extend({ top: 12, bottom: 12, left: 12, right: 12, background: ICON_BACKGROUND })
+    .flatten({ background: ICON_BACKGROUND })
+    .png()
+    .toBuffer();
+  return [
+    { path: 'favicon.ico', body: favicon },
+    { path: 'apple-touch-icon.png', body: touch },
+  ];
 }
 
 /* -------------------------------------------------------------- redirects */

@@ -20,8 +20,17 @@ const site = siteUrl();
 /** In development the browser loads the client entry from source, styles included. */
 const ASSETS = { css: [], js: ['/src/entry-client.tsx'] };
 
+/** The raster icons are generated at build time; here they are generated on request. */
+const ICONS = { '/favicon.ico': 'image/x-icon', '/apple-touch-icon.png': 'image/png' };
+
 const renderPage = (server) => async (req, res, next) => {
   const url = new URL(req.originalUrl ?? req.url ?? '/', site);
+  if (url.pathname in ICONS) {
+    const entry = await server.ssrLoadModule('/src/entry-server.tsx');
+    const icon = (await entry.icons()).find((i) => `/${i.path}` === url.pathname);
+    res.setHeader('Content-Type', ICONS[url.pathname]);
+    return res.end(icon.body);
+  }
   // Anything with an extension is an asset request: Vite's own middleware answers it.
   if (/\.[a-z0-9]+$/i.test(url.pathname)) return next();
 

@@ -60,7 +60,7 @@ export const SECTIONS = [
 export const LIFECYCLE_BADGES = { new: 'New', preview: 'Preview', beta: 'Beta', planned: 'Planned', deprecated: 'Deprecated', legacy: 'Legacy' };
 
 /** Footer columns. */
-export const FOOTER_COLUMNS = ['Products', 'Resources', 'Explore', 'Company'];
+export const FOOTER_COLUMNS = ['Get started', 'Resources', 'Project'];
 
 /* ------------------------------------------------------------------------ nav */
 

@@ -58,7 +58,9 @@ export function remarkDocs({ contentDir }) {
           `<button type="button" data-demo-action="reset" disabled>Reset</button>` +
           `</div>` +
           `<div class="demo-stage" data-demo-stage data-pagefind-ignore role="region" aria-label="${escapeAttr(title)}">` +
+          // Without JavaScript the fallback shows; with it, the loading line until the demo mounts.
           `<p class="demo-fallback">This live demo needs JavaScript and WebGL. Its source is below.</p>` +
+          `<p class="demo-loading">Loading the live demo…</p>` +
           `</div>` +
           `<details class="demo-source"><summary>Show source</summary>`;
         parent.children.splice(

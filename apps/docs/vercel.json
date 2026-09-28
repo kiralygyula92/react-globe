@@ -17,6 +17,11 @@
       "permanent": true
     },
     {
+      "source": "/react-globe/discover-more/showcase/",
+      "destination": "/react-globe/discover-more/roadmap/",
+      "permanent": true
+    },
+    {
       "source": "/",
       "destination": "/react-globe/",
       "permanent": false

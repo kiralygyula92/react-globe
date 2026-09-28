@@ -51,14 +51,12 @@
   "/react-globe/guides/best-practices/": "Best practices",
   "/react-globe/guides/performance/": "Performance",
   "/react-globe/guides/testing/": "Testing",
-  "/react-globe/guides/localization/": "Localization",
+  "/react-globe/guides/localization/": "Internationalization",
   "/react-globe/guides/accessibility/": "Accessibility",
   "/react-globe/guides/security/": "Security",
   "/react-globe/integrations-group": "Integrations",
   "/react-globe/integrations/vite/": "Vite",
-  "/react-globe/migration-group": "Migration",
   "/react-globe/discover-more-group": "Discover more",
-  "/react-globe/discover-more/showcase/": "Showcase",
   "/react-globe/discover-more/roadmap/": "Roadmap",
   "/react-globe/discover-more/changelog/": "Changelog"
 }

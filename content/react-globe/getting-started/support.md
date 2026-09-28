@@ -27,5 +27,6 @@ pre-filled issue.
 
 ## Security issues
 
-Do not open a public issue for a security problem. Contact the maintainer privately through their
-GitHub profile.
+Do not open a public issue for a security problem. Report it privately instead: on the repository's
+[Security tab](https://github.com/kiralygyula92/react-globe/security), choose **Report a
+vulnerability**. Only the maintainer sees the report.

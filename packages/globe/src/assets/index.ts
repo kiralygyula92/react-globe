@@ -163,7 +163,12 @@ function loadJson(url: string): Promise<unknown> {
   return cached(jsonCache, url, async () => {
     const res = await fetch(url);
     if (!res.ok) throw new Error(`[globe] could not load dataset: ${url} (${res.status})`);
-    return res.json();
+    try {
+      return await res.json();
+    } catch {
+      // Typically an HTML page served in place of a missing file, with a 200 status.
+      throw new Error(`[globe] could not load dataset: ${url} (not JSON)`);
+    }
   });
 }
 
@@ -183,7 +188,12 @@ export function loadCountries(source: string | FeatureCollection): Promise<Prepa
   if (typeof source !== 'string') {
     let prepared = countriesByObject.get(source);
     if (!prepared) {
-      prepared = prepareCountries(asCollection(source, 'countriesGeoJson'));
+      // Rejected, not thrown: a bad object fails the same way a bad URL does.
+      try {
+        prepared = prepareCountries(asCollection(source, 'countriesGeoJson'));
+      } catch (error) {
+        return Promise.reject(error);
+      }
       countriesByObject.set(source, prepared);
     }
     return Promise.resolve(prepared);

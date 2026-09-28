@@ -12,6 +12,13 @@ const slug = (text: string) => text.toLowerCase().replace(/[^a-z0-9]+/g, '-');
 const code = (text: string | number | boolean | null | undefined) => (text === undefined || text === null || text === '' ? null : String(text));
 const KIND: Record<string, string> = { component: 'Component', function: 'Function', type: 'Type', 'setting-group': 'Constant' };
 
+/**
+ * A symbol name with line-break opportunities between its words (GlobeControls·RenderProps,
+ * DEFAULT_·GLOBE_·MESSAGES), so a long one wraps on a phone instead of widening the page.
+ */
+const breakable = (text: string) =>
+  text.split(/(?<=[a-z0-9])(?=[A-Z])|(?<=_)/).flatMap((part, i) => (i === 0 ? [part] : [<wbr key={i} />, part]));
+
 /** The right rail lists the sections this template renders, in the order it renders them. */
 export function referenceHeadings(page: Page): Heading[] {
   const { schema } = page.reference!;
@@ -40,9 +47,11 @@ export function ReferencePage({ page, headings, site, assets }: { page: Page; he
     <DocsLayout page={page} headings={headings} site={site} assets={assets}>
       <article className="article reference">
         <header className="page-header">
-          <h1>{page.heading}</h1>
+          <h1>{breakable(page.heading)}</h1>
           <p className="page-subtitle">{page.description}</p>
-          <p className="reference-kind">{KIND[schema.kind] ?? schema.kind}</p>
+          <p className="reference-kind" data-pagefind-ignore>
+            {KIND[schema.kind] ?? schema.kind}
+          </p>
         </header>
 
         <h2 id="used-by">Used by</h2>
@@ -95,8 +104,8 @@ export function ReferencePage({ page, headings, site, assets }: { page: Page; he
           </pre>
         ) : (
           <div className="table-wrap">
-            <table>
-              <thead>
+            <table className="members">
+              <thead data-pagefind-ignore>
                 <tr>
                   <th scope="col">Name</th>
                   <th scope="col">Type</th>
@@ -137,8 +146,8 @@ export function ReferencePage({ page, headings, site, assets }: { page: Page; he
           <>
             <h2 id="events">Events</h2>
             <div className="table-wrap">
-              <table>
-                <thead>
+              <table className="members">
+                <thead data-pagefind-ignore>
                   <tr>
                     <th scope="col">Name</th>
                     <th scope="col">Type</th>
@@ -168,7 +177,7 @@ export function ReferencePage({ page, headings, site, assets }: { page: Page; he
             <h2 id="tokens">Tokens</h2>
             <div className="table-wrap">
               <table>
-                <thead>
+                <thead data-pagefind-ignore>
                   <tr>
                     <th scope="col">Token</th>
                     <th scope="col">Element</th>
@@ -182,7 +191,7 @@ export function ReferencePage({ page, headings, site, assets }: { page: Page; he
                       <tr key={`${token.name}-${i}`}>
                         {i === 0 && (
                           <th scope="rowgroup" rowSpan={token.usages.length}>
-                            <code>{token.name}</code>
+                            <code>{token.name}</code>{' '}
                             <span
                               className="token-description"
                               dangerouslySetInnerHTML={{ __html: inlineHtml(strings.tokenDescriptions?.[token.name]) }}

@@ -21,8 +21,12 @@ const arg = (name, fallback) => {
 const DIST = resolve(ROOT, arg('dist', 'apps/docs/dist'));
 const REPORT = arg('report', null);
 
-/** Errors that are expected by design: the error-handling demos load missing files on purpose. */
-const EXPECTED = [/does-not-exist\.geojson/, /missing-capitals\.json/, /Failed to load resource: the server responded with a status of 404/];
+/**
+ * Console errors that are expected by design. None: the error-handling demos fail without a
+ * network request, so every error, a missing file included, is a real one. Each carries the URL
+ * it came from.
+ */
+const EXPECTED = [];
 
 function htmlPages(dir, out = []) {
   for (const name of readdirSync(dir)) {
@@ -41,7 +45,7 @@ const results = [];
 for (const path of pages.sort()) {
   const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
   const errors = [];
-  page.on('console', (m) => m.type() === 'error' && errors.push(m.text()));
+  page.on('console', (m) => m.type() === 'error' && errors.push(`${m.text()} ${m.location()?.url ?? ''}`.trim()));
   page.on('pageerror', (e) => errors.push(String(e)));
   await page.goto(origin + path, { waitUntil: 'load' });
 
@@ -70,7 +74,7 @@ for (const path of pages.sort()) {
         await figure.locator('[data-demo-stage] canvas').first().waitFor({ timeout: 60000 });
       }
       const stageText = (await figure.locator('[data-demo-stage]').innerText()).trim();
-      if (/could not start|missing from the build/.test(stageText)) status = `failed: ${stageText}`;
+      if (/The live demo could not load|This demo is missing from the build|cannot start WebGL 2/.test(stageText)) status = `failed: ${stageText}`;
     } catch {
       status = expectsFailure ? 'failed: no error state' : 'failed: no canvas';
     }

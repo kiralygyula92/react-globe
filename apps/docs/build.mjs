@@ -60,3 +60,7 @@ rmSync(join(DIST, '.vite'), { recursive: true, force: true });
 const images = await server.ogImages();
 for (const image of images) write(image.path, image.png);
 console.log(`[docs] ${images.length} social image(s) written`);
+
+const icons = await server.icons();
+for (const icon of icons) write(icon.path, icon.body);
+console.log(`[docs] ${icons.map((icon) => icon.path).join(', ')} written`);

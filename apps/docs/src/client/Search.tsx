@@ -166,6 +166,10 @@ export function Search() {
                 if (event.key === 'ArrowDown') {
                   event.preventDefault();
                   links()[0]?.focus();
+                } else if (event.key === 'Escape') {
+                  // A search field would spend the first Escape clearing itself; close at once instead.
+                  event.preventDefault();
+                  dialog.current?.close();
                 }
               }}
             />

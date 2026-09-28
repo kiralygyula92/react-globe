@@ -23,7 +23,10 @@
   --callout-warning: #b45309;
   --backdrop: rgb(15 23 42 / 0.45);
   --shadow: 0 16px 40px rgb(15 23 42 / 0.16);
+  /* Three radii: inline marks, controls, and framed surfaces (cards, demos, dialogs). */
+  --radius-sm: 4px;
   --radius: 6px;
+  --radius-lg: 8px;
   --font: 'Inter Variable', Inter, system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
   --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
   --header-h: 3.125rem;
@@ -105,7 +108,7 @@ a {
 :focus-visible {
   outline: 2px solid var(--focus);
   outline-offset: 2px;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 code,
@@ -118,7 +121,7 @@ kbd {
 :not(pre) > code {
   background: var(--code-bg);
   padding: 0.1em 0.3em;
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
 }
 
 pre {
@@ -341,7 +344,7 @@ pre code {
   min-width: 1.25rem;
   padding: 0 0.3rem;
   border: 1px solid var(--border);
-  border-radius: 4px;
+  border-radius: var(--radius-sm);
   font-size: 0.6875rem;
   line-height: 1.25rem;
   text-align: center;
@@ -353,7 +356,7 @@ pre code {
   margin: 12vh auto auto;
   padding: 0;
   border: 1px solid var(--border);
-  border-radius: 10px;
+  border-radius: var(--radius-lg);
   background: var(--bg-raised);
   color: var(--fg);
   box-shadow: var(--shadow);
@@ -697,6 +700,11 @@ details[open] > .section-title:hover {
   text-decoration: underline;
 }
 
+/* A long unbroken name or path wraps rather than widening the page on a phone. */
+.article {
+  overflow-wrap: break-word;
+}
+
 .article h1,
 .article h2,
 .article h3 {
@@ -834,7 +842,7 @@ details[open] > .section-title:hover {
   height: 100%;
   padding: 0.75rem 0.875rem;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   background: var(--bg-raised);
   color: var(--fg);
   text-decoration: none;
@@ -911,8 +919,23 @@ details[open] > .section-title:hover {
   white-space: nowrap;
 }
 
-.article td code {
-  word-break: break-word;
+/*
+ * Reference tables: the description keeps a readable width, so on a phone the table scrolls
+ * sideways instead of squeezing that column to a word per line, and the name stays in view.
+ */
+.reference .members td:last-child {
+  min-width: 14rem;
+}
+
+.reference tbody th[scope='row'],
+.reference .members thead th:first-child {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+}
+
+.reference tbody th[scope='row'] {
+  background: var(--bg);
 }
 
 .article tr.deprecated th code {
@@ -945,7 +968,7 @@ details[open] > .section-title:hover {
   margin: 1.25rem 0 1.75rem;
   overflow: hidden;
   border: 1px solid var(--border);
-  border-radius: 8px;
+  border-radius: var(--radius-lg);
   scroll-margin-top: calc(var(--header-h) + 1rem);
 }
 
@@ -968,7 +991,7 @@ details[open] > .section-title:hover {
 .demo-toolbar button {
   padding: 0.1rem 0.5rem;
   border: 1px solid var(--border-strong);
-  border-radius: 5px;
+  border-radius: var(--radius);
   background: var(--bg);
   color: var(--fg);
   font: 500 0.75rem var(--font);
@@ -993,9 +1016,30 @@ details[open] > .section-title:hover {
   color: #e6edf3;
 }
 
-.demo-fallback {
+/* Without JavaScript: the fallback notice. With it: a loading line until the demo mounts. */
+.demo-fallback,
+.demo-message {
   margin: 0;
   padding: 1rem;
+  font-size: 0.8125rem;
+}
+
+.demo-loading {
+  display: none;
+}
+
+.js .demo-fallback {
+  display: none;
+}
+
+.js .demo-loading {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  color: rgb(230 237 243 / 0.72);
   font-size: 0.8125rem;
 }
 
@@ -1081,6 +1125,15 @@ details[open] > .section-title:hover {
   margin: 2rem 0 0;
   color: var(--fg-muted);
   font-size: 0.75rem;
+}
+
+.site-footer .legal a {
+  color: inherit;
+  text-decoration-color: var(--border-strong);
+}
+
+.site-footer .legal a:hover {
+  color: var(--fg-strong);
 }
 
 /* ---------------------------------------------------------------- responsive */
@@ -1193,9 +1246,18 @@ body[data-pathname$='/demos/playground/'] .article {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 100vh;
-  padding: 2rem 1.25rem;
+  min-height: calc(100vh - var(--header-h) - 4rem);
   text-align: center;
+}
+
+.not-found-links {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.375rem 1.25rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
 }
 
 .not-found-code {

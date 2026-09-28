@@ -221,15 +221,8 @@
     ]
   },
   {
-    "pathname": "/react-globe/migration-group",
-    "children": []
-  },
-  {
     "pathname": "/react-globe/discover-more-group",
     "children": [
-      {
-        "pathname": "/react-globe/discover-more/showcase/"
-      },
       {
         "pathname": "/react-globe/discover-more/roadmap/"
       },

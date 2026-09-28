@@ -76,7 +76,13 @@ export function startServer(dist, port = 0) {
       file = join(file, 'index.html');
     }
     if (!existsSync(file) || statSync(file).isDirectory()) {
-      res.writeHead(404, { 'Content-Type': 'text/plain' }).end('404');
+      // Like the host: the site's own 404 page, with a 404 status.
+      const notFound = join(root, '404.html');
+      if (existsSync(notFound)) {
+        res.writeHead(404, { 'Content-Type': TYPES['.html'] });
+        if (req.method === 'HEAD') res.end();
+        else createReadStream(notFound).pipe(res);
+      } else res.writeHead(404, { 'Content-Type': 'text/plain' }).end('404');
       return;
     }
     res.writeHead(200, { 'Content-Type': TYPES[extname(file)] ?? 'application/octet-stream' });

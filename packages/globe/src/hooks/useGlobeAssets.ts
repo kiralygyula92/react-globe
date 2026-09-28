@@ -66,7 +66,8 @@ function useLoaded<T>(
   useEffect(() => {
     if (!need || loadedFor.current === source) return;
     let alive = true;
-    load().then(
+    // A loader that throws instead of rejecting still ends in onError, not in the error boundary.
+    new Promise<T>((resolve) => resolve(load())).then(
       (value) => {
         if (!alive) {
           discard?.(value);

@@ -3,7 +3,7 @@ import { editUrl, feedbackUrl, type Page } from '../lib/site';
 
 export function PageActions({ page }: { page: Page }) {
   return (
-    <div className="page-actions">
+    <div className="page-actions" data-pagefind-ignore>
       <a href={editUrl(page.file)}>Edit this page</a>
       <div className="feedback">
         <span id="feedback-label">Was this page helpful?</span>

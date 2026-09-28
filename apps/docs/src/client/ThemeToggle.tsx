@@ -28,6 +28,10 @@ export function ThemeToggle() {
   const toggle = () => {
     const next = current() === 'dark' ? 'light' : 'dark';
     document.documentElement.dataset.theme = next;
+    // The browser chrome follows the header; each meta carries both colours.
+    for (const meta of document.querySelectorAll<HTMLMetaElement>('meta[name="theme-color"]')) {
+      meta.content = meta.dataset[next] ?? meta.content;
+    }
     try {
       localStorage.setItem(STORAGE_KEY, next);
     } catch {

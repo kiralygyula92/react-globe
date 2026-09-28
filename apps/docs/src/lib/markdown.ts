@@ -36,6 +36,24 @@ function collectHeadings(headings: Heading[]) {
   };
 }
 
+/**
+ * Every table sits in the same scrolling wrapper the reference tables use, so a wide one scrolls
+ * on its own on a phone instead of widening the page. Its header row is left out of the search
+ * index, where the cells would run together into one word.
+ */
+function wrapTables() {
+  return (tree: Root) => {
+    visit(tree, 'element', (node, index, parent) => {
+      if (node.tagName !== 'table' || !parent || index === undefined) return;
+      const wrapped = parent.type === 'element' && String(parent.properties?.className ?? '').includes('table-wrap');
+      for (const child of node.children) {
+        if (child.type === 'element' && child.tagName === 'thead') child.properties = { ...child.properties, dataPagefindIgnore: '' };
+      }
+      if (!wrapped) parent.children[index] = { type: 'element', tagName: 'div', properties: { className: ['table-wrap'] }, children: [node] };
+    });
+  };
+}
+
 const THEMES = { light: 'github-light-high-contrast', dark: 'github-dark-high-contrast' } as const;
 /** The languages the pages fence their code with. A page using another one fails the build, loudly. */
 const LANGUAGES = ['tsx', 'ts', 'jsx', 'js', 'json', 'bash', 'css', 'html', 'http', 'md'];
@@ -54,6 +72,7 @@ const processor = (headings: Heading[], instance: Highlighter) =>
     // The directives expand to HTML, which rehype-raw parses back into the tree.
     .use(remarkRehype, { allowDangerousHtml: true })
     .use(rehypeRaw)
+    .use(wrapTables)
     .use(rehypeSlug)
     .use(collectHeadings(headings))
     .use(rehypeShikiFromHighlighter, instance, { themes: THEMES, defaultColor: 'light' })
