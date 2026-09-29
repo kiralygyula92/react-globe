@@ -1,8 +1,8 @@
 blank_issues_enabled: false
 contact_links:
   - name: Documentation
-    url: https://github.com/kiralygyula92/react-globe#readme
-    about: Installation, props and the full API.
+    url: https://react-globe-three.vercel.app/react-globe/
+    about: Guides, live demos and the API reference.
   - name: Report a security vulnerability
     url: https://github.com/kiralygyula92/react-globe/security/advisories/new
     about: Please report vulnerabilities privately.

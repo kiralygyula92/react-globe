@@ -21,7 +21,7 @@
     "url": "git+https://github.com/kiralygyula92/react-globe.git",
     "directory": "packages/globe"
   },
-  "homepage": "https://github.com/kiralygyula92/react-globe#readme",
+  "homepage": "https://react-globe-three.vercel.app/react-globe/",
   "bugs": {
     "url": "https://github.com/kiralygyula92/react-globe/issues"
   },
