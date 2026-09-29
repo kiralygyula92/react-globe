@@ -1,0 +1,24 @@
+@kiralygyula92/react-globe
+Copyright (c) 2026 kiralygyula92. Licensed under the MIT License (see LICENSE).
+
+Third-party material
+--------------------
+
+This package includes Earth imagery from NASA: Blue Marble: Next Generation
+(earth-day-*.jpg), the NASA Earth Observatory cloud composite
+(earth-clouds-2048.jpg) and NASA Visible Earth GEBCO elevation
+(earth-topology.png). NASA imagery is in the public domain.
+
+This package includes 1:50m vector data from Natural Earth
+(https://www.naturalearthdata.com/): countries, coastlines, borders and
+capitals, in the public domain. Translated country and capital names come from
+Natural Earth and Wikidata (https://www.wikidata.org/) labels, available under
+CC0 1.0. The normal and specular maps are derived from these files.
+
+The package stylesheet (dist/globe.css) is compiled with Tailwind CSS
+(https://tailwindcss.com), Copyright Tailwind Labs, Inc., licensed under the
+MIT License. The license banner is kept at the top of the file.
+
+This package is designed to be used with three.js (https://threejs.org),
+Copyright three.js authors, licensed under the MIT License. three.js (`three`)
+is a peer dependency and is not bundled.
