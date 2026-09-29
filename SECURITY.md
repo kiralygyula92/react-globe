@@ -2,11 +2,14 @@
 
 ## Supported versions
 
-The latest release of `@kiralygyula92/react-globe` receives security fixes.
+Security fixes are released for the latest version of `@kiralygyula92/react-globe`.
 
 ## Reporting a vulnerability
 
-Please do not open a public issue. Report the problem privately on this repository's
-[Security tab](https://github.com/kiralygyula92/react-globe/security) with **Report a
-vulnerability**; only the maintainer sees the report. Include the affected version, what an
-attacker could do, and the steps or code that show it.
+Please do **not** open a public issue. Report vulnerabilities privately through
+[GitHub security advisories](https://github.com/kiralygyula92/react-globe/security/advisories/new);
+only the maintainer sees the report. Include the affected version, what an attacker could do, and
+the steps or code that show it.
+
+You can expect an acknowledgement within a few days. Once a fix is released, the advisory is
+published with credit to the reporter unless you prefer to stay anonymous.

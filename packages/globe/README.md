@@ -373,4 +373,5 @@ own `controlsComponent` for keyboard users.
 
 ## License
 
-[MIT](./LICENSE)
+[MIT](./LICENSE) © kiralygyula92. Third-party attributions (NASA and Natural Earth data, Wikidata
+labels, Tailwind CSS) are listed in [`NOTICE`](./NOTICE).

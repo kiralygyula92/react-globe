@@ -15,13 +15,13 @@
     "visualization"
   ],
   "license": "MIT",
-  "author": "kiralygyula92",
-  "homepage": "https://github.com/kiralygyula92/react-globe#readme",
+  "author": "kiralygyula92 (https://github.com/kiralygyula92)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kiralygyula92/react-globe.git",
     "directory": "packages/globe"
   },
+  "homepage": "https://react-globe-three.vercel.app/react-globe/",
   "bugs": {
     "url": "https://github.com/kiralygyula92/react-globe/issues"
   },
@@ -32,8 +32,9 @@
   "files": [
     "dist",
     "README.md",
+    "CHANGELOG.md",
     "LICENSE",
-    "CHANGELOG.md"
+    "NOTICE"
   ],
   "main": "./dist/index.js",
   "module": "./dist/index.js",
@@ -51,7 +52,8 @@
     "node": ">=18"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "provenance": true
   },
   "scripts": {
     "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",

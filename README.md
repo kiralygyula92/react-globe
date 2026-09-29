@@ -82,24 +82,8 @@ Both `vercel.json` files are generated: run `pnpm docs:vercel` after changing `r
 
 ## Releasing
 
-The package is published as `@kiralygyula92/react-globe`, so it needs an npm account (or an npm
-organization) named `kiralygyula92`.
-
-1. Bump `version` in `packages/globe/package.json` and add a dated entry to
-   `packages/globe/CHANGELOG.md`.
-2. Commit, tag `vX.Y.Z` and push the tag.
-3. Publish a GitHub release for the tag. The `publish` workflow checks that the tag matches the
-   package version, runs the typecheck, the tests and the build, then publishes with provenance.
-
-The workflow authenticates with npm trusted publishing: on npmjs.com, make this repository's
-`publish.yml` the package's trusted publisher and no secret is needed. npm only offers that for a
-package that already exists, so publish the first version by hand, or add an `NPM_TOKEN` repository
-secret until trusted publishing is set up.
-
-To publish by hand: `pnpm --filter @kiralygyula92/react-globe publish` (`prepublishOnly` runs the
-checks and the build).
-
-To preview exactly what would ship: `pnpm --filter @kiralygyula92/react-globe pack` after `pnpm build`.
+See [RELEASING.md](RELEASING.md). Contributions follow [CONTRIBUTING.md](CONTRIBUTING.md), and
+security problems go through [SECURITY.md](SECURITY.md), never a public issue.
 
 ## Data sources
 
@@ -111,4 +95,5 @@ maps are derived from those by `scripts/globe-assets.mjs`.
 
 ## License
 
-[MIT](LICENSE)
+[MIT](LICENSE) © kiralygyula92. Third-party attributions are listed in
+[`packages/globe/NOTICE`](packages/globe/NOTICE).
