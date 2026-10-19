@@ -2,8 +2,8 @@
   "name": "Globe",
   "kind": "component",
   "imports": [
-    "import { Globe } from '@kiralygyula92/react-globe';",
-    "import '@kiralygyula92/react-globe/globe.css';"
+    "import { Globe } from '@kingtech/react-globe';",
+    "import '@kingtech/react-globe/globe.css';"
   ],
   "propsType": "GlobeProps",
   "options": {

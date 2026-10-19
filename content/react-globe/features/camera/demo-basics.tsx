@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Globe, type CameraPose } from '@kiralygyula92/react-globe';
+import { Globe, type CameraPose } from '@kingtech/react-globe';
 
 export default function CameraBasics() {
   const [pose, setPose] = useState<Required<CameraPose>>();

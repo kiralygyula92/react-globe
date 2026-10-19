@@ -2,7 +2,7 @@
   "name": "CameraPose",
   "kind": "type",
   "imports": [
-    "import type { CameraPose } from '@kiralygyula92/react-globe';"
+    "import type { CameraPose } from '@kingtech/react-globe';"
   ],
   "options": {
     "lat": {

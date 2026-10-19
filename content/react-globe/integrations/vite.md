@@ -9,13 +9,13 @@ configuration.
 ## Install
 
 ```bash
-npm install @kiralygyula92/react-globe three
+npm install @kingtech/react-globe three
 ```
 
 Import the stylesheet in your entry file:
 
 ```tsx
-import '@kiralygyula92/react-globe/globe.css';
+import '@kingtech/react-globe/globe.css';
 ```
 
 ## Pre-bundle three.js's line modules

@@ -2,7 +2,7 @@
   "name": "ConnectionRenderProps",
   "kind": "type",
   "imports": [
-    "import type { ConnectionRenderProps } from '@kiralygyula92/react-globe';"
+    "import type { ConnectionRenderProps } from '@kingtech/react-globe';"
   ],
   "options": {
     "connection": {

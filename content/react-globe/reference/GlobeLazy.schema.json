@@ -2,8 +2,8 @@
   "name": "GlobeLazy",
   "kind": "component",
   "imports": [
-    "import { GlobeLazy } from '@kiralygyula92/react-globe';",
-    "import '@kiralygyula92/react-globe/globe.css';"
+    "import { GlobeLazy } from '@kingtech/react-globe';",
+    "import '@kingtech/react-globe/globe.css';"
   ],
   "propsType": "GlobeProps",
   "options": {

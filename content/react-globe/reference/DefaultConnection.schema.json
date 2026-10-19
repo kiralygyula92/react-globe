@@ -2,8 +2,8 @@
   "name": "DefaultConnection",
   "kind": "component",
   "imports": [
-    "import { DefaultConnection } from '@kiralygyula92/react-globe';",
-    "import '@kiralygyula92/react-globe/globe.css';"
+    "import { DefaultConnection } from '@kingtech/react-globe';",
+    "import '@kingtech/react-globe/globe.css';"
   ],
   "propsType": "ConnectionRenderProps",
   "options": {

@@ -2,7 +2,7 @@
   "name": "ConnectionType",
   "kind": "type",
   "imports": [
-    "import type { ConnectionType } from '@kiralygyula92/react-globe';"
+    "import type { ConnectionType } from '@kingtech/react-globe';"
   ],
   "definition": "'arch' | 'line'",
   "inheritance": null,

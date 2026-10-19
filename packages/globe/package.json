@@ -1,5 +1,5 @@
 {
-  "name": "@kiralygyula92/react-globe",
+  "name": "@kingtech/react-globe",
   "version": "1.0.0",
   "description": "An interactive, detailed 3D Earth for React, drawn with plain three.js.",
   "keywords": [
@@ -15,7 +15,7 @@
     "visualization"
   ],
   "license": "MIT",
-  "author": "kiralygyula92 (https://github.com/kiralygyula92)",
+  "author": "Gyula Kiraly (https://github.com/kiralygyula92)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/kiralygyula92/react-globe.git",
@@ -27,13 +27,11 @@
   },
   "type": "module",
   "sideEffects": [
-    "*.css"
+    "**/*.css"
   ],
   "files": [
     "dist",
-    "README.md",
     "CHANGELOG.md",
-    "LICENSE",
     "NOTICE"
   ],
   "main": "./dist/index.js",
@@ -48,12 +46,8 @@
     "./assets/*": "./dist/assets/*",
     "./package.json": "./package.json"
   },
-  "engines": {
-    "node": ">=18"
-  },
   "publishConfig": {
-    "access": "public",
-    "provenance": true
+    "access": "public"
   },
   "scripts": {
     "clean": "node -e \"require('fs').rmSync('dist',{recursive:true,force:true})\"",

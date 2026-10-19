@@ -9,8 +9,8 @@ React Globe is free, open-source software maintained on GitHub. There is no paid
 
 Open an issue on the [issue tracker](https://github.com/kiralygyula92/react-globe/issues). Include:
 
-- the `@kiralygyula92/react-globe`, `react` and `three` versions
-  (`npm ls react react-dom three @kiralygyula92/react-globe`);
+- the `@kingtech/react-globe`, `react` and `three` versions
+  (`npm ls react react-dom three @kingtech/react-globe`);
 - your browser and operating system;
 - a minimal component that shows the problem;
 - any development warning the globe logged in the console.

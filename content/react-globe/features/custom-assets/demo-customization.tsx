@@ -1,4 +1,4 @@
-import { Globe, type CapitalRecord } from '@kiralygyula92/react-globe';
+import { Globe, type CapitalRecord } from '@kingtech/react-globe';
 
 /** Your own points of interest, drawn with the capital marker and its collision-aware label. */
 const sites: CapitalRecord[] = [

@@ -1,4 +1,4 @@
-import { Globe } from '@kiralygyula92/react-globe';
+import { Globe } from '@kingtech/react-globe';
 
 /** Line colour and weight come with the render style; cartoon draws the heaviest borders. */
 export default function BordersCustomization() {

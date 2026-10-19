@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Globe, type CountryCollection } from '@kiralygyula92/react-globe';
+import { Globe, type CountryCollection } from '@kingtech/react-globe';
 
 /** Stands in for a download that came back wrong: TopoJSON where GeoJSON belongs. */
 const brokenDownload: unknown = { type: 'Topology', objects: { countries: {} }, arcs: [] };

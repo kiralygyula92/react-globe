@@ -6,7 +6,7 @@ All notable changes to this package are documented here. The format follows
 
 ## [1.0.0] - 2026-09-25
 
-The first release, published as `@kiralygyula92/react-globe`.
+The first release, published as `@kingtech/react-globe`.
 
 ### Added
 

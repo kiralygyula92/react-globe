@@ -1,5 +1,5 @@
 import type { CSSProperties } from 'react';
-import { Globe } from '@kiralygyula92/react-globe';
+import { Globe } from '@kingtech/react-globe';
 
 const theme = {
   height: '100%',

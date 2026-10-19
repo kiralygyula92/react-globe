@@ -1,6 +1,6 @@
 # Contributing
 
-Thanks for helping improve `@kiralygyula92/react-globe`! Bug reports, docs fixes and pull requests
+Thanks for helping improve `@kingtech/react-globe`! Bug reports, docs fixes and pull requests
 are all welcome.
 
 ## Getting started
