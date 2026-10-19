@@ -1,15 +1,15 @@
 ---
 description: Which versions of React Globe exist, how they are numbered and which receive fixes.
-date: 2026-09-15
+date: 2026-10-19
 ---
 
 ## Current version
 
 | Version | Status | Documentation |
 |---|---|---|
-| 1.0.0 | Current, supported | [This site](/react-globe/) |
+| 1.0.1 | Current, supported | [This site](/react-globe/) |
 
-Version 1.0.0 is the first release; there are no earlier versions.
+Version 1.0.0 was the first release; 1.x is the only major version so far.
 
 ## Numbering
 
