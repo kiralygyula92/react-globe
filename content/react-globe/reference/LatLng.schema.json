@@ -2,7 +2,7 @@
   "name": "LatLng",
   "kind": "type",
   "imports": [
-    "import type { LatLng } from '@kiralygyula92/react-globe';"
+    "import type { LatLng } from '@kingtech/react-globe';"
   ],
   "options": {
     "lat": {

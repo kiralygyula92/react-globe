@@ -1,4 +1,4 @@
-import { Globe } from '@kiralygyula92/react-globe';
+import { Globe } from '@kingtech/react-globe';
 
 export default function CapitalsBasics() {
   return (

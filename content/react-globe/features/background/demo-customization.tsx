@@ -1,5 +1,5 @@
 import { useState, type CSSProperties } from 'react';
-import { Globe } from '@kiralygyula92/react-globe';
+import { Globe } from '@kingtech/react-globe';
 
 /**
  * The background can name a design token defined on an ancestor. The token is read when the

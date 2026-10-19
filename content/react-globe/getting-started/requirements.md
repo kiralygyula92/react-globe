@@ -24,7 +24,7 @@ declared range that are not listed have not been tested; please report problems.
 The peer dependencies are installed alongside the package:
 
 ```bash
-npm install @kiralygyula92/react-globe three react react-dom
+npm install @kingtech/react-globe three react react-dom
 ```
 
 ## Minimal working example
@@ -32,7 +32,7 @@ npm install @kiralygyula92/react-globe three react react-dom
 Check the versions your project resolved:
 
 ```bash
-npm ls react react-dom three @kiralygyula92/react-globe
+npm ls react react-dom three @kingtech/react-globe
 ```
 
 ## Verification

@@ -1,4 +1,4 @@
-import { Globe, type CountryCollection } from '@kiralygyula92/react-globe';
+import { Globe, type CountryCollection } from '@kingtech/react-globe';
 
 /** A tiny hand-drawn dataset: two rectangles standing in for regions. */
 const regions: CountryCollection = {

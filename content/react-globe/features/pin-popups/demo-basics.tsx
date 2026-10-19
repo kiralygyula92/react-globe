@@ -1,4 +1,4 @@
-import { Globe, type Pin } from '@kiralygyula92/react-globe';
+import { Globe, type Pin } from '@kingtech/react-globe';
 
 type Peak = { name: string; description: string };
 

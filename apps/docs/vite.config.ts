@@ -4,7 +4,7 @@
  *
  * Live demos are demo-*.tsx files colocated with their pages under content/; the React
  * plugin compiles them and `resolve.dedupe` makes their bare imports (react, three,
- * @kiralygyula92/react-globe) resolve from this app, not from the content folder.
+ * @kingtech/react-globe) resolve from this app, not from the content folder.
  */
 
 import { fileURLToPath } from 'node:url';
@@ -63,7 +63,7 @@ export default defineConfig({
     chunkSizeWarningLimit: 900,
   },
   plugins: [react()],
-  resolve: { dedupe: ['react', 'react-dom', 'three', '@kiralygyula92/react-globe'] },
+  resolve: { dedupe: ['react', 'react-dom', 'three', '@kingtech/react-globe'] },
   optimizeDeps: {
     include: [
       'three',

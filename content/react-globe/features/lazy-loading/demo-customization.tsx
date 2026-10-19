@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { GlobeLazy } from '@kiralygyula92/react-globe';
+import { GlobeLazy } from '@kingtech/react-globe';
 
 /** Mount the globe only when the reader asks for it. */
 export default function LazyLoadingCustomization() {

@@ -2,7 +2,7 @@
   "name": "CountryFeature",
   "kind": "type",
   "imports": [
-    "import type { CountryFeature } from '@kiralygyula92/react-globe';"
+    "import type { CountryFeature } from '@kingtech/react-globe';"
   ],
   "definition": "Feature<Polygon | MultiPolygon, CountryProperties>",
   "inheritance": null,

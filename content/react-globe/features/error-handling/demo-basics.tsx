@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { Globe, type CountryCollection } from '@kiralygyula92/react-globe';
+import { Globe, type CountryCollection } from '@kingtech/react-globe';
 
 /**
  * A TopoJSON file passed where GeoJSON belongs, a common mix-up with world-atlas data. The globe

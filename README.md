@@ -9,7 +9,7 @@ and the full API.
 ## Layout
 
 ```
-packages/globe/       the library, published to npm as `@kiralygyula92/react-globe`
+packages/globe/       the library, published to npm as `@kingtech/react-globe`
 apps/docs/            the documentation site (React, rendered to static files)
 content/react-globe/  docs content and data: plugin.config.json, nav.json, titles.json, redirects.json, Markdown
 e2e/                  Playwright suite driving the docs playground (Demos › Playground)

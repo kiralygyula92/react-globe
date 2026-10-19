@@ -7,7 +7,7 @@ Instructions for AI coding agents working in this repository. Claude Code reads 
 
 A pnpm monorepo:
 
-- `packages/globe`: the published library `@kiralygyula92/react-globe`, an interactive, detailed
+- `packages/globe`: the published library `@kingtech/react-globe`, an interactive, detailed
   3D Earth for React, drawn with plain three.js.
 - `apps/docs`: the documentation site (React, rendered to static files), which consumes the
   library's built output.

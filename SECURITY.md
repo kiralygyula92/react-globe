@@ -2,7 +2,7 @@
 
 ## Supported versions
 
-Security fixes are released for the latest version of `@kiralygyula92/react-globe`.
+Security fixes are released for the latest version of `@kingtech/react-globe`.
 
 ## Reporting a vulnerability
 
