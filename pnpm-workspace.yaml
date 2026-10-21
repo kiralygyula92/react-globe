@@ -8,3 +8,8 @@ minimumReleaseAgeExclude:
   - react-dom@19.3.0
   - react@19.3.0
   - scheduler@0.28.0
+overrides:
+  # @tailwindcss/cli 4.3.3 pins @parcel/watcher 2.5.1, whose micromatch pulls in braces 3.0.3 and
+  # its unpatched denial-of-service advisory (GHSA-vfj7-8cjw-p6xm). 2.6.0 has the same API and
+  # matches with picomatch instead. Drop this once the Tailwind CLI depends on 2.6 or later.
+  '@tailwindcss/cli>@parcel/watcher': 2.6.0
