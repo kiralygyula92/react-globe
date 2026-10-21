@@ -1,6 +1,6 @@
 {
   "name": "@kingtech/react-globe",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An interactive, detailed 3D Earth for React, drawn with plain three.js.",
   "keywords": [
     "react",
