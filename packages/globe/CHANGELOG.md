@@ -4,6 +4,20 @@ All notable changes to this package are documented here. The format follows
 [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and the package adheres to
 [Semantic Versioning](https://semver.org/).
 
+## [1.0.2] - 2026-10-21
+
+### Security
+
+- Build and development dependencies updated to clear every open advisory: Vite 8.3.4,
+  sharp 0.35.5 and source-map-js 1.2.2, and the Tailwind CLI's file watcher now resolves to
+  `@parcel/watcher` 2.6.0, which no longer pulls in braces. The package itself has no runtime
+  dependencies, so installs were never affected.
+
+### Changed
+
+- Built and tested with React 19.3.1, Vitest 5.0.5 and Playwright 1.64.1 (Dependabot updates
+  #11, #12 and #20).
+
 ## [1.0.1] - 2026-10-19
 
 ### Changed
